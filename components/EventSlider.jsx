@@ -3,37 +3,33 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 
-const slides = [
-  {
-    image: "/11.png",
-    title: "Free Fire Championship",
-    subtitle: "Fast-paced survival action for college teams.",
-    label: "Register your squad now",
+export default function EventSlider({
+  slides = [],
+  title = "India's Biggest",
+  subtitle = "Inter-IIIT Esports League",
+  description = "",
+  primaryBtn = {
+    text: "Register Now",
+    href: "/register",
   },
-  {
-    image: "/33.png",
-    title: "Valorant Tactical Showdown",
-    subtitle: "Teamwork, strategy, and precision in every match.",
-    label: "Secure your slot today",
+  secondaryBtn = {
+    text: "Event Details",
+    href: "/event-details",
   },
-  {
-    image: "/23.png",
-    title: "BGMI Championship",
-    subtitle: "Battle with the best squads from IIITs across India.",
-    label: "Compete for glory",
-  },
-];
-
-export default function EventSlider() {
+}) {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
+    if (slides.length <= 1) return;
+
     const interval = setInterval(() => {
       setActive((prev) => (prev + 1) % slides.length);
     }, 5500);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [slides.length]);
+
+  if (!slides.length) return null;
 
   return (
     <section className="bg-slate-950 text-white">
@@ -43,7 +39,7 @@ export default function EventSlider() {
           {/* Changing Banner */}
           <img
             src={slides[active].image}
-            alt={slides[active].title}
+            alt={slides[active].title || title}
             className="absolute inset-0 h-full w-full object-cover transition-all duration-700"
           />
 
@@ -58,31 +54,29 @@ export default function EventSlider() {
               </p> */}
 
               <h1 className="text-4xl md:text-5xl font-black leading-tight">
-                India's Biggest
-                <span className="block text-3xl md:text-4xl  text-white">
-                  Inter-IIIT Esports League
+                {title}
+                <span className="block text-3xl md:text-4xl text-white">
+                  {subtitle}
                 </span>
               </h1>
 
               <p className="mt-6 text-lg text-gray-300">
-                Compete with the finest gamers from IIITs across India in BGMI,
-                Valorant and Free Fire. Experience professional production,
-                exciting prize pools and national recognition.
+                {description}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link
-                  href="/register"
+                  href={primaryBtn.href}
                   className="rounded bg-red-600 px-6 py-3 font-semibold hover:bg-red-500"
                 >
-                  Register Now
+                  {primaryBtn.text}
                 </Link>
 
                 <Link
-                  href="/event-details"
+                  href={secondaryBtn.href}
                   className="rounded border border-white/20 bg-white/10 px-6 py-3 font-semibold hover:border-red-500"
                 >
-                  Event Details
+                  {secondaryBtn.text}
                 </Link>
               </div>
 
@@ -104,8 +98,6 @@ export default function EventSlider() {
 
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-200/10 to-transparent" />
       </div>
-
-     
     </section>
   );
 }

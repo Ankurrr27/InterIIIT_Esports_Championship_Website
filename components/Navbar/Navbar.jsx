@@ -23,7 +23,7 @@ export default function Navbar() {
         <div className="relative flex w-[320px] items-center bg-[#111] px-6">
 
           <div
-            className="absolute right-[-32px] top-0 h-full w-10 bg-[#111]"
+            className="absolute right-[32px] top-0 h-full w-10 bg-[#111]"
             style={{
               clipPath: "polygon(0 0,100% 0,60% 100%,0 100%)",
             }}
@@ -32,12 +32,12 @@ export default function Navbar() {
           <Link href="/" className="flex items-center gap-3">
 
             <img
-              src="/IIITians-Network-Logo-Light.png"
+              src="/logos/iiitians-network.png"
               className="h-8"
             />
 
             <img
-              src="/IEC LOGO Black.png"
+              src="/logos/IEC LOGO Black.png"
               className="h-15 invert"
             />
 
@@ -46,8 +46,8 @@ export default function Navbar() {
                 INTER IIIT
               </h1>
 
-              <p className="text-[11px] uppercase tracking-wider text-zinc-400">
-                ESPORTS CHAMPIONSHIP
+              <p className="text-[11px]  text-zinc-400">
+                ESports Championship
               </p>
             </div>
 

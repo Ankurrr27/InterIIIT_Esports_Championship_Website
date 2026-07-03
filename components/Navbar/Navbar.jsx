@@ -8,6 +8,7 @@ export default function Navbar() {
             <div className="flex items-center gap-5">
                 <Link href="/event-details" className="px-4 py-2 rounded-lg">Event</Link>
                 <Link href="/support" className="px-4 py-2 rounded-lg">Support</Link>
+                <Link href="/team" className="px-4 py-2 rounded-lg">Team</Link>
                 <Link href="/register">Register</Link>
             </div>
         </nav>

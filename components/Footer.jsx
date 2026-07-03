@@ -2,155 +2,71 @@ function Footer() {
   return (
     <footer className="bg-[#111827] text-white">
 
-      {/* Top Banner */}
-      <div className="max-w-7xl mx-auto px-6 pt-16">
-
-        <div className="bg-[#1B2435] rounded-3xl border border-gray-700 px-8 py-8">
-
-          <p className="uppercase tracking-[0.35em] text-xs text-red-400">
-            INTERIIIIT Esports
-          </p>
-
-          <div className="mt-5 flex flex-col lg:flex-row justify-between gap-8">
-
-            <div>
-              <h1 className="text-5xl font-bold">
-                31+
-              </h1>
-
-              <p className="text-2xl text-gray-400 mt-2">
-                Participating Colleges
-              </p>
-            </div>
-
-            <div className="flex flex-wrap gap-4">
-
-              <div className="border border-gray-700 rounded-full px-5 py-3">
-                🔥 Free Fire
-              </div>
-
-              <div className="border border-gray-700 rounded-full px-5 py-3">
-                🎯 BGMI
-              </div>
-
-              <div className="border border-gray-700 rounded-full px-5 py-3">
-                💥 Valorant
-              </div>
-
-              <div className="border border-gray-700 rounded-full px-5 py-3">
-                🏆 InterIIIT Tournament
-              </div>
-
-            </div>
-
+      {/* Top Summary */}
+      <div className="max-w-7xl mx-auto px-6 py-10">
+        <div className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-8 rounded-3xl border border-white/10 bg-[#1B2435]/80 p-6">
+          <div>
+            <p className="uppercase tracking-[0.35em] text-xs text-red-400 mb-3">
+              INTERIIIIT Esports
+            </p>
+            <h2 className="text-3xl font-bold text-white">31+ Participating Colleges</h2>
+            <p className="mt-3 text-sm text-slate-300 max-w-xl">
+              Bringing together college gamers for competitive tournaments across major titles.
+            </p>
           </div>
 
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <span className="rounded-full border border-gray-700 bg-white/5 px-3 py-2 text-center text-sm text-gray-300">
+              🔥 Free Fire
+            </span>
+            <span className="rounded-full border border-gray-700 bg-white/5 px-3 py-2 text-center text-sm text-gray-300">
+              🎯 BGMI
+            </span>
+            <span className="rounded-full border border-gray-700 bg-white/5 px-3 py-2 text-center text-sm text-gray-300">
+              💥 Valorant
+            </span>
+            <span className="rounded-full border border-gray-700 bg-white/5 px-3 py-2 text-center text-sm text-gray-300">
+              🏆 InterIIIT
+            </span>
+          </div>
         </div>
-
       </div>
 
       {/* Main Footer */}
 
-      <div className="max-w-7xl mx-auto px-6 py-16">
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-
-          {/* About */}
-
+      <div className="max-w-7xl mx-auto px-6 pb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-sm text-slate-300">
           <div>
-
-            <h2 className="text-3xl font-bold">
-              InterIIIIT
-            </h2>
-
-            <p className="text-gray-400 mt-5 leading-8">
-              India's premier InterIIIT esports platform,
-              bringing together colleges through
-              competitive gaming and community.
+            <h3 className="text-lg font-semibold text-white mb-4">About</h3>
+            <p className="leading-7">
+              India's premier InterIIIT esports platform connecting colleges through competitive gaming.
             </p>
-
           </div>
 
-          {/* Navigation */}
-
-          <div>
-
-            <h3 className="font-semibold text-lg mb-5">
-              Navigation
-            </h3>
-
-            <ul className="space-y-3 text-gray-400">
-
-              <li className="hover:text-white cursor-pointer">Home</li>
-              <li className="hover:text-white cursor-pointer">Games</li>
-              <li className="hover:text-white cursor-pointer">Developers</li>
-              <li className="hover:text-white cursor-pointer">Contact</li>
-
-            </ul>
-
+          <div className="grid grid-cols-2 gap-6">
+            <div>
+              <h3 className="text-lg font-semibold text-white mb-4">Site</h3>
+              <ul className="space-y-2 text-slate-400">
+                <li className="hover:text-white">Home</li>
+                <li className="hover:text-white">Events</li>
+                <li className="hover:text-white">Register</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-white mb-4">Games</h3>
+              <ul className="space-y-2 text-slate-400">
+                <li className="hover:text-white">Free Fire</li>
+                <li className="hover:text-white">BGMI</li>
+                <li className="hover:text-white">Valorant</li>
+              </ul>
+            </div>
           </div>
-
-          {/* Games */}
-
-          <div>
-
-            <h3 className="font-semibold text-lg mb-5">
-              Games
-            </h3>
-
-            <ul className="space-y-3 text-gray-400">
-
-              <li className="hover:text-white cursor-pointer">
-                Free Fire
-              </li>
-
-              <li className="hover:text-white cursor-pointer">
-                BGMI
-              </li>
-
-              <li className="hover:text-white cursor-pointer">
-                Valorant
-              </li>
-
-            </ul>
-
-          </div>
-
-          {/* Tournament */}
-
-          <div>
-
-            <h3 className="font-semibold text-lg mb-5">
-              Tournament
-            </h3>
-
-            <ul className="space-y-3 text-gray-400">
-
-              <li>31+ Colleges</li>
-              <li>National Competition</li>
-              <li>Student Driven</li>
-              <li>Annual Event</li>
-
-            </ul>
-
-          </div>
-
         </div>
 
-        <hr className="border-gray-700 my-12" />
-
-        <div className="flex flex-col md:flex-row justify-between items-center text-gray-500 text-sm">
-
-          <p>
-            © 2026 InterIIIIT. All Rights Reserved.
-          </p>
-
-          <p className="mt-4 md:mt-0">
-            Built with ❤️ by Ankur • Advik • Rahul
-          </p>
-
+        <div className="mt-8 border-t border-white/10 pt-6 text-sm text-slate-500 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+          <p>© 2026 InterIIIIT. All Rights Reserved.</p>
+          <p>Built with ❤️ by Ankur • Advik • Rahul</p>
         </div>
-
       </div>
 
     </footer>

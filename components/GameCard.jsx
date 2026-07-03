@@ -6,7 +6,7 @@ export default function GameCard({ image, title, description }) {
         <img
           src={image}
           alt={title}
-          className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+          className="w-full h-90 object-cover transition-transform duration-500 group-hover:scale-110"
         />
       </div>
 
@@ -19,7 +19,7 @@ export default function GameCard({ image, title, description }) {
           {description}
         </p>
 
-        <button className="mt-6 px-5 py-2 rounded-lg bg-red-600 hover:bg-red-700 transition duration-300 font-semibold">
+        <button className="mt-6 px-5 py-2 rounded-lg bg-red-600 hover:bg-red-200 transition duration-300 font-semibold">
           View Details
         </button>
       </div>

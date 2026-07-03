@@ -57,7 +57,7 @@ export default function About() {
           {/* Right */}
           <div className="relative group">
             <img
-              src="/event-image.jpg" // Replace with your image
+              src="/event-slide-2.png"
               alt="Gaming Event"
               className="w-full h-[500px] object-cover rounded-3xl transition-transform duration-500 group-hover:scale-105"
             />

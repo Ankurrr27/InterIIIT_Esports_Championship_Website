@@ -1,7 +1,14 @@
-export default function TeamPage() {
+import TeamActions from "./components/TeamActions";
+
+export const metadata = {
+  title: "Team Management | IEC Esports",
+  description: "Create, join, or manage your esports team.",
+};
+
+export default function UserTeamPage() {
   return (
-    <main>
-      <h1>This is the team page</h1>
+    <main className="min-h-screen bg-[#121212]">
+      <TeamActions />
     </main>
   );
 }

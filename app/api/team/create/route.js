@@ -1,14 +1,38 @@
 import { dbConnect } from "@/lib/mongodb";
 import { createTeam } from "@/lib/service/team.service";
+import { requireAuth } from "@/lib/auth";
 
 export async function POST(req) {
   await dbConnect();
-  const body = await req.json();
 
   try {
-    const team = await createTeam(body);
-    return Response.json(team);
+    // Authenticate the user using the JWT
+    const user = await requireAuth(req);
+
+    const body = await req.json();
+
+    // Create team using the logged-in user's game
+    const team = await createTeam({
+      userId: user._id,
+      name: body.name,
+      game: user.game,
+    });
+
+    return Response.json({
+      success: true,
+      message: "Team created successfully",
+      team,
+    });
+
   } catch (e) {
-    return Response.json({ error: e.message }, { status: 400 });
+    return Response.json(
+      {
+        success: false,
+        message: e.message,
+      },
+      {
+        status: 400,
+      }
+    );
   }
 }

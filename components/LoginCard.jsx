@@ -3,16 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 import BorderGlow from "./BorderGlow";
-import { Mail, Lock, User, GraduationCap, Gamepad2 } from "lucide-react";
+import { GraduationCap, Lock } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 
-export default function RegisterCard() {
+export default function LoginCard() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
     collegeEmail: "",
     password: "",
-    game: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -26,13 +23,13 @@ export default function RegisterCard() {
     }));
   };
 
-  const handleRegister = async () => {
+  const handleLogin = async () => {
     setLoading(true);
     setMessage("");
 
     try {
-      const res = await fetch("/api/auth/register", {
-        // Change this if your route is different
+      // Change this endpoint if your login route is different
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,22 +39,28 @@ export default function RegisterCard() {
 
       const data = await res.json();
 
-      if (!res.ok) {
-        throw new Error(data.error || "Registration failed");
+      if (!res.ok || !data.success) {
+        throw new Error(data.message || "Login failed");
       }
 
+      // Store JWT
+      localStorage.setItem("token", data.token);
+
       setSuccess(true);
-      setMessage("✅ Registration Successful!");
+      setMessage("✅ Login Successful!");
 
-      console.log("Registered User:", data);
+      console.log("JWT Token:", data.token);
+      console.log("Logged In User:", data.user);
 
+      // Optional: clear form
       setFormData({
-        name: "",
-        email: "",
         collegeEmail: "",
         password: "",
-        game: "",
       });
+
+      // Later we can redirect to dashboard
+      // router.push("/dashboard");
+
     } catch (err) {
       setSuccess(false);
       setMessage(err.message);
@@ -79,48 +82,17 @@ export default function RegisterCard() {
       colors={["#c084fc", "#f472b6", "#38bdf8"]}
     >
       <div className="w-[420px] px-8 py-10">
+        {/* Heading */}
         <h1 className="text-3xl font-bold text-white text-center">
-          Create Account
+          Welcome Back
         </h1>
 
         <p className="mt-2 text-center text-gray-400">
-          Register to IEC Esports
+          Login to your IEC Esports account
         </p>
 
+        {/* Form */}
         <div className="mt-8 space-y-5">
-          {/* Name */}
-          <div className="relative">
-            <User
-              size={20}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-            />
-
-            <input
-              name="name"
-              type="text"
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-zinc-700 bg-[#111111] py-3 pl-12 pr-4 text-white placeholder:text-gray-500 outline-none focus:border-red-500"
-            />
-          </div>
-
-          {/* Personal Email */}
-          <div className="relative">
-            <Mail
-              size={20}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-            />
-
-            <input
-              name="email"
-              type="email"
-              placeholder="Personal Email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-zinc-700 bg-[#111111] py-3 pl-12 pr-4 text-white placeholder:text-gray-500 outline-none focus:border-red-500"
-            />
-          </div>
 
           {/* College Email */}
           <div className="relative">
@@ -130,12 +102,12 @@ export default function RegisterCard() {
             />
 
             <input
-              name="collegeEmail"
               type="email"
+              name="collegeEmail"
               placeholder="College Email"
               value={formData.collegeEmail}
               onChange={handleChange}
-              className="w-full rounded-xl border border-zinc-700 bg-[#111111] py-3 pl-12 pr-4 text-white placeholder:text-gray-500 outline-none focus:border-red-500"
+              className="w-full rounded-xl border border-zinc-700 bg-[#111111] py-3 pl-12 pr-4 text-white placeholder:text-gray-500 outline-none transition focus:border-red-500"
             />
           </div>
 
@@ -147,44 +119,25 @@ export default function RegisterCard() {
             />
 
             <input
-              name="password"
               type="password"
+              name="password"
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full rounded-xl border border-zinc-700 bg-[#111111] py-3 pl-12 pr-4 text-white placeholder:text-gray-500 outline-none focus:border-red-500"
+              className="w-full rounded-xl border border-zinc-700 bg-[#111111] py-3 pl-12 pr-4 text-white placeholder:text-gray-500 outline-none transition focus:border-red-500"
             />
           </div>
 
-          {/* Game */}
-          <div className="relative">
-            <Gamepad2
-              size={20}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-            />
-
-            <select
-              name="game"
-              value={formData.game}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-zinc-700 bg-[#111111] py-3 pl-12 pr-4 text-white outline-none focus:border-red-500"
-            >
-              <option value="">Select Game</option>
-              <option value="BGMI">BGMI</option>
-              <option value="Valorant">Valorant</option>
-              <option value="Free Fire">Free Fire</option>
-            </select>
-          </div>
-
-          {/* Register Button */}
+          {/* Login Button */}
           <button
-            onClick={handleRegister}
+            onClick={handleLogin}
             disabled={loading}
             className="w-full rounded-xl bg-red-600 py-3 font-semibold text-white transition hover:bg-red-700 disabled:opacity-60"
           >
-            {loading ? "Registering..." : "Register"}
+            {loading ? "Logging In..." : "Login"}
           </button>
 
+          {/* Message */}
           {message && (
             <p
               className={`text-center text-sm ${
@@ -195,25 +148,28 @@ export default function RegisterCard() {
             </p>
           )}
 
+          {/* Divider */}
           <div className="flex items-center gap-3">
             <div className="h-px flex-1 bg-zinc-700" />
             <span className="text-sm text-gray-500">OR</span>
             <div className="h-px flex-1 bg-zinc-700" />
           </div>
 
+          {/* Google Login */}
           <button className="flex w-full items-center justify-center gap-3 rounded-xl border border-zinc-700 bg-[#111111] py-3 font-medium text-white transition hover:border-white">
             <FcGoogle size={22} />
             Continue with Google
           </button>
         </div>
 
+        {/* Footer */}
         <p className="mt-8 text-center text-sm text-gray-400">
-          Already have an account?{" "}
+          Don't have an account?{" "}
           <Link
-            href="/login"
+            href="/register"
             className="font-semibold text-red-500 transition hover:text-red-400"
           >
-            Sign In
+            Register
           </Link>
         </p>
       </div>

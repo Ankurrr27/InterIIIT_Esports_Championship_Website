@@ -9,11 +9,11 @@ export default function Navbar() {
   const [gamesOpen, setGamesOpen] = useState(false);
 
   const links = [
-    { name: "ABOUT", href: "/" },
-    { name: "EVENTS", href: "/event-details" },
-    { name: "REGISTRATION", href: "/register" },
+    { name: "Home", href: "/" },
+    { name: "Events", href: "/event-details" },
+    { name: "Registration", href: "/register" },
   
-    { name: "CONTACT", href: "/support" },
+    { name: "Contact", href: "/support" },
   ];
 
   const gameLinks = [
@@ -69,7 +69,7 @@ export default function Navbar() {
                 type="button"
                 className="text-[11px] font-semibold tracking-[0.22em] text-slate-300 transition hover:text-white"
               >
-                GAMES
+                Games
               </button>
 
               <div
@@ -143,7 +143,7 @@ export default function Navbar() {
                 key={item.name}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="rounded-xl px-3 py-3 text-sm font-medium tracking-[0.18em] text-slate-200 transition hover:bg-white/5 hover:text-white"
+                className="rounded-xl px-3 py-3 text-sm font-medium  text-slate-200 transition hover:bg-white/5 hover:text-white"
               >
                 {item.name}
               </Link>

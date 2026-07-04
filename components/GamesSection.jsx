@@ -42,9 +42,9 @@ export default function GamesSection() {
     <section className="bg-[#050816] py-14">
       <div className="mx-auto max-w-7xl px-6">
         {/* Heading */}
-        <div className="mb-14 flex items-center justify-center gap-2">
-          <h2 className="text-2xl md:text-3xl font-black  text-white">
-            Our Games
+        <div className="mb-14 flex items-center justify-start gap-2">
+          <h2 className="text-3xl md:text-4xl font-black  text-white">
+            Featured Games
           </h2>
         </div>
 

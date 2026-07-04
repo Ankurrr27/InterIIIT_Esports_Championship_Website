@@ -4,9 +4,9 @@
 export default function EventIntro() {
   const organisers = [
     { name: "IIITians Network", role: "Founder", logo: "/logos/iiitians-network.png" },
-    { name: "Clutch IIITK", role: "Organising Partner BGMI", logo: "/logos/clutch.jpg" },
+    { name: "Clutch IIIT Kota", role: "Organising Partner BGMI", logo: "/logos/clutch.jpg" },
     { name: "Synergy IIIT Nagpur", role: "Organising Partner Valo", logo: "/logos/synergy.png" },
-    { name: "Sports Club Kalyani", role: "Community Partner FF", logo: "/logos/SportsClubKalyani.jpg" },
+    { name: "Sports Club IIIT Kalyani", role: "Community Partner FF", logo: "/logos/SportsClubKalyani.jpg" },
   ];
 
   return (
@@ -19,7 +19,7 @@ export default function EventIntro() {
 
             <h2 className="mb-8 text-3xl font-bold leading-tight lg:text-4xl">
               What is
-              <span className="text-red-500"> IEC ?</span>
+              <span className="text-white"> IEC ?</span>
             </h2>
 
             <div className="space-y-3 text-slate-300 leading-8">
@@ -60,7 +60,7 @@ export default function EventIntro() {
           </div>
 
           <div>
-            <h3 className="mb-6 text-3xl font-bold">Organising Partners</h3>
+            <h3 className="mb-6 text-3xl font-bold">Partners</h3>
 
             <div className="grid grid-cols-2 gap-5">
               {organisers.map((item) => (

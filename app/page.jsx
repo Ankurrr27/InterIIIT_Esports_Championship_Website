@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import EventSlider from "@/components/EventSlider";
 import EventIntro from "@/components/EventIntro";
 import Stats from "@/components/Stats/Stats";
-import GameSection from "@/components/GameSection";
+
 import DeveloperSection from "@/components/DeveloperSection";
 import Footer from "@/components/Footer";
 import GamesSection from "@/components/GamesSection";
@@ -27,7 +27,7 @@ export default function Home() {
       <GamesSection/>
       <EventIntro />
       <Stats />
-      <GameSection />
+  
       <DeveloperSection />
       <Footer />
     </main>

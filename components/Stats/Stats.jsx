@@ -5,29 +5,35 @@ function StatsSection() {
     { number: "500+", label: "Participants" },
     { number: "3", label: "Game Titles" },
     { number: "50+", label: "Teams" },
-    { number: "Rs 50K+", label: "Prize Pool" },
+    { number: "₹50K+", label: "Prize Pool" },
   ];
 
   return (
-    <section className="relative overflow-hidden bg-black py-16 text-white sm:py-20">
-      <div className="absolute left-1/2 top-0 h-[320px] w-[320px] -translate-x-1/2 rounded-full bg-red-600/10 blur-[120px]" />
+    <section className="relative overflow-hidden bg-black py-14 text-white">
+      {/* Background Glow */}
+      <div className="absolute left-1/2 top-0 h-[350px] w-[350px] -translate-x-1/2 rounded-full bg-red-600/10 blur-[140px]" />
+      <div className="absolute right-0 bottom-0 h-[250px] w-[250px] rounded-full bg-red-500/5 blur-[100px]" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-red-500 sm:text-xs">
-            IEC Championship
-          </p>
-          <h2 className="text-3xl font-semibold uppercase tracking-tight sm:text-4xl lg:text-5xl">
-            Our Impact
+      <div className="relative mx-auto max-w-7xl px-6">
+        <div className="text-left">
+          <h2 className="text-2xl font-black md:text-3xl">
+            Tournament by Numbers
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
-            A growing inter-college esports event built around competition, community, and clean execution.
+
+          <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-400">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut nemo
+            consequuntur laudantium deleniti dolorum tenetur vel totam dolore
+            animi aspernatur?
           </p>
         </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, index) => (
-            <StatCard key={index} number={stat.number} label={stat.label} />
+            <StatCard
+              key={index}
+              number={stat.number}
+              label={stat.label}
+            />
           ))}
         </div>
       </div>

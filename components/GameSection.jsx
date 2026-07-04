@@ -1,45 +1,63 @@
 import GameCard from "./GameCard";
 
+const tournaments = [
+  {
+    title: "Free Fire",
+    image: "/ff/FFCard.png",
+    description:
+      "Fast-paced squad battles built for quick decisions, clean rotations, and sharp execution.",
+    accent: "from-rose-500/20 to-transparent",
+    tag: "Squad Battle",
+  },
+  {
+    title: "Valorant",
+    image: "/valo/ValoCard.png",
+    description:
+      "Tactical team play, disciplined aim, and coordinated rounds from start to finish.",
+    accent: "from-cyan-500/20 to-transparent",
+    tag: "Tactical FPS",
+  },
+  {
+    title: "BGMI",
+    image: "/bgmi/BGMICard.png",
+    description:
+      "Battle royale matches where survival, positioning, and timing decide the winner.",
+    accent: "from-amber-500/20 to-transparent",
+    tag: "Battle Royale",
+  },
+];
+
 function GameSection() {
   return (
-    <section className="w-full py-24 bg-slate-950 text-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="relative overflow-hidden bg-slate-950 py-16 text-white sm:py-20 lg:py-24">
+      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent" />
+      <div className="absolute left-1/2 top-8 h-64 w-64 -translate-x-1/2 rounded-full bg-red-500/10 blur-3xl" />
 
-        {/* Heading */}
-        <div className="text-center">
-          <h2 className="text-5xl font-extrabold uppercase tracking-wider">
-            Featured tournaments
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-red-400 sm:text-xs">
+            Featured Tournaments
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
+            Game Titles
           </h2>
-
-          <div className="w-28 h-1 bg-red-500 rounded-full mx-auto mt-5"></div>
-
-          <p className="mt-6 text-gray-400 text-lg max-w-2xl mx-auto">
-            Discover the main esports titles and register your college team for the next match.
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
+            Register your college team for the main esports titles in the event.
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 mt-20">
-          <GameCard
-            image="/FFCard.png"
-            title="Free Fire"
-            description="Drop into fast-paced battles and fight your way to victory with your squad."
-          />
-
-          <GameCard
-            image="/ValoCard.png"
-            title="Valorant"
-            description="Outplay your opponents with teamwork, precision, and tactical gameplay."
-          />
-
-          <GameCard
-            image="/BGMICard.png"
-            title="BGMI"
-            description="Survive intense battle royale matches and dominate the competition."
-          />
-
+        <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {tournaments.map((game) => (
+            <GameCard
+              key={game.title}
+              title={game.title}
+              image={game.image}
+              description={game.description}
+              accent={game.accent}
+              tag={game.tag}
+            />
+          ))}
         </div>
-
       </div>
     </section>
   );

@@ -1,26 +1,26 @@
 export default function DeveloperCard({ image, name, role, quote }) {
   return (
-    <div className="group bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-3 hover:border-red-500 hover:shadow-[0_0_35px_rgba(239,68,68,0.35)]">
-      
+    <div className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04] transition duration-300 hover:border-red-500/40 hover:bg-white/[0.06]">
       <div className="overflow-hidden">
         <img
           src={image}
           alt={name}
-          className="w-full h-80 object-cover transition-transform duration-500 group-hover:scale-105"
+          className="h-64 w-full object-cover transition duration-500 group-hover:scale-[1.03] sm:h-72"
         />
       </div>
 
-      <div className="p-6 text-center">
-        <h3 className="text-2xl font-bold text-white">
-          {name}
-        </h3>
+      <div className="space-y-3 p-5 text-center sm:p-6">
+        <div>
+          <h3 className="text-xl font-semibold text-white">
+            {name}
+          </h3>
+          <p className="mt-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-red-400">
+            {role}
+          </p>
+        </div>
 
-        <p className="mt-2 text-red-500 font-semibold">
-          {role}
-        </p>
-
-        <p className="mt-5 text-gray-400 italic leading-7">
-          "{quote}"
+        <p className="text-sm leading-7 text-slate-400">
+          {quote}
         </p>
       </div>
     </div>

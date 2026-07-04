@@ -1,57 +1,78 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 
-export default function FAQ() {
-  const faqs = [
+const themes = {
+  amber: {
+    border: "border-amber-400/50",
+    label: "text-amber-300",
+    panel: "hover:bg-amber-400/[0.04]",
+    icon: "text-amber-300",
+  },
+  red: {
+    border: "border-red-500/50",
+    label: "text-red-300",
+    panel: "hover:bg-red-500/[0.04]",
+    icon: "text-red-300",
+  },
+  blue: {
+    border: "border-sky-400/50",
+    label: "text-sky-300",
+    panel: "hover:bg-sky-400/[0.04]",
+    icon: "text-sky-300",
+  },
+};
+
+export default function GameFAQs({ faqs = [], theme = "red" }) {
+  const colors = themes[theme] || themes.red;
+  const fallbackFaqs = [
     {
-      question: "Who can participate in the tournament?",
+      question: "Who can participate?",
       answer:
-        "The tournament is open to all eligible college students. Each participant must register before the deadline.",
+        "Registered students from eligible IIIT teams can participate after completing the team registration process.",
     },
     {
-      question: "Is there any registration fee?",
+      question: "Where will match updates be shared?",
       answer:
-        "No, participation is completely free. Simply register your team through the registration portal.",
+        "All match timings, lobby details, and important updates will be shared through official event channels.",
     },
     {
-      question: "Which games are included?",
+      question: "Can team members be changed later?",
       answer:
-        "The tournament features BGMI, Free Fire, and Valorant. Each game has its own format and schedule.",
+        "Roster changes are allowed only before verification closes and must be approved by the organizers.",
     },
   ];
 
+  const items = faqs.length ? faqs : fallbackFaqs;
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
     <section className="bg-black py-16 text-white sm:py-20">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl border-l border-white/20 pl-4">
-          <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-white/40">
-            FAQ
+        <div className={`max-w-2xl border-l pl-4 ${colors.border}`}>
+          <p className={`text-[10px] font-semibold uppercase tracking-[0.45em] ${colors.label}`}>
+            FAQs
           </p>
           <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
-            Frequently Asked Questions
+            Player Questions
           </h2>
-          <p className="mt-3 text-sm leading-7 text-white/55 sm:text-base">
-            Clear answers for teams and participants before the event begins.
-          </p>
         </div>
 
         <div className="mt-10 divide-y divide-white/10 border border-white/10 bg-white/[0.03]">
-          {faqs.map((faq, index) => {
+          {items.map((faq, index) => {
             const open = openIndex === index;
 
             return (
-              <div key={faq.question} className="px-5 py-4 sm:px-6">
+              <div key={faq.question} className={`px-5 py-4 transition sm:px-6 ${colors.panel}`}>
                 <button
+                  type="button"
                   onClick={() => setOpenIndex(open ? -1 : index)}
                   className="flex w-full items-center justify-between gap-4 text-left"
                 >
                   <span className="text-sm font-medium leading-6 text-white sm:text-base">
                     {faq.question}
                   </span>
-                  <span className="text-lg text-white/45">
+                  <span className={`text-lg ${open ? colors.icon : "text-white/45"}`}>
                     {open ? "-" : "+"}
                   </span>
                 </button>

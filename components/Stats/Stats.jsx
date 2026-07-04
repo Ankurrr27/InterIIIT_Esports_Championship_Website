@@ -5,41 +5,29 @@ function StatsSection() {
     { number: "500+", label: "Participants" },
     { number: "3", label: "Game Titles" },
     { number: "50+", label: "Teams" },
-    { number: "₹50K+", label: "Prize Pool" },
+    { number: "Rs 50K+", label: "Prize Pool" },
   ];
 
   return (
-    <section className="relative overflow-hidden bg-black py-24 text-white">
-      {/* Background Glow */}
-      <div className="absolute top-0 left-1/2 h-[450px] w-[450px] -translate-x-1/2 rounded-full bg-red-600/10 blur-[140px]" />
+    <section className="relative overflow-hidden bg-black py-16 text-white sm:py-20">
+      <div className="absolute left-1/2 top-0 h-[320px] w-[320px] -translate-x-1/2 rounded-full bg-red-600/10 blur-[120px]" />
 
-      <div className="relative mx-auto max-w-7xl px-6">
-        {/* Heading */}
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.35em] text-red-500">
+          <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-red-500 sm:text-xs">
             IEC Championship
           </p>
-
-          <h2 className="text-4xl font-black uppercase md:text-6xl">
-            OUR IMPACT
+          <h2 className="text-3xl font-semibold uppercase tracking-tight sm:text-4xl lg:text-5xl">
+            Our Impact
           </h2>
-
-          <div className="mx-auto mt-5 h-1 w-24 rounded-full bg-red-500"></div>
-
-          <p className="mx-auto mt-7 max-w-2xl text-lg text-gray-400">
-            Building one of India's fastest-growing inter-college esports
-            communities through competitive gaming and unforgettable events.
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
+            A growing inter-college esports event built around competition, community, and clean execution.
           </p>
         </div>
 
-        {/* Stats */}
-        <div className="mt-20 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, index) => (
-            <StatCard
-              key={index}
-              number={stat.number}
-              label={stat.label}
-            />
+            <StatCard key={index} number={stat.number} label={stat.label} />
           ))}
         </div>
       </div>

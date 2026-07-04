@@ -2,49 +2,42 @@ import DeveloperCard from "./DeveloperCard";
 
 function DeveloperSection() {
   return (
-    <section className="w-full py-24 bg-black text-white">
-      <div className="max-w-7xl mx-auto px-6">
-
-        {/* Heading */}
-        <div className="text-center mb-20">
-          <h2 className="text-5xl font-extrabold uppercase tracking-wider">
-            Meet the Developers
+    <section className="w-full bg-black py-16 text-white sm:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-red-500 sm:text-xs">
+            Team
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold uppercase tracking-tight sm:text-4xl lg:text-5xl">
+            Developers
           </h2>
-
-          <div className="w-28 h-1 bg-red-500 rounded-full mx-auto mt-5"></div>
-
-          <p className="mt-6 text-lg text-gray-400 max-w-2xl mx-auto">
-            The team behind the website, dedicated to delivering a seamless
-            esports experience.
+          <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
+            The people behind the website, focused on a clean and reliable event experience.
           </p>
         </div>
 
-        {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10">
-
+        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           <DeveloperCard
             image="/developers/ankur.jpg"
             name="Ankur"
             role="Frontend Developer"
-            quote="Great software is built by solving real problems, one feature at a time."
+            quote="Great software solves the real problem with the fewest moving parts."
           />
 
           <DeveloperCard
             image="/developers/advik.jpg"
             name="Advik"
             role="Frontend Developer"
-            quote="Creating intuitive interfaces that make every interaction simple and enjoyable."
+            quote="Clear interfaces make every interaction feel faster and easier."
           />
 
           <DeveloperCard
             image="/developers/rahul.jpg"
             name="Rahul"
             role="Backend Developer"
-            quote="Clean code, scalable architecture, and continuous learning drive every project."
+            quote="Simple, scalable systems are the best foundation for a growing product."
           />
-
         </div>
-
       </div>
     </section>
   );

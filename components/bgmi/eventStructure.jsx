@@ -1,102 +1,111 @@
-import React from "react";
+﻿import React from "react";
 
-export default function EventStructure() {
+const themes = {
+  amber: {
+    border: "border-amber-400/50",
+    label: "text-amber-300",
+    card: "hover:border-amber-400/40 hover:bg-amber-400/[0.05]",
+    badge: "border-amber-400/30 bg-amber-400/10 text-amber-200",
+    number: "text-amber-300",
+  },
+  red: {
+    border: "border-red-500/50",
+    label: "text-red-300",
+    card: "hover:border-red-500/40 hover:bg-red-500/[0.05]",
+    badge: "border-red-500/30 bg-red-500/10 text-red-200",
+    number: "text-red-300",
+  },
+  blue: {
+    border: "border-sky-400/50",
+    label: "text-sky-300",
+    card: "hover:border-sky-400/40 hover:bg-sky-400/[0.05]",
+    badge: "border-sky-400/30 bg-sky-400/10 text-sky-200",
+    number: "text-sky-300",
+  },
+};
+
+export default function EventStructure({ theme = "red" }) {
+  const colors = themes[theme] || themes.red;
   const stages = [
-    { 
-      title: "Intra-IIIT", 
-      desc: "Internal college qualifiers", 
+    {
+      title: "Intra-IIIT",
+      desc: "Internal college qualifiers",
       qualify: "Top 2 Teams",
-      details: "The initial battleground where all registered squads from the campus compete in a single-elimination or round-robin format. Only the highest-performing 2 teams secure their slot to represent the institute on the grander stage."
+      details:
+        "The first stage where registered squads compete within their institute for two qualification spots.",
     },
-    { 
-      title: "Group Stage", 
-      desc: "3–4 Groups • 4–5 Matches", 
+    {
+      title: "Group Stage",
+      desc: "3-4 Groups | 4-5 Matches",
       qualify: "Top 2 / Group",
-      details: "Qualified teams are split evenly into 3 to 4 competitive groups. Over a span of 4 to 5 intense matches per group, teams accumulate placement and finish points. The top 2 structural leaders from each group advance forward."
+      details:
+        "Qualified teams are split into groups and accumulate points across several round-based matches.",
     },
-    { 
-      title: "Grand Finals", 
-      desc: "6–8 Teams • 3 Matches", 
+    {
+      title: "Grand Finals",
+      desc: "6-8 Teams | 3 Matches",
       qualify: "Highest Points",
-      details: "The ultimate showdown consisting of the elite 6 to 8 surviving teams. Facing off across 3 high-stakes matches, strategies are tested to the limit. Standing order is determined entirely by overall accumulated points."
+      details:
+        "The surviving teams battle through the final matches, with standings decided by total points.",
     },
-    { 
-      title: "Champion", 
-      desc: "IEC BGMI 2026", 
-      qualify: "🏆 Winner",
-      details: "The squad that secures the maximum aggregate score at the end of the Grand Finals lifecycle is crowned the undisputed champion of IEC BGMI 2026, taking home the lion's share of glory and rewards."
+    {
+      title: "Champion",
+      desc: "IEC Championship 2026",
+      qualify: "Winner",
+      details:
+        "The team with the strongest aggregate score is crowned the champion of the event.",
     },
   ];
 
   return (
-    <section className="bg-black py-12 text-white">
-      <div className="mx-auto max-w-7xl px-4">
-        
-        {/* Compact Header */}
-        <div className="mb-8 border-l-2 border-red-600 pl-3">
-          <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-500">Format Overview</p>
-          <h2 className="text-xl font-black uppercase tracking-tight sm:text-2xl">Tournament Structure</h2>
+    <section className="bg-black py-16 text-white sm:py-20">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className={`max-w-2xl border-l pl-4 ${colors.border}`}>
+          <p className={`text-[10px] font-semibold uppercase tracking-[0.45em] ${colors.label}`}>
+            Format Overview
+          </p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
+            Tournament Structure
+          </h2>
+          <p className="mt-3 text-sm leading-7 text-white/55 sm:text-base">
+            A simple progression from qualifiers to finals, styled to match each game identity.
+          </p>
         </div>
 
-        {/* Adaptive Pipeline: Vertical on Mobile, Horizontal on Desktop */}
-        <div className="relative flex flex-col gap-4 lg:flex-row lg:items-stretch lg:gap-2">
+        <div className="mt-10 grid gap-4 lg:grid-cols-4">
           {stages.map((stage, i) => (
-            <div key={stage.title} className="relative flex flex-1 flex-col sm:flex-row lg:flex-col group">
-              
-              {/* The Card */}
-              <div className="relative w-full rounded-lg border border-white/5 bg-gradient-to-b from-white/[0.04] to-transparent p-4 transition-all duration-300 hover:border-red-500/30 hover:from-red-950/10">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-xs font-black uppercase tracking-wider text-gray-200 group-hover:text-red-400 transition-colors">
+            <article
+              key={stage.title}
+              className={`border border-white/10 bg-white/[0.03] p-5 transition duration-300 ${colors.card}`}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/35">
+                    Step {i + 1}
+                  </p>
+                  <h3 className="mt-2 text-base font-semibold uppercase tracking-wide text-white">
                     {stage.title}
                   </h3>
-                  <span className="font-mono text-[10px] font-bold text-white/10 group-hover:text-red-500/30">
-                    0{i + 1}
-                  </span>
                 </div>
-
-                <p className="mt-1 text-xs text-gray-400 sm:max-w-md lg:max-w-none">
-                  {stage.desc}
-                </p>
-
-                <div className="mt-3 inline-flex items-center rounded bg-red-950/40 border border-red-500/20 px-2 py-0.5 text-[10px] font-bold tracking-wide text-red-400 uppercase">
-                  {stage.qualify}
-                </div>
+                <span className={`text-[11px] font-semibold uppercase tracking-[0.24em] ${colors.number}`}>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
               </div>
 
-              {/* Responsive Connecting Line */}
-              {i !== stages.length - 1 && (
-                <>
-                  {/* Vertical Line on Mobile */}
-                  <div className="absolute left-6 -bottom-4 h-4 w-[2px] bg-gradient-to-b from-red-500/20 to-transparent lg:hidden" />
-                  
-                  {/* Horizontal Bar on Desktop */}
-                  <div className="hidden absolute top-1/2 -right-1 h-[1px] w-2 bg-white/10 group-hover:bg-red-500/30 lg:block z-10" />
-                </>
-              )}
+              <p className="mt-3 text-sm leading-7 text-white/60">
+                {stage.desc}
+              </p>
 
-            </div>
-          ))}
-        </div>
-
-        {/* Structural Text Descriptions */}
-        <div className="mt-12 grid grid-cols-1 gap-6 border-t border-white/5 pt-8 md:grid-cols-2">
-          {stages.map((stage, i) => (
-            <div key={`desc-${stage.title}`} className="flex gap-3">
-              <span className="font-mono text-xs font-bold text-red-500/60 mt-0.5">
-                [0{i + 1}]
-              </span>
-              <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-gray-300">
-                  {stage.title} Phase
-                </h4>
-                <p className="mt-1 text-xs leading-relaxed text-gray-400">
-                  {stage.details}
-                </p>
+              <div className={`mt-4 inline-flex border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] ${colors.badge}`}>
+                {stage.qualify}
               </div>
-            </div>
+
+              <p className="mt-4 border-t border-white/10 pt-4 text-sm leading-7 text-white/55">
+                {stage.details}
+              </p>
+            </article>
           ))}
         </div>
-
       </div>
     </section>
   );

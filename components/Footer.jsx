@@ -1,74 +1,67 @@
+import Link from "next/link";
+
 function Footer() {
   return (
-    <footer className="bg-[#111827] text-white">
+    <footer className="border-t border-white/10 bg-slate-950 text-white">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8 lg:py-12">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+          <div className="space-y-4">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-red-400">
+              Inter IIIT Esports
+            </p>
+            <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
+              Compact. Competitive. Built for the event.
+            </h2>
+            <p className="max-w-md text-sm leading-7 text-slate-400">
+              A focused esports platform for registrations, event details, and team coordination across IIITs.
+            </p>
+          </div>
 
-      {/* Top Summary */}
-      <div className="max-w-7xl mx-auto px-6 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-8 rounded-3xl border border-white/10 bg-[#1B2435]/80 p-6">
           <div>
-            <p className="uppercase tracking-[0.35em] text-xs text-red-400 mb-3">
-              INTERIIIIT Esports
-            </p>
-            <h2 className="text-3xl font-bold text-white">31+ Participating Colleges</h2>
-            <p className="mt-3 text-sm text-slate-300 max-w-xl">
-              Bringing together college gamers for competitive tournaments across major titles.
-            </p>
+            <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-200">
+              Explore
+            </h3>
+            <ul className="mt-4 space-y-3 text-sm text-slate-400">
+              <li>
+                <Link href="/" className="transition hover:text-white">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link href="/event-details" className="transition hover:text-white">
+                  Events
+                </Link>
+              </li>
+              <li>
+                <Link href="/register" className="transition hover:text-white">
+                  Register
+                </Link>
+              </li>
+              <li>
+                <Link href="/support" className="transition hover:text-white">
+                  Support
+                </Link>
+              </li>
+            </ul>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            <span className="rounded-full border border-gray-700 bg-white/5 px-3 py-2 text-center text-sm text-gray-300">
-              🔥 Free Fire
-            </span>
-            <span className="rounded-full border border-gray-700 bg-white/5 px-3 py-2 text-center text-sm text-gray-300">
-              🎯 BGMI
-            </span>
-            <span className="rounded-full border border-gray-700 bg-white/5 px-3 py-2 text-center text-sm text-gray-300">
-              💥 Valorant
-            </span>
-            <span className="rounded-full border border-gray-700 bg-white/5 px-3 py-2 text-center text-sm text-gray-300">
-              🏆 InterIIIT
-            </span>
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-200">
+              Games
+            </h3>
+            <ul className="mt-4 space-y-3 text-sm text-slate-400">
+              <li>Free Fire</li>
+              <li>BGMI</li>
+              <li>Valorant</li>
+            </ul>
           </div>
+        </div>
+
+        <div className="mt-10 flex flex-col gap-3 border-t border-white/10 pt-6 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
+          <p>Copyright 2026 Inter IIIT. All rights reserved.</p>
+          <p>Built by Ankur, Advik, and Rahul.</p>
         </div>
       </div>
-
-      {/* Main Footer */}
-
-      <div className="max-w-7xl mx-auto px-6 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 text-sm text-slate-300">
-          <div>
-            <h3 className="text-lg font-semibold text-white mb-4">About</h3>
-            <p className="leading-7">
-              India's premier InterIIIT esports platform connecting colleges through competitive gaming.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 gap-6">
-            <div>
-              <h3 className="text-lg font-semibold text-white mb-4">Site</h3>
-              <ul className="space-y-2 text-slate-400">
-                <li className="hover:text-white">Home</li>
-                <li className="hover:text-white">Events</li>
-                <li className="hover:text-white">Register</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-lg font-semibold text-white mb-4">Games</h3>
-              <ul className="space-y-2 text-slate-400">
-                <li className="hover:text-white">Free Fire</li>
-                <li className="hover:text-white">BGMI</li>
-                <li className="hover:text-white">Valorant</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-8 border-t border-white/10 pt-6 text-sm text-slate-500 flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
-          <p>© 2026 InterIIIIT. All Rights Reserved.</p>
-          <p>Built with ❤️ by Ankur • Advik • Rahul</p>
-        </div>
-      </div>
-
     </footer>
   );
 }

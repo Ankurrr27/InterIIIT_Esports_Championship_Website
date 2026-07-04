@@ -1,54 +1,33 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-import CreateTeamCard from "./CreateTeamcard";
+import CreateTeamCard from "./CreateTeamCard";
 import JoinTeamCard from "./JoinTeamCard";
 import CurrentTeamCard from "./CurrentTeamCard";
 import CreateTeamModal from "./CreateTeamModal";
-
-import { createTeam } from "@/lib/api/team";
+import JoinTeamModal from "./JoinTeamModal";
 
 export default function TeamActions() {
   const [openModal, setOpenModal] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [joinModal, setJoinModal] = useState(false);
 
-  const handleCreateClick = () => {
+  const router = useRouter();
+
+  // Create Team
+  const handleCreateTeam = () => {
     setOpenModal(true);
   };
 
-  const handleCreateTeam = async (teamName) => {
-  try {
-    setLoading(true);
-
-    const team = await createTeam(teamName);
-
-    // Update local user for testing
-    const user = JSON.parse(localStorage.getItem("user"));
-
-    user.teamId = team._id;
-    user.role = "LEADER";
-
-    localStorage.setItem("user", JSON.stringify(user));
-
-    console.log(team);
-
-    alert("Team created successfully!");
-
-    setOpenModal(false);
-  } catch (err) {
-    alert(err.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  // Join Team
   const handleJoinTeam = () => {
-    console.log("Join Team");
+    setJoinModal(true);
   };
 
+  // Current Team
   const handleCurrentTeam = () => {
-    console.log("Current Team");
+    router.push("/team/current");
   };
 
   return (
@@ -56,19 +35,21 @@ export default function TeamActions() {
       <section className="w-full py-20 bg-[#121212]">
         <div className="max-w-7xl mx-auto px-6">
 
+          {/* Heading */}
           <div className="mb-12 text-center">
             <h1 className="text-4xl font-bold text-white">
               Team Management
             </h1>
 
-            <p className="mt-4 text-gray-400 max-w-2xl mx-auto">
+            <p className="mt-4 max-w-2xl mx-auto text-gray-400">
               Create your own squad, join an existing one, or manage your current
               team from one place.
             </p>
           </div>
 
+          {/* Cards */}
           <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-            <CreateTeamCard onClick={handleCreateClick} />
+            <CreateTeamCard onClick={handleCreateTeam} />
             <JoinTeamCard onClick={handleJoinTeam} />
             <CurrentTeamCard onClick={handleCurrentTeam} />
           </div>
@@ -76,12 +57,19 @@ export default function TeamActions() {
         </div>
       </section>
 
-      <CreateTeamModal
-        open={openModal}
-        onClose={() => setOpenModal(false)}
-        onCreate={handleCreateTeam}
-        loading={loading}
-      />
+      {/* Create Team Modal */}
+      {openModal && (
+        <CreateTeamModal
+          onClose={() => setOpenModal(false)}
+        />
+      )}
+
+      {/* Join Team Modal */}
+      {joinModal && (
+        <JoinTeamModal
+          onClose={() => setJoinModal(false)}
+        />
+      )}
     </>
   );
 }

@@ -32,10 +32,10 @@ export default function EventSlider({
   if (!slides.length) return null;
 
   return (
-    <section className="bg-slate-950 text-white">
+    <section className="bg-black text-white">
       {/* Banner */}
       <div className="relative overflow-hidden">
-        <section className="relative bg-slate-950 overflow-hidden">
+        <section className="relative bg-black overflow-hidden">
           {/* Changing Banner */}
           <img
             src={slides[active].image}
@@ -44,7 +44,7 @@ export default function EventSlider({
           />
 
           {/* Dark Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-100/10 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-black/40 to-transparent" />
 
           {/* Content */}
           <div className="relative mx-auto max-w-7xl min-h-[650px] flex items-center px-6">
@@ -96,7 +96,7 @@ export default function EventSlider({
           </div>
         </section>
 
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-200/10 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
       </div>
     </section>
   );

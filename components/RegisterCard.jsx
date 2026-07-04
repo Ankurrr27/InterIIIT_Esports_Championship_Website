@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import BorderGlow from "./BorderGlow";
 import { Mail, Lock, User, GraduationCap, Gamepad2 } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 
 export default function RegisterCard() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -58,6 +61,11 @@ export default function RegisterCard() {
         password: "",
         game: "",
       });
+
+      // Redirect to login after a short delay
+      setTimeout(() => {
+        router.push("/login");
+      }, 1000);
     } catch (err) {
       setSuccess(false);
       setMessage(err.message);

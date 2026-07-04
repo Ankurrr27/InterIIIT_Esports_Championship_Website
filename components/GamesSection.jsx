@@ -39,11 +39,12 @@ const games = [
 
 export default function GamesSection() {
   return (
-    <section className="bg-[#050816] py-14">
+    <section className="bg-black py-14">
       <div className="mx-auto max-w-7xl px-6">
         {/* Heading */}
-        <div className="mb-14 flex items-center justify-start gap-2">
-          <h2 className="text-3xl md:text-4xl font-black  text-white">
+        <div className="mb-14 flex items-start flex-col gap-1">
+          <p className="text-xs tracking-[0.25em] uppercase text-slate-400 font-medium">Our Games</p>
+          <h2 className="text-5xl md:text-6xl font-[family-name:var(--font-display)] tracking-wide text-white leading-none">
             Featured Games
           </h2>
         </div>

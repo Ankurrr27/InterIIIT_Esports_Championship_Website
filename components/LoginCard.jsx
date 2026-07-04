@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import BorderGlow from "./BorderGlow";
 import { GraduationCap, Lock } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 
 export default function LoginCard() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     collegeEmail: "",
     password: "",
@@ -58,8 +61,10 @@ export default function LoginCard() {
         password: "",
       });
 
-      // Later we can redirect to dashboard
-      // router.push("/dashboard");
+      // Redirect to team dashboard
+      setTimeout(() => {
+        router.push("/team");
+      }, 1000);
 
     } catch (err) {
       setSuccess(false);

@@ -6,6 +6,8 @@ import Stats from "@/components/Stats/Stats";
 import DeveloperSection from "@/components/DeveloperSection";
 import Footer from "@/components/Footer";
 import GamesSection from "@/components/GamesSection";
+import PrizePoolSection from "@/components/PrizePoolSection";
+import FAQSection from "@/components/FAQSection";
 
 const homeSlides = [
   { image: "/ff/11.png" },
@@ -26,8 +28,8 @@ export default function Home() {
       />
       <GamesSection/>
       <EventIntro />
-      <Stats />
-  
+      
+      <FAQSection />
       <DeveloperSection />
       <Footer />
     </main>

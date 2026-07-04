@@ -2,17 +2,19 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import BorderGlow from "./BorderGlow";
-import { Mail, Lock, User, GraduationCap } from "lucide-react";
+
+import { GraduationCap, Lock } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 
-export default function RegisterCard() {
+export default function LoginCard() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
     collegeEmail: "",
     password: "",
-    game: "BGMI",
   });
 
   const [loading, setLoading] = useState(false);
@@ -25,17 +27,16 @@ export default function RegisterCard() {
     }));
   };
 
-  const handleRegister = async () => {
+  const handleLogin = async () => {
     console.clear();
 
-    console.log("========== REGISTER ==========");
-    console.log("Sending Data:");
+    console.log("========== LOGIN ==========");
     console.log(formData);
 
     setLoading(true);
 
     try {
-      const res = await fetch("/api/auth/register", {
+      const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -43,17 +44,26 @@ export default function RegisterCard() {
         body: JSON.stringify(formData),
       });
 
-      console.log("Response Status:", res.status);
-
       const data = await res.json();
 
-      console.log("Backend Response:");
       console.log(data);
 
       setResponse(data);
+
+      if (data.success) {
+        // TEMPORARY: Store token & user for Team Backend Testing
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+
+        router.push("/");
+      }
     } catch (err) {
-      console.error("Registration Error:", err);
-      setResponse({ error: err.message });
+      console.error(err);
+
+      setResponse({
+        success: false,
+        message: err.message,
+      });
     } finally {
       setLoading(false);
     }
@@ -72,51 +82,15 @@ export default function RegisterCard() {
       colors={["#c084fc", "#f472b6", "#38bdf8"]}
     >
       <div className="w-[420px] px-8 py-10">
-
         <h1 className="text-3xl font-bold text-white text-center">
-          Create Account
+          Welcome Back
         </h1>
 
         <p className="mt-2 text-center text-gray-400">
-          Backend Integration Test
+          Sign in to continue
         </p>
 
         <div className="mt-8 space-y-5">
-
-          {/* Name */}
-          <div className="relative">
-            <User
-              size={20}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-            />
-
-            <input
-              type="text"
-              name="name"
-              placeholder="Full Name"
-              value={formData.name}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-zinc-700 bg-[#111111] py-3 pl-12 pr-4 text-white placeholder:text-gray-500 outline-none focus:border-red-500"
-            />
-          </div>
-
-          {/* Personal Email */}
-          <div className="relative">
-            <Mail
-              size={20}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-            />
-
-            <input
-              type="email"
-              name="email"
-              placeholder="Personal Email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full rounded-xl border border-zinc-700 bg-[#111111] py-3 pl-12 pr-4 text-white placeholder:text-gray-500 outline-none focus:border-red-500"
-            />
-          </div>
-
           {/* College Email */}
           <div className="relative">
             <GraduationCap
@@ -151,24 +125,12 @@ export default function RegisterCard() {
             />
           </div>
 
-          {/* Game */}
-          <select
-            name="game"
-            value={formData.game}
-            onChange={handleChange}
-            className="w-full rounded-xl border border-zinc-700 bg-[#111111] py-3 px-4 text-white outline-none focus:border-red-500"
-          >
-            <option value="BGMI">BGMI</option>
-            <option value="VALORANT">VALORANT</option>
-            <option value="FREEFIRE">FREE FIRE</option>
-          </select>
-
           <button
-            onClick={handleRegister}
+            onClick={handleLogin}
             disabled={loading}
             className="w-full rounded-xl bg-red-600 py-3 font-semibold text-white transition hover:bg-red-700 disabled:opacity-50"
           >
-            {loading ? "Registering..." : "Register"}
+            {loading ? "Signing In..." : "Sign In"}
           </button>
 
           <div className="flex items-center gap-3">
@@ -182,7 +144,6 @@ export default function RegisterCard() {
             Continue with Google
           </button>
 
-          {/* Temporary Backend Response */}
           {response && (
             <pre className="rounded-lg bg-zinc-900 p-3 text-xs text-green-400 overflow-auto">
               {JSON.stringify(response, null, 2)}
@@ -191,12 +152,12 @@ export default function RegisterCard() {
         </div>
 
         <p className="mt-8 text-center text-sm text-gray-400">
-          Already have an account?{" "}
+          Don't have an account?{" "}
           <Link
-            href="/login"
+            href="/register"
             className="font-semibold text-red-500 hover:text-red-400"
           >
-            Sign In
+            Register
           </Link>
         </p>
       </div>

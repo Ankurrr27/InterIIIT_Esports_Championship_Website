@@ -5,7 +5,6 @@ import GameOrganizers from "@/components/GameOrganisers";
 import GameRules from "@/components/GameRules";
 import GameFAQs from "@/components/GameFAQs";
 import GameLeaderboard from "@/components/GameLeaderboard";
-import GameOverview from "@/components/GameOverview";
 
 const valoSlides = [
   { image: "/valo/1.png" },
@@ -84,7 +83,6 @@ export default function ValorantPage() {
         }}
       />
 
-      <GameOverview game="Valorant" theme="red" stats={overviewStats} prize={prizeSplit} schedule={eventFlow} />
       <GameOrganizers organizers={organizers} theme="red" />
       <GameRules title="Valorant Rules" rules={rules} theme="red" />
       <EventStructure theme="red" />

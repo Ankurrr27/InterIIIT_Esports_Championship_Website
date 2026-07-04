@@ -5,7 +5,6 @@ import GameOrganizers from "@/components/GameOrganisers";
 import GameRules from "@/components/GameRules";
 import GameFAQs from "@/components/GameFAQs";
 import GameLeaderboard from "@/components/GameLeaderboard";
-import GameOverview from "@/components/GameOverview";
 
 const bgmiSlides = [
   { image: "/bgmi/1.png" },
@@ -86,7 +85,7 @@ export default function BGMIPage() {
         }}
       />
 
-      <GameOverview game="BGMI" theme="amber" stats={overviewStats} prize={prizeSplit} schedule={eventFlow} />
+     
       <GameOrganizers organizers={organizers} theme="amber" />
       <GameRules title="BGMI Rules" rules={rules} theme="amber" />
       <EventStructure theme="amber" />

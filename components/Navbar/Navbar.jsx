@@ -12,7 +12,7 @@ export default function Navbar() {
     { name: "Home", href: "/" },
     { name: "Events", href: "/event-details" },
     { name: "Registration", href: "/register" },
-  
+
     { name: "Contact", href: "/support" },
   ];
 
@@ -31,7 +31,7 @@ export default function Navbar() {
             alt="IIITians Network"
             className="h-9 w-auto opacity-95"
           />
-            <h1 className="opacity-50">|</h1>
+          <h1 className="opacity-50">|</h1>
           <img
             src="/logos/IEC LOGO Black.png"
             alt="IEC"
@@ -73,11 +73,10 @@ export default function Navbar() {
               </button>
 
               <div
-                className={`absolute left-1/2 top-full mt-4 w-56 -translate-x-1/2 overflow-hidden border border-white/10 bg-slate-950/95 shadow-[0_18px_60px_rgba(0,0,0,0.45)] transition-all duration-200 ${
-                  gamesOpen
+                className={`absolute left-1/2 top-full mt-4 w-56 -translate-x-1/2 overflow-hidden border border-white/10 bg-slate-950/95 shadow-[0_18px_60px_rgba(0,0,0,0.45)] transition-all duration-200 ${gamesOpen
                     ? "pointer-events-auto translate-y-0 opacity-100"
                     : "pointer-events-none -translate-y-2 opacity-0"
-                }`}
+                  }`}
               >
                 <div className="p-2">
                   {gameLinks.map((item) => (
@@ -114,7 +113,7 @@ export default function Navbar() {
             </button>
             <Link
               href="/register"
-              className=" px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-red-200 transition  hover:text-white"
+              className="px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-red-200 transition hover:text-white"
             >
               Register
             </Link>
@@ -143,7 +142,7 @@ export default function Navbar() {
                 key={item.name}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="rounded-xl px-3 py-3 text-sm font-medium  text-slate-200 transition hover:bg-white/5 hover:text-white"
+                className="rounded-xl px-3 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/5 hover:text-white"
               >
                 {item.name}
               </Link>

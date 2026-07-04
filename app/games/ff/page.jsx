@@ -5,7 +5,6 @@ import GameOrganizers from "@/components/GameOrganisers";
 import GameRules from "@/components/GameRules";
 import GameFAQs from "@/components/GameFAQs";
 import GameLeaderboard from "@/components/GameLeaderboard";
-import GameOverview from "@/components/GameOverview";
 
 const ffSlides = [
   { image: "/ff/1.png" },
@@ -84,7 +83,6 @@ export default function FFPage() {
         }}
       />
 
-      <GameOverview game="Free Fire" theme="blue" stats={overviewStats} prize={prizeSplit} schedule={eventFlow} />
       <GameOrganizers organizers={organizers} theme="blue" />
       <GameRules title="Free Fire Rules" rules={rules} theme="blue" />
       <EventStructure theme="blue" />

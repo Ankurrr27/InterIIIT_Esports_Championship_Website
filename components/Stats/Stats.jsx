@@ -1,29 +1,32 @@
 import StatCard from "./StatCard";
 
 function StatsSection() {
+  const stats = [
+    { number: "500+", label: "Participants" },
+    { number: "3", label: "Game Titles" },
+    { number: "50+", label: "Teams" },
+    { number: "Rs 50K+", label: "Prize Pool" },
+  ];
+
   return (
-    <section className="w-full py-24 bg-black text-white">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Heading */}
-        <div className="text-center">
-          <h2 className="text-5xl font-extrabold uppercase tracking-wider">
-            Our Impact
-          </h2>
-
-          <div className="w-28 h-1 bg-red-500 rounded-full mx-auto mt-5"></div>
-
-          <p className="mt-6 text-gray-400 text-lg max-w-2xl mx-auto">
-            Numbers that showcase the scale of our esports community and
-            competitive tournaments.
+    <section className="bg-black py-12 text-white lg:py-14">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-[0.28em] text-slate-400">Scale</p>
+            <h2 className="mt-2 text-4xl font-[family-name:var(--font-display)] leading-none tracking-wide text-white sm:text-5xl">
+              Tournament by Numbers
+            </h2>
+          </div>
+          <p className="max-w-2xl text-sm leading-7 text-slate-400 sm:text-base lg:ml-auto">
+            A fast, college-only esports league with multiple titles, verified squads, and a clean road from qualifiers to finals.
           </p>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-20">
-          <StatCard number="500+" label="Participants" />
-          <StatCard number="3" label="Game Titles" />
-          <StatCard number="50+" label="Teams" />
-          <StatCard number="₹50K+" label="Prize Pool" />
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((stat, index) => (
+            <StatCard key={index} number={stat.number} label={stat.label} />
+          ))}
         </div>
       </div>
     </section>

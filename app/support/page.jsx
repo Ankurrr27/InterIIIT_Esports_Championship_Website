@@ -12,14 +12,16 @@ import EmergencyHelp from "./components/EmergencyHelp";
 
 export default function SupportPage() {
   return (
-    <StarsBackground className="min-h-screen w-full">
-      <Hero />
-      <SupportCategories />
-      <ContactForm />
-      <ContactCards />
-      <EmergencyHelp />
-
-      {/* <Footer /> */}
-    </StarsBackground>
+    <main className="min-h-screen relative overflow-hidden bg-black">
+      <StarsBackground className="absolute inset-0 z-0 h-full w-full" />
+      <div className="relative z-10 h-full w-full">
+        <Hero />
+        <SupportCategories />
+        <ContactForm />
+        <ContactCards />
+        <EmergencyHelp />
+        {/* <Footer /> */}
+      </div>
+    </main>
   );
 }

@@ -1,10 +1,11 @@
-﻿import EventStructure from "@/components/bgmi/eventStructure";
+import EventStructure from "@/components/bgmi/eventStructure";
 import EventSlider from "@/components/EventSlider";
 import Navbar from "@/components/Navbar/Navbar";
 import GameOrganizers from "@/components/GameOrganisers";
 import GameRules from "@/components/GameRules";
 import GameFAQs from "@/components/GameFAQs";
 import GameLeaderboard from "@/components/GameLeaderboard";
+import GameMatchIntel from "@/components/GameMatchIntel";
 
 const ffSlides = [
   { image: "/ff/1.png" },
@@ -82,7 +83,14 @@ export default function FFPage() {
           href: "/games/ff/rulebook",
         }}
       />
-
+      <GameMatchIntel
+        title="Free Fire Match Intel"
+        description="Fast lobbies, clean roster checks, and placement-focused scoring for squad battles."
+        overviewStats={overviewStats}
+        prizeSplit={prizeSplit}
+        eventFlow={eventFlow}
+        theme="blue"
+      />
       <GameOrganizers organizers={organizers} theme="blue" />
       <GameRules title="Free Fire Rules" rules={rules} theme="blue" />
       <EventStructure theme="blue" />

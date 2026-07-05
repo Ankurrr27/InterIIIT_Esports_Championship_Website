@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X } from "lucide-react";
+import { X, ArrowRight, Shield } from "lucide-react";
 
 export default function CreateTeamModal({ onClose }) {
   const [teamName, setTeamName] = useState("");
@@ -55,46 +55,62 @@ export default function CreateTeamModal({ onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
-      <div className="w-[420px] rounded-2xl bg-[#111111] p-8 border border-zinc-700">
-
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-2xl font-bold text-white">
-            Create Team
-          </h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+      <div className="w-full max-w-[420px] rounded-3xl bg-black/80 backdrop-blur-xl border border-white/10 p-8 shadow-2xl animate-in fade-in zoom-in duration-200">
+        <div className="mb-8 flex items-start justify-between">
+          <div>
+            <h2 className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-orange-400">
+              Create Team
+            </h2>
+            <p className="mt-2 text-sm text-gray-400">
+              Give your squad a legendary name.
+            </p>
+          </div>
 
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white"
+            className="rounded-full bg-white/5 p-2 text-gray-400 transition-all hover:bg-white/10 hover:text-white"
           >
-            <X size={22} />
+            <X size={20} />
           </button>
         </div>
 
-        <input
-          type="text"
-          placeholder="Team Name"
-          value={teamName}
-          onChange={(e) => setTeamName(e.target.value)}
-          className="w-full rounded-xl border border-zinc-700 bg-[#1A1A1A] px-4 py-3 text-white outline-none focus:border-red-500"
-        />
+        <div className="space-y-4">
+          <div className="relative group">
+            <Shield
+              size={20}
+              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 transition-colors group-focus-within:text-red-500"
+            />
+            <input
+              type="text"
+              placeholder="Team Name"
+              value={teamName}
+              onChange={(e) => setTeamName(e.target.value)}
+              className="w-full rounded-xl border border-white/10 bg-white/5 py-3.5 pl-12 pr-4 text-white placeholder:text-gray-500 outline-none transition-all duration-300 focus:border-red-500 focus:bg-white/10 focus:ring-4 focus:ring-red-500/10"
+            />
+          </div>
 
-        {message && (
-          <p
-            className={`mt-4 text-center text-sm ${success ? "text-green-400" : "text-red-400"
+          {message && (
+            <div
+              className={`rounded-lg p-3 text-center text-sm font-medium backdrop-blur-sm ${
+                success 
+                  ? "bg-green-500/10 text-green-400 border border-green-500/20" 
+                  : "bg-red-500/10 text-red-400 border border-red-500/20"
               }`}
-          >
-            {message}
-          </p>
-        )}
+            >
+              {message}
+            </div>
+          )}
 
-        <button
-          onClick={handleCreateTeam}
-          disabled={loading}
-          className="mt-6 w-full rounded-xl bg-red-600 py-3 font-semibold text-white transition hover:bg-red-700 disabled:opacity-60"
-        >
-          {loading ? "Creating..." : "Create Team"}
-        </button>
+          <button
+            onClick={handleCreateTeam}
+            disabled={loading}
+            className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-red-500 py-3.5 font-semibold text-white shadow-lg shadow-red-500/25 transition-all duration-300 hover:scale-[1.02] hover:shadow-red-500/40 disabled:pointer-events-none disabled:opacity-60"
+          >
+            {loading ? "Creating..." : "Create Team"}
+            {!loading && <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />}
+          </button>
+        </div>
       </div>
     </div>
   );

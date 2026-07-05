@@ -61,7 +61,7 @@ export default function EventIntro() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-slate-950 py-12 lg:py-16 text-white">
+    <section className="relative overflow-hidden bg-black py-12 lg:py-16 text-white">
       {/* Subtle Background Glow */}
       <div className="absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-900/10 blur-[100px] pointer-events-none" />
 

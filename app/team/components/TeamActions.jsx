@@ -32,16 +32,16 @@ export default function TeamActions() {
 
   return (
     <>
-      <section className="w-full py-20 bg-[#121212]">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="w-full py-24 min-h-[calc(100vh-80px)] flex flex-col justify-center">
+        <div className="max-w-7xl mx-auto px-6 w-full">
 
           {/* Heading */}
-          <div className="mb-12 text-center">
-            <h1 className="text-4xl font-bold text-white">
+          <div className="mb-16 text-center">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-red-600 drop-shadow-sm">
               Team Management
             </h1>
 
-            <p className="mt-4 max-w-2xl mx-auto text-gray-400">
+            <p className="mt-6 max-w-2xl mx-auto text-base sm:text-lg text-gray-400 font-medium">
               Create your own squad, join an existing one, or manage your current
               team from one place.
             </p>

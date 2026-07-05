@@ -5,35 +5,27 @@ function StatsSection() {
     { number: "500+", label: "Participants" },
     { number: "3", label: "Game Titles" },
     { number: "50+", label: "Teams" },
-    { number: "₹50K+", label: "Prize Pool" },
+    { number: "Rs 50K+", label: "Prize Pool" },
   ];
 
   return (
-    <section className="relative overflow-hidden bg-black py-10 lg:py-12 text-white">
-      {/* Background Glow */}
-      <div className="absolute left-1/2 top-0 h-[250px] w-[250px] -translate-x-1/2 rounded-full bg-red-600/10 blur-[100px]" />
-      <div className="absolute right-0 bottom-0 h-[150px] w-[150px] rounded-full bg-red-500/5 blur-[80px]" />
-
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="text-left">
-          <h2 className="text-xl sm:text-2xl font-black md:text-3xl">
-            Tournament by Numbers
-          </h2>
-
-          <p className="mt-2 max-w-2xl text-xs sm:text-sm leading-relaxed text-slate-400">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut nemo
-            consequuntur laudantium deleniti dolorum tenetur vel totam dolore
-            animi aspernatur?
+    <section className="bg-black py-12 text-white lg:py-14">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
+          <div>
+            <p className="text-xs font-medium uppercase tracking-[0.28em] text-slate-400">Scale</p>
+            <h2 className="mt-2 text-4xl font-[family-name:var(--font-display)] leading-none tracking-wide text-white sm:text-5xl">
+              Tournament by Numbers
+            </h2>
+          </div>
+          <p className="max-w-2xl text-sm leading-7 text-slate-400 sm:text-base lg:ml-auto">
+            A fast, college-only esports league with multiple titles, verified squads, and a clean road from qualifiers to finals.
           </p>
         </div>
 
-        <div className="mt-8 grid gap-4 sm:gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, index) => (
-            <StatCard
-              key={index}
-              number={stat.number}
-              label={stat.label}
-            />
+            <StatCard key={index} number={stat.number} label={stat.label} />
           ))}
         </div>
       </div>

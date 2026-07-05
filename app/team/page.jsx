@@ -1,3 +1,4 @@
+import { StarsBackground } from "@/components/animate-ui/components/backgrounds/stars";
 import TeamActions from "./components/TeamActions";
 
 export const metadata = {
@@ -7,8 +8,11 @@ export const metadata = {
 
 export default function UserTeamPage() {
   return (
-    <main className="min-h-screen bg-[#121212]">
-      <TeamActions />
+    <main className="min-h-screen relative overflow-hidden">
+      <StarsBackground className="absolute inset-0 z-0 h-full w-full" />
+      <div className="relative z-10 h-full w-full">
+        <TeamActions />
+      </div>
     </main>
   );
 }

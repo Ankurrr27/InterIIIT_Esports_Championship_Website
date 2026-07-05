@@ -42,7 +42,7 @@ export default function FAQSection() {
   ];
 
   return (
-    <section className="relative py-12 lg:py-16 bg-slate-950">
+    <section className="relative py-12 lg:py-16 bg-black">
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-left mb-8">
           <p className="text-xs tracking-[0.25em] uppercase text-slate-400 font-medium mb-1">Help</p>

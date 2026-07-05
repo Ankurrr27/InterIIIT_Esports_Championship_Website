@@ -1,10 +1,11 @@
-﻿import EventStructure from "@/components/bgmi/eventStructure";
+import EventStructure from "@/components/bgmi/eventStructure";
 import EventSlider from "@/components/EventSlider";
 import Navbar from "@/components/Navbar/Navbar";
 import GameOrganizers from "@/components/GameOrganisers";
 import GameRules from "@/components/GameRules";
 import GameFAQs from "@/components/GameFAQs";
 import GameLeaderboard from "@/components/GameLeaderboard";
+import GameMatchIntel from "@/components/GameMatchIntel";
 
 const bgmiSlides = [
   { image: "/bgmi/1.png" },
@@ -84,8 +85,14 @@ export default function BGMIPage() {
           href: "/games/bgmi/rulebook",
         }}
       />
-
-     
+      <GameMatchIntel
+        title="BGMI Match Intel"
+        description="Squad verification, room assignments, and qualifier readiness for battle royale match days."
+        overviewStats={overviewStats}
+        prizeSplit={prizeSplit}
+        eventFlow={eventFlow}
+        theme="amber"
+      />
       <GameOrganizers organizers={organizers} theme="amber" />
       <GameRules title="BGMI Rules" rules={rules} theme="amber" />
       <EventStructure theme="amber" />

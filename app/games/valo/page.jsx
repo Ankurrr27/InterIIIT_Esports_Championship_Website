@@ -1,10 +1,11 @@
-﻿import EventStructure from "@/components/bgmi/eventStructure";
+import EventStructure from "@/components/bgmi/eventStructure";
 import EventSlider from "@/components/EventSlider";
 import Navbar from "@/components/Navbar/Navbar";
 import GameOrganizers from "@/components/GameOrganisers";
 import GameRules from "@/components/GameRules";
 import GameFAQs from "@/components/GameFAQs";
 import GameLeaderboard from "@/components/GameLeaderboard";
+import GameMatchIntel from "@/components/GameMatchIntel";
 
 const valoSlides = [
   { image: "/valo/1.png" },
@@ -82,7 +83,14 @@ export default function ValorantPage() {
           href: "/games/valo/rulebook",
         }}
       />
-
+      <GameMatchIntel
+        title="Valorant Match Intel"
+        description="Roster checks, map veto preparation, knockout flow, and best-of finals planning."
+        overviewStats={overviewStats}
+        prizeSplit={prizeSplit}
+        eventFlow={eventFlow}
+        theme="red"
+      />
       <GameOrganizers organizers={organizers} theme="red" />
       <GameRules title="Valorant Rules" rules={rules} theme="red" />
       <EventStructure theme="red" />

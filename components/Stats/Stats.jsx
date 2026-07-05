@@ -2,7 +2,7 @@ import StatCard from "./StatCard";
 
 function StatsSection() {
   const stats = [
-    { number: "500+", label: "Participants" },
+    { number: "3", label: "Participating Colleges" },
     { number: "3", label: "Game Titles" },
     { number: "50+", label: "Teams" },
     { number: "Rs 50K+", label: "Prize Pool" },
@@ -15,7 +15,7 @@ function StatsSection() {
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.28em] text-slate-400">Scale</p>
             <h2 className="mt-2 text-4xl font-[family-name:var(--font-display)] leading-none tracking-wide text-white sm:text-5xl">
-              Tournament by Numbers
+              Participating Colleges
             </h2>
           </div>
           <p className="max-w-2xl text-sm leading-7 text-slate-400 sm:text-base lg:ml-auto">

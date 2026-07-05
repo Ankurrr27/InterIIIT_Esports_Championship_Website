@@ -5,17 +5,17 @@ import { CalendarDays, Flag, RadioTower, ShieldCheck, Swords, Trophy, Users } fr
 const featureCards = [
   {
     icon: Swords,
-    title: "College-first battles",
+    title: "Intra IIIT Battles",
     copy: "Every roster represents its IIIT, keeping the competition sharp, fair, and easy to follow.",
   },
   {
     icon: RadioTower,
-    title: "Live match ops",
+    title: "Inter IIIT",
     copy: "Schedules, lobby updates, disputes, and announcements stay coordinated through one tournament flow.",
   },
   {
     icon: ShieldCheck,
-    title: "Verified teams",
+    title: "Grand Finale",
     copy: "College email checks and team rules keep registrations clean before fixtures go live.",
   },
 ];
@@ -29,8 +29,8 @@ const stages = [
 
 const matchStats = [
   { icon: Users, label: "Expected teams", value: "50+" },
-  { icon: Trophy, label: "Prize pool", value: "Rs 50K+" },
-  { icon: CalendarDays, label: "Final week", value: "July 2026" },
+  { icon: Trophy, label: "Prize pool", value: "50K+" },
+  { icon: CalendarDays, label: "Final week", value: "August" },
   { icon: Flag, label: "Game titles", value: "3" },
 ];
 
@@ -41,7 +41,7 @@ export default function HomeFeatureSections() {
         <div className="grid gap-8 lg:grid-cols-[0.92fr_1.08fr] lg:items-stretch">
           <div className="relative min-h-[460px] overflow-hidden rounded-lg border border-white/10 bg-black">
             <Image
-              src="/All.png"
+              src="/pan.jpg"
               alt="IEC tournament games lineup"
               fill
               sizes="(min-width: 1024px) 46vw, 100vw"
@@ -49,23 +49,24 @@ export default function HomeFeatureSections() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/45 to-black/10" />
             <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-red-400">Tournament Hub</p>
-              <h2 className="mt-3 max-w-lg text-3xl font-black leading-tight text-white sm:text-4xl">
-                One championship across BGMI, Valorant, and Free Fire.
-              </h2>
+              {/* <p className="text-xs font-semibold uppercase tracking-[0.28em] text-red-400">Tournament Hub</p> */}
+              
               <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {matchStats.map((item) => {
                   const Icon = item.icon;
 
                   return (
-                    <div key={item.label} className="rounded-lg border border-white/10 bg-black/55 p-3 backdrop-blur">
-                      <Icon size={17} className="text-red-500" />
+                    <div key={item.label} className="rounded-sm  border-white/10 p-3 ">
+                      {/* <Icon size={17} className="text-red-500" /> */}
                       <p className="mt-3 text-lg font-black text-white">{item.value}</p>
-                      <p className="mt-1 text-[10px] uppercase tracking-[0.18em] text-white/45">{item.label}</p>
+                      <p className="mt-1 text-[10px] uppercase  text-white/45">{item.label}</p>
                     </div>
                   );
                 })}
               </div>
+              {/* <h2 className="mt-3 max-w-lg text-xl font-black leading-tight text-white sm:text-2xl">
+                One championship across BGMI, Valorant, and Free Fire.
+              </h2> */}
             </div>
           </div>
 
@@ -73,7 +74,7 @@ export default function HomeFeatureSections() {
             <div>
               <p className="text-xs font-medium uppercase tracking-[0.28em] text-slate-400">Built for competition</p>
               <h2 className="mt-3 text-4xl font-[family-name:var(--font-display)] leading-none tracking-wide text-white sm:text-5xl">
-                More than a registration page.
+                Event Architecture
               </h2>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base">
                 IEC now reads like a complete event system: verified teams, game-specific formats, match-day coordination, and a clear route from sign-up to finals.
@@ -86,10 +87,10 @@ export default function HomeFeatureSections() {
 
                 return (
                   <article key={item.title} className="rounded-lg border border-white/10 bg-white/[0.035] p-4">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-red-500/30 bg-red-500/10 text-red-400">
+                    {/* <div className="flex h-10 w-10 items-center justify-center rounded-lg border border-red-500/30 bg-red-500/10 text-red-400">
                       <Icon size={19} />
-                    </div>
-                    <h3 className="mt-4 text-sm font-semibold uppercase tracking-[0.16em] text-white">{item.title}</h3>
+                    </div> */}
+                    <h3 className="mt-4 text-sm font-semibold   text-white">{item.title}</h3>
                     <p className="mt-3 text-sm leading-6 text-slate-400">{item.copy}</p>
                   </article>
                 );

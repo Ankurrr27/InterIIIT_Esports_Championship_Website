@@ -3,8 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, Gamepad2, GraduationCap, Lock, Mail, User } from "lucide-react";
+import { ArrowRight, Building2, Gamepad2, GraduationCap, Lock, Mail, User } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
+
+const COLLEGES = [
+  { name: "IIIT Kota", domain: "iiitkota.ac.in" },
+  { name: "IIIT Nagpur", domain: "iiitnagpur.ac.in" },
+  { name: "IIIT Patna", domain: "iiitpatna.ac.in" },
+];
 
 const cardShell = "z-10 my-2 flex w-full max-w-[430px] justify-center px-4 sm:px-0 lg:my-0";
 const cardPanel = "flex h-[590px] max-h-[calc(100svh-7rem)] min-h-[520px] w-full flex-col overflow-y-auto rounded-lg border border-white/10 bg-black/55 px-5 py-5 shadow-2xl backdrop-blur-xl sm:px-6 sm:py-6";
@@ -16,6 +22,7 @@ export default function RegisterCard() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    college: "",
     collegeEmail: "",
     password: "",
     game: "",
@@ -32,7 +39,23 @@ export default function RegisterCard() {
     }));
   };
 
+  // Get expected domain hint for the selected college
+  const selectedCollege = COLLEGES.find((c) => c.name === formData.college);
+  const domainHint = selectedCollege ? `e.g. you@${selectedCollege.domain}` : "College Email";
+
   const handleRegister = async () => {
+    // Client-side validation: email domain must match selected college
+    if (selectedCollege && formData.collegeEmail) {
+      const emailDomain = formData.collegeEmail.split("@")[1]?.toLowerCase();
+      if (emailDomain !== selectedCollege.domain) {
+        setSuccess(false);
+        setMessage(
+          `Email must end with @${selectedCollege.domain} for ${selectedCollege.name}`
+        );
+        return;
+      }
+    }
+
     setLoading(true);
     setMessage("");
 
@@ -57,6 +80,7 @@ export default function RegisterCard() {
       setFormData({
         name: "",
         email: "",
+        college: "",
         collegeEmail: "",
         password: "",
         game: "",
@@ -110,12 +134,31 @@ export default function RegisterCard() {
               />
             </div>
 
+            {/* College Dropdown */}
+            <div className="relative group">
+              <Building2 size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-red-500" />
+              <select
+                name="college"
+                value={formData.college}
+                onChange={handleChange}
+                className={inputClass + " appearance-none"}
+              >
+                <option value="" className="bg-[#111111]">Select College</option>
+                {COLLEGES.map((c) => (
+                  <option key={c.name} value={c.name} className="bg-[#111111]">
+                    {c.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* College Email — placeholder changes based on selected college */}
             <div className="relative group">
               <GraduationCap size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-red-500" />
               <input
                 name="collegeEmail"
                 type="email"
-                placeholder="College Email"
+                placeholder={domainHint}
                 value={formData.collegeEmail}
                 onChange={handleChange}
                 className={inputClass}

@@ -26,13 +26,14 @@ export default function Home() {
         subtitle="Inter-IIIT Esports League"
         description="Compete with the finest gamers from IIITs across India in BGMI, Valorant and Free Fire. Experience professional production, exciting prize pools and national recognition."
       />
-      <Stats />
+      <EventIntro />
+
       <GamesSection />
       <HomeFeatureSections />
-      <EventIntro />
-      <PrizePoolSection />
+
+      {/* <PrizePoolSection /> */}
       <FAQSection />
-      <DeveloperSection />
+      {/* <DeveloperSection /> */}
       <Footer />
     </main>
   );

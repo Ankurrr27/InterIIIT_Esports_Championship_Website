@@ -1,27 +1,28 @@
-"use client";
-
-import { StarsBackground } from "@/components/animate-ui/components/backgrounds/stars";
+import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer";
 
 import Hero from "./components/Hero";
 import SupportCategories from "./components/SupportCategories";
-import ContactForm from "./components/ContactForm";
-import ContactCards from "./components/ContactCards";
-import EmergencyHelp from "./components/EmergencyHelp";
+import ContactSection from "./components/ContactSection";
 
-// import Footer from "@/components/Footer";
+export const metadata = {
+  title: "Support | IEC Esports",
+  description: "Get help and support for Inter IIIT Esports Championship.",
+};
 
 export default function SupportPage() {
   return (
-    <main className="min-h-screen relative overflow-hidden bg-black">
-      <StarsBackground className="absolute inset-0 z-0 h-full w-full" />
-      <div className="relative z-10 h-full w-full">
+    <main className="min-h-screen relative overflow-hidden bg-white text-slate-900 flex flex-col">
+      <Navbar />
+      
+      {/* ── Main Content Area ── */}
+      <div className="relative flex-grow w-full">
         <Hero />
         <SupportCategories />
-        <ContactForm />
-        <ContactCards />
-        <EmergencyHelp />
-        {/* <Footer /> */}
+        <ContactSection />
       </div>
+
+      <Footer />
     </main>
   );
 }

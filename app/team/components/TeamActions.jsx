@@ -37,11 +37,12 @@ export default function TeamActions() {
 
           {/* Heading */}
           <div className="mb-16 text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-red-600 drop-shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-red-500 mb-2">Portal</p>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-[family-name:var(--font-display)] tracking-wide text-white drop-shadow-lg">
               Team Management
             </h1>
 
-            <p className="mt-6 max-w-2xl mx-auto text-base sm:text-lg text-gray-400 font-medium">
+            <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-slate-400 font-medium">
               Create your own squad, join an existing one, or manage your current
               team from one place.
             </p>

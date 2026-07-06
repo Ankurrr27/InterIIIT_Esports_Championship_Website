@@ -39,14 +39,46 @@ const games = [
 
 export default function GamesSection() {
   return (
-    <section className="bg-black py-14">
-      <div className="mx-auto max-w-7xl px-6">
+    <section className="relative bg-black py-16 overflow-hidden">
+      {/* ── Grunge accents ── */}
+
+      {/* Diagonal stripe accent behind heading */}
+      <div
+        className="absolute top-0 left-0 w-full h-[250px] pointer-events-none"
+        style={{
+          background: `
+            linear-gradient(135deg, rgba(220,38,38,0.06) 0%, transparent 40%),
+            repeating-linear-gradient(
+              -45deg,
+              transparent,
+              transparent 50px,
+              rgba(255,255,255,0.01) 50px,
+              rgba(255,255,255,0.01) 52px
+            )
+          `,
+        }}
+      />
+
+      {/* Halftone dots — bottom right */}
+      <div
+        className="absolute bottom-0 right-0 w-[250px] h-[250px] pointer-events-none opacity-[0.035]"
+        style={{
+          backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)",
+          backgroundSize: "9px 9px",
+          maskImage: "linear-gradient(135deg, transparent 30%, black 80%)",
+          WebkitMaskImage: "linear-gradient(135deg, transparent 30%, black 80%)",
+        }}
+      />
+
+      {/* ── Content ── */}
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
         {/* Heading */}
-        <div className="mb-14 flex items-start flex-col gap-1">
+        <div className="mb-10 flex items-start flex-col gap-1">
           <p className="text-xs tracking-[0.25em] uppercase text-slate-400 font-medium">Our Games</p>
           <h2 className="text-5xl md:text-6xl font-[family-name:var(--font-display)] tracking-wide text-white leading-none">
             Featured Games
           </h2>
+          <div className="mt-2 h-[2px] w-12 bg-red-600" />
         </div>
 
         {/* Cards */}
@@ -54,10 +86,10 @@ export default function GamesSection() {
           {games.map((game) => (
             <div
               key={game.title}
-              className={`group relative overflow-hidden rounded-md  bg-[#090C18] transition-all duration-300 hover:-translate-y-1 ${game.border} ${game.glow}`}
+              className={`group relative overflow-hidden rounded-md bg-[#090C18] transition-all duration-300 hover:-translate-y-1 ${game.border} ${game.glow}`}
             >
               {/* Image */}
-              <div className="w-full h-[360px]">
+              <div className="w-full h-[400px]">
                 <Image
                   src={game.image}
                   alt={game.title}

@@ -5,26 +5,25 @@ import { TriangleAlert, ArrowRight } from "lucide-react";
 
 export default function EmergencyHelp() {
   return (
-    <section className="px-6 py-24 relative z-10">
+    <section className="px-6 py-24 relative z-10 bg-slate-50">
       <div className="mx-auto max-w-6xl">
 
-        <div className="relative overflow-hidden rounded-3xl border border-red-500/20 bg-black/40 backdrop-blur-xl p-10 md:p-14 shadow-2xl">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-red-600/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+        <div className="relative overflow-hidden rounded-none border border-red-500 bg-white p-10 md:p-14 shadow-sm">
           
           <div className="flex flex-col items-start justify-between gap-10 lg:flex-row lg:items-center relative z-10">
 
             <div className="max-w-3xl">
 
-              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-5 py-2.5 text-sm font-semibold text-red-400 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-none border border-red-200 bg-red-50 px-5 py-2.5 text-sm font-semibold uppercase tracking-widest text-red-600">
                 <TriangleAlert size={18} className="animate-pulse" />
                 Urgent Assistance
               </div>
 
-              <h2 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300 leading-tight">
+              <h2 className="text-4xl md:text-5xl font-[family-name:var(--font-display)] tracking-wide text-slate-900 leading-tight">
                 Tournament Starts Soon?
               </h2>
 
-              <p className="mt-6 text-lg leading-relaxed text-gray-400 font-medium">
+              <p className="mt-6 text-lg leading-relaxed text-slate-600 font-medium">
                 If you're experiencing a payment issue, registration problem,
                 missing teammate, or match-related issue just before your
                 tournament begins, contact our moderators immediately for the
@@ -36,7 +35,7 @@ export default function EmergencyHelp() {
 
               <Link
                 href="#"
-                className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-red-500 px-8 py-4 font-semibold text-white shadow-lg shadow-red-500/25 transition-all duration-300 hover:scale-[1.02] hover:shadow-red-500/40"
+                className="group flex w-full items-center justify-center gap-2 rounded-none bg-red-600 px-8 py-4 text-sm font-semibold uppercase tracking-widest text-white transition-all duration-300 hover:bg-red-700"
               >
                 Join Discord
                 <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
@@ -44,7 +43,7 @@ export default function EmergencyHelp() {
 
               <Link
                 href="#contact"
-                className="group w-full rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-center font-semibold text-white transition-all duration-300 hover:bg-white/10 hover:border-white/20 hover:scale-[1.02]"
+                className="group w-full rounded-none border border-slate-300 bg-white px-8 py-4 text-center text-sm font-semibold uppercase tracking-widest text-slate-900 transition-all duration-300 hover:bg-slate-50 hover:border-slate-400"
               >
                 Submit Support Ticket
               </Link>

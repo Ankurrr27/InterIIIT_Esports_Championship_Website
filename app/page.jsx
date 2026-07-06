@@ -28,8 +28,9 @@ export default function Home() {
       />
       <EventIntro />
 
-      <GamesSection />
+     
       <HomeFeatureSections />
+       <GamesSection />
 
       {/* <PrizePoolSection /> */}
       <FAQSection />

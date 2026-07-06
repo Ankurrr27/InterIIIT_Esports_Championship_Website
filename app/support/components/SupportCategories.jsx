@@ -50,15 +50,15 @@ const categories = [
 
 export default function SupportCategories() {
   return (
-    <section className="px-6 py-24 relative z-10">
+    <section className="px-6 py-24 relative z-10 bg-white">
       <div className="mx-auto max-w-7xl">
         {/* Heading */}
         <div className="mb-16 text-center">
-          <h2 className="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400 md:text-5xl">
+          <h2 className="text-4xl md:text-5xl font-[family-name:var(--font-display)] tracking-wide text-slate-900">
             What do you need help with?
           </h2>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-gray-400 font-medium">
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-slate-600 font-medium">
             Choose the category that best describes your issue and we'll point
             you in the right direction.
           </p>
@@ -72,20 +72,19 @@ export default function SupportCategories() {
             return (
               <div
                 key={item.title}
-                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-black/40 p-8 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-red-500/50 hover:shadow-2xl hover:shadow-red-500/10 cursor-pointer"
+                className="group relative overflow-hidden rounded-none border border-black/10 bg-slate-50 p-8 transition-all duration-300 hover:-translate-y-1 hover:border-red-500 hover:shadow-xl cursor-pointer"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-red-500/5 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 
                 <div className="relative z-10">
-                  <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-red-500/10 to-red-500/5 text-red-500 ring-1 ring-red-500/20 transition-all duration-300 group-hover:scale-110 group-hover:from-red-600 group-hover:to-red-500 group-hover:text-white group-hover:ring-red-500 group-hover:shadow-lg group-hover:shadow-red-500/30">
-                    <Icon size={32} />
+                  <div className="mb-6 flex h-14 w-14 items-center justify-center border border-black/10 bg-white text-slate-900 transition-all duration-300 group-hover:scale-110 group-hover:bg-red-600 group-hover:text-white group-hover:border-red-600">
+                    <Icon size={24} />
                   </div>
 
-                  <h3 className="text-2xl font-bold text-white transition-colors group-hover:text-red-400">
+                  <h3 className="text-xl font-bold text-slate-900 transition-colors group-hover:text-red-600">
                     {item.title}
                   </h3>
 
-                  <p className="mt-4 leading-relaxed text-gray-400">
+                  <p className="mt-4 leading-relaxed text-slate-600">
                     {item.description}
                   </p>
                 </div>

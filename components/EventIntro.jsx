@@ -61,7 +61,7 @@ export default function EventIntro() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-black py-12 lg:py-16 text-white">
+    <section className="relative overflow-hidden bg-black py-12 lg:py-24 text-white">
       {/* Subtle Background Glow */}
       <div className="absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-900/10 blur-[100px] pointer-events-none" />
 
@@ -81,6 +81,7 @@ export default function EventIntro() {
               <h2 className="text-5xl lg:text-6xl font-[family-name:var(--font-display)] tracking-wide text-white leading-none">
                 What is IEC?
               </h2>
+              <div className="mt-2 h-[2px] w-12 bg-red-600" />
             </motion.div>
 
             <motion.div variants={itemVariants} className="space-y-3 text-sm sm:text-base text-slate-300/80 leading-relaxed">
@@ -141,12 +142,12 @@ export default function EventIntro() {
               </h3>
             </motion.div>
 
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
               {organisers.map((item, idx) => (
                 <motion.div
                   variants={itemVariants}
                   key={item.name}
-                  className="group relative flex flex-col overflow-hidden rounded-xl border border-white/5 bg-slate-900/40 p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-500/30 hover:bg-slate-800/60"
+                  className="group relative flex flex-col overflow-hidden rounded-xl border border-white/5 bg-slate-900/40 p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-500/30 hover:bg-slate-800/60"
                 >
                   <img
                     src={item.logo}

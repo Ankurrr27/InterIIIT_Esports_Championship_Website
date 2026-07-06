@@ -33,12 +33,12 @@ export default function PrizePoolSection() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-red-500/5 blur-[80px] rounded-full pointer-events-none" />
 
       <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8">
+        <div className="mb-8 text-left sm:text-center">
           <p className="text-xs tracking-[0.25em] uppercase text-slate-400 font-medium mb-1">Rewards</p>
-          <h2 className="text-5xl sm:text-6xl font-[family-name:var(--font-display)] tracking-wide text-white leading-none">
+          <h2 className="text-4xl font-[family-name:var(--font-display)] leading-none tracking-wide text-white sm:text-6xl">
             Prize Pool
           </h2>
-          <p className="mt-3 text-xs sm:text-sm text-slate-400 max-w-xl mx-auto">
+          <p className="mt-3 max-w-xl text-xs text-slate-400 sm:mx-auto sm:text-sm">
             Compete for glory and walk away with massive cash prizes. The stakes have never been higher.
           </p>
         </div>
@@ -65,3 +65,4 @@ export default function PrizePoolSection() {
     </section>
   );
 }
+

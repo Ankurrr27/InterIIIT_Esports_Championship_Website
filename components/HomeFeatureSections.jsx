@@ -132,7 +132,7 @@ export default function HomeFeatureSections() {
             </div>
 
             {/* CTAs */}
-            <div className="flex flex-row flex-nowrap gap-2">
+            <div className="hidden flex-row flex-nowrap gap-2 sm:flex">
               <Link href="/register" className="flex-1 sm:flex-none text-center rounded-lg bg-red-600 px-4 py-2.5 sm:px-5 text-[13px] sm:text-sm font-semibold  sm:tracking-[0.12em] text-white transition hover:bg-red-500">
                 Register
               </Link>

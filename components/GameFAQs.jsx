@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 
@@ -47,29 +47,29 @@ export default function GameFAQs({ faqs = [], theme = "red" }) {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="bg-black py-16 text-white sm:py-20">
+    <section className="bg-black py-12 text-white sm:py-16">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         <div className={`max-w-2xl border-l pl-4 ${colors.border}`}>
           <p className={`text-[10px] font-semibold uppercase tracking-[0.45em] ${colors.label}`}>
             FAQs
           </p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
+          <h2 className="mt-2 text-xl font-semibold tracking-tight sm:text-3xl lg:text-4xl">
             Player Questions
           </h2>
         </div>
 
-        <div className="mt-10 divide-y divide-white/10 border border-white/10 bg-white/[0.03]">
+        <div className="mt-8 divide-y divide-white/10 border border-white/10 bg-white/[0.03]">
           {items.map((faq, index) => {
             const open = openIndex === index;
 
             return (
-              <div key={faq.question} className={`px-5 py-4 transition sm:px-6 ${colors.panel}`}>
+              <div key={faq.question} className={`px-4 py-3 transition sm:px-6 sm:py-4 ${colors.panel}`}>
                 <button
                   type="button"
                   onClick={() => setOpenIndex(open ? -1 : index)}
-                  className="flex w-full items-center justify-between gap-4 text-left"
+                  className="flex w-full items-center justify-between gap-3 text-left"
                 >
-                  <span className="text-sm font-medium leading-6 text-white sm:text-base">
+                  <span className="text-[13px] font-medium leading-6 text-white sm:text-base">
                     {faq.question}
                   </span>
                   <span className={`text-lg ${open ? colors.icon : "text-white/45"}`}>
@@ -83,7 +83,7 @@ export default function GameFAQs({ faqs = [], theme = "red" }) {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="max-w-3xl text-sm leading-7 text-white/60 sm:text-[15px]">
+                    <p className="max-w-3xl text-[11px] leading-6 text-white/60 sm:text-[15px]">
                       {faq.answer}
                     </p>
                   </div>
@@ -96,3 +96,4 @@ export default function GameFAQs({ faqs = [], theme = "red" }) {
     </section>
   );
 }
+

@@ -108,7 +108,7 @@ export default function EventIntro() {
               
             </motion.div>
 
-            <motion.div variants={itemVariants} className="mt-8 flex flex-row flex-nowrap items-center gap-2 sm:gap-3 w-full sm:w-auto">
+            <motion.div variants={itemVariants} className="mt-8 flex w-full flex-row flex-nowrap items-center justify-start gap-2 sm:w-auto sm:justify-center sm:gap-3">
               <a
                 href="/register"
                 className="group relative flex-1 sm:flex-none flex items-center justify-center gap-1.5 rounded-lg bg-red-600 px-3 py-2.5 sm:px-5 sm:py-2.5 text-[13px] sm:text-sm font-semibold text-white transition-all hover:bg-red-500 whitespace-nowrap"
@@ -119,7 +119,7 @@ export default function EventIntro() {
               </a>
 
               <a
-                href="/brochure.pdf"
+                href="/docs/IEC_Brochure_Final.pdf"
                 className="group flex-1 sm:flex-none flex items-center justify-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 sm:px-5 sm:py-2.5 text-[13px] sm:text-sm font-semibold text-white transition-all hover:bg-white/10 whitespace-nowrap"
               >
                 <Download size={14} className="sm:w-4 sm:h-4 text-slate-400 transition-colors group-hover:text-white" />
@@ -213,3 +213,5 @@ export default function EventIntro() {
     </section>
   );
 }
+
+

@@ -74,8 +74,8 @@ export default function GamesSection() {
       <div className="relative z-10 mx-auto max-w-7xl px-6">
         {/* Heading */}
         <div className="mb-10 flex items-start flex-col gap-1">
-          <p className="text-xs tracking-[0.25em] uppercase text-slate-400 font-medium">Our Games</p>
-          <h2 className="text-5xl md:text-6xl font-[family-name:var(--font-display)] tracking-wide text-white leading-none">
+          <p className="text-[0.5rem] sm:text-xs tracking-[0.25em] uppercase text-slate-400 font-medium">Our Games</p>
+          <h2 className="text-3xl md:text-6xl font-[family-name:var(--font-display)] tracking-wide text-white leading-none">
             Featured Games
           </h2>
           <div className="mt-2 h-[2px] w-12 bg-red-600" />
@@ -89,7 +89,7 @@ export default function GamesSection() {
               className={`group relative overflow-hidden rounded-md bg-[#090C18] transition-all duration-300 hover:-translate-y-1 ${game.border} ${game.glow}`}
             >
               {/* Image */}
-              <div className="w-full h-[400px]">
+              <div className="relative w-full h-[320px] sm:h-[360px] lg:h-[400px]">
                 <Image
                   src={game.image}
                   alt={game.title}
@@ -107,8 +107,8 @@ export default function GamesSection() {
               </div>
 
               {/* Content */}
-              <div className="absolute inset-0 flex flex-col justify-end p-6">
-                <div className="relative h-24 w-48">
+              <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6">
+                <div className="relative h-16 w-36 sm:h-24 sm:w-48">
                   <Image
                     src={game.logo}
                     alt={game.title}
@@ -117,15 +117,15 @@ export default function GamesSection() {
                   />
                 </div>
 
-                <p className="mt-2 text-xs text-neutral-300">{game.subtitle}</p>
+                <p className="mt-1 text-[11px] sm:mt-2 sm:text-xs text-neutral-300">{game.subtitle}</p>
 
                 <Link
                   href={game.link}
-                  className={`mt-6 flex h-10 w-full items-center justify-center gap-3 rounded-md border text-sm font-semibold uppercase text-white transition duration-300 ${game.button}`}
+                  className={`mt-4 sm:mt-6 flex h-9 sm:h-10 w-full items-center justify-center gap-2 sm:gap-3 rounded-md border text-[11px] sm:text-sm font-semibold uppercase text-white transition duration-300 ${game.button}`}
                 >
                   VIEW DETAILS
                   <ArrowRight
-                    size={16}
+                    size={15}
                     className="transition-transform group-hover:translate-x-1"
                   />
                 </Link>
@@ -137,3 +137,4 @@ export default function GamesSection() {
     </section>
   );
 }
+

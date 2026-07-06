@@ -124,7 +124,7 @@ export default function Navbar() {
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen(!open)}
-          className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-white transition hover:border-white/20 hover:bg-white/10 lg:hidden"
+          className="flex h-10 w-10 items-center justify-center text-white transition hover:text-white/90 lg:hidden"
         >
           {open ? <X size={18} /> : <Menu size={18} />}
         </button>
@@ -140,14 +140,14 @@ export default function Navbar() {
 
       {/* Mobile Sidebar */}
       <div
-        className={`fixed top-0 right-0 z-50 h-[100dvh] w-64 border-l border-white/10 bg-slate-950 p-5 shadow-2xl transition-transform duration-300 lg:hidden flex flex-col ${
+        className={`fixed top-0 right-0 z-50 h-[100dvh] w-64 border-l border-slate-200 bg-white p-4 shadow-2xl transition-transform duration-300 lg:hidden flex flex-col ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="flex justify-end mb-6">
+        <div className="mb-4 flex justify-end">
           <button
             onClick={() => setOpen(false)}
-            className="grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-white transition hover:border-white/20 hover:bg-white/10"
+            className="grid h-9 w-9 place-items-center rounded-md border border-slate-200 bg-slate-100 text-slate-900 transition hover:bg-slate-200"
           >
             <X size={18} />
           </button>
@@ -160,14 +160,14 @@ export default function Navbar() {
                 key={item.name}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className="rounded-lg px-3 py-2 text-sm font-medium text-slate-200 transition hover:bg-white/5 hover:text-white"
+                className="rounded-md px-3 py-2 text-sm font-medium text-slate-800 transition hover:bg-slate-100 hover:text-slate-950"
               >
                 {item.name}
               </Link>
             ))}
 
-            <div className="mt-4 rounded-lg border border-white/10 bg-white/[0.03] p-2">
-              <p className="px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500 mb-1">
+            <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-2">
+              <p className="mb-1 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">
                 Games
               </p>
               {gameLinks.map((item) => (
@@ -175,10 +175,10 @@ export default function Navbar() {
                   key={item.name}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="flex items-center justify-between rounded px-2 py-2 text-xs text-slate-200 transition hover:bg-white/5 hover:text-white"
+                  className="flex items-center justify-between rounded-md px-2 py-2 text-xs text-slate-700 transition hover:bg-slate-100 hover:text-slate-950"
                 >
                   <span>{item.name}</span>
-                  <span className="text-[9px] uppercase tracking-[0.22em] text-slate-500">
+                  <span className="text-[9px] uppercase tracking-[0.22em] text-slate-400">
                     {item.label}
                   </span>
                 </Link>
@@ -190,7 +190,7 @@ export default function Navbar() {
         <Link
           href="/register"
           onClick={() => setOpen(false)}
-          className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-red-600 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.1em] text-white transition hover:bg-red-500 shadow-[0_0_15px_rgba(220,38,38,0.2)]"
+          className="mt-5 inline-flex w-full items-center justify-center rounded-lg bg-red-600 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.1em] text-white transition hover:bg-red-500 shadow-[0_0_15px_rgba(220,38,38,0.2)]"
         >
           Register
         </Link>
@@ -198,3 +198,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

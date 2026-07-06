@@ -77,14 +77,14 @@ export default function EventIntro() {
           >
 
             <motion.div variants={itemVariants} className="mb-4">
-              <p className="text-xs tracking-[0.25em] uppercase text-slate-400 font-medium mb-1">About</p>
-              <h2 className="text-5xl lg:text-6xl font-[family-name:var(--font-display)] tracking-wide text-white leading-none">
+              <p className="text-[0.5rem] sm:text-xs tracking-[0.25em] uppercase text-slate-400 font-medium mb-1">About</p>
+              <h2 className="text-3xl lg:text-6xl font-[family-name:var(--font-display)] tracking-wide text-white leading-none">
                 What is IEC?
               </h2>
               <div className="mt-2 h-[2px] w-12 bg-red-600" />
             </motion.div>
 
-            <motion.div variants={itemVariants} className="space-y-3 text-sm sm:text-base text-slate-300/80 leading-relaxed">
+            <motion.div variants={itemVariants} className="space-y-3 text-xs sm:text-base text-slate-300/80 leading-relaxed">
               <p>
                 The Inter-IIIT Esports Championship (IEC) is a nationwide esports
                 competition uniting students from IIITs across India through
@@ -108,21 +108,23 @@ export default function EventIntro() {
               
             </motion.div>
 
-            <motion.div variants={itemVariants} className="mt-8 flex flex-wrap items-center gap-3">
+            <motion.div variants={itemVariants} className="mt-8 flex flex-row flex-nowrap items-center gap-2 sm:gap-3 w-full sm:w-auto">
               <a
                 href="/register"
-                className="group relative inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-red-500"
+                className="group relative flex-1 sm:flex-none flex items-center justify-center gap-1.5 rounded-lg bg-red-600 px-3 py-2.5 sm:px-5 sm:py-2.5 text-[13px] sm:text-sm font-semibold text-white transition-all hover:bg-red-500 whitespace-nowrap"
               >
-                Register Now
-                <ChevronRight size={16} className="transition-transform group-hover:translate-x-1" />
+                <span className="sm:hidden">Register</span>
+                <span className="hidden sm:inline">Register Now</span>
+                <ChevronRight size={14} className="sm:w-4 sm:h-4 transition-transform group-hover:translate-x-1" />
               </a>
 
               <a
                 href="/brochure.pdf"
-                className="group inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-white/10"
+                className="group flex-1 sm:flex-none flex items-center justify-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 sm:px-5 sm:py-2.5 text-[13px] sm:text-sm font-semibold text-white transition-all hover:bg-white/10 whitespace-nowrap"
               >
-                <Download size={16} className="text-slate-400 transition-colors group-hover:text-white" />
-                Download Brochure
+                <Download size={14} className="sm:w-4 sm:h-4 text-slate-400 transition-colors group-hover:text-white" />
+                <span className="sm:hidden">Brochure</span>
+                <span className="hidden sm:inline">Download Brochure</span>
               </a>
             </motion.div>
           </motion.div>
@@ -136,18 +138,18 @@ export default function EventIntro() {
              className="relative"
           >
             <motion.div variants={itemVariants} className="mb-5">
-              <p className="text-xs tracking-[0.25em] uppercase text-slate-400 font-medium mb-1">Partners</p>
-              <h3 className="text-4xl font-[family-name:var(--font-display)] tracking-wide text-white leading-none">
+              <p className="text-[0.5rem] sm:text-xs tracking-[0.25em] uppercase text-slate-400 font-medium mb-1">Partners</p>
+              <h3 className="text-3xl font-[family-name:var(--font-display)] tracking-wide text-white leading-none">
                 Official Partners
               </h3>
             </motion.div>
 
-            <div className="grid grid-cols-2 gap-2 sm:gap-3">
+            <div className="grid grid-cols-4 sm:grid-cols-2 gap-1 sm:gap-3">
               {organisers.map((item, idx) => (
                 <motion.div
                   variants={itemVariants}
                   key={item.name}
-                  className="group relative flex flex-col overflow-hidden rounded-xl border border-white/5 bg-slate-900/40 p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-500/30 hover:bg-slate-800/60"
+                  className="group relative flex flex-col overflow-hidden sm:rounded-xl sm:border border-white/5 sm:bg-slate-900/40 p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-slate-500/30 hover:bg-slate-800/60"
                 >
                   <img
                     src={item.logo}
@@ -155,11 +157,11 @@ export default function EventIntro() {
                     className="mx-auto h-14 object-contain mb-3 transition-transform duration-300 group-hover:scale-105"
                   />
 
-                  <h4 className="text-center text-xs font-semibold text-slate-100 sm:text-sm line-clamp-1">
+                  <h4 className="text-left sm:text-center text-[10px] font-semibold text-slate-100 sm:text-sm line-clamp-1">
                     {item.name}
                   </h4>
 
-                  <p className="mt-1 text-center text-[10px] font-medium uppercase tracking-wider text-slate-400 line-clamp-1">
+                  <p className="mt-1  text-left sm:text-center text-[8px] font-medium uppercase tracking-wider text-slate-400 line-clamp-1">
                     {item.role}
                   </p>
 

@@ -1,8 +1,8 @@
 import Hero_event from "@/components/Hero/Hero_event"
 import Navbar from "@/components/Navbar/Navbar";
-import About from "./About"
+import About from "./About";
+import Campuses from "./Campuses";
 import Timeline from "./Timeline";
-import FAQ from "./FAQ"
 import Footer from "@/components/Footer";
 
 export default function EventDetailsPage() {
@@ -11,8 +11,9 @@ export default function EventDetailsPage() {
       <Navbar />
       <Hero_event />
       <About />
+     
       <Timeline />
-      <FAQ />
+       <Campuses />
       <Footer />
     </main>
   );

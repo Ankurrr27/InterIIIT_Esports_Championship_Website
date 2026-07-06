@@ -16,117 +16,114 @@ const gameCards = [
   },
 ];
 
-const logos = [
-  "Logo space",
-  "Logo space",
-  "Logo space",
-  "Logo space",
-];
-
 const stats = [
-  { label: "Titles", value: "3" },
-  { label: "Teams", value: "IIIT squads" },
-  { label: "Format", value: "Live finals" },
-  { label: "Style", value: "Minimal, premium" },
+  { label: "Titles", value: "3 Major Games" },
+  { label: "Teams", value: "30+ IIIT Squads" },
+  { label: "Format", value: "Live Finals" },
+  { label: "Prize", value: "₹50,000 Pool" },
 ];
 
 export default function About() {
   return (
-    <section className="bg-black py-8 text-white sm:py-10 lg:py-12">
-      <div className="mx-auto max-w-[1280px] px-4 sm:px-6 lg:px-8">
-        <div className="border border-white/10 bg-white text-black shadow-[0_24px_80px_rgba(0,0,0,0.45)]">
-          <div className="grid gap-0 lg:grid-cols-[1.02fr_0.98fr]">
-            <div className="border-b border-black/10 p-6 sm:p-8 lg:border-b-0 lg:border-r lg:p-10">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.42em] text-black/45">
-                About the Event
-              </p>
+    <section id="about" className="relative bg-white py-12 text-slate-900 sm:py-16 overflow-hidden border-b border-black/5">
+      
+      {/* Background accents */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-red-600/5 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/3" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-orange-600/5 rounded-full blur-[100px] pointer-events-none translate-y-1/2 -translate-x-1/3" />
 
-              <h2 className="mt-4 max-w-lg text-3xl font-semibold tracking-tight sm:text-4xl lg:text-[3.1rem] lg:leading-[1.05]">
-                Inter-IIIT Esports, built with a clean and serious visual tone.
-              </h2>
+      <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+          
+          {/* Left Column (Text & Stats) */}
+          <div className="flex flex-col justify-center">
+            
+            <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-red-600">
+              About the Event
+            </p>
 
-              <p className="mt-5 max-w-xl text-sm leading-7 text-black/70 sm:text-base">
-                A focused championship experience for college teams, designed to feel professional, compact, and easy to read while still carrying the energy of the event.
-              </p>
+            <h2 className="mt-6 max-w-xl text-4xl font-[family-name:var(--font-display)] tracking-wide sm:text-5xl lg:text-6xl text-slate-900 leading-[1.1]">
+              The Ultimate 
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-500">Collegiate Showdown.</span>
+            </h2>
 
-              <div className="mt-8 grid gap-3 sm:grid-cols-2">
-                {stats.map((item) => (
-                  <div key={item.label} className="border border-black/10 p-4">
-                    <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-black/45">
-                      {item.label}
-                    </p>
-                    <p className="mt-2 text-sm font-medium text-black sm:text-[15px]">
-                      {item.value}
-                    </p>
-                  </div>
-                ))}
-              </div>
+            <p className="mt-8 max-w-xl text-base leading-relaxed text-slate-600 font-medium">
+              Inter-IIIT Esports brings together the best competitive gamers across India's premier tech institutes. Featuring multiple titles, massive prize pools, and a ruthless tournament bracket designed to crown the undisputed champions.
+            </p>
 
-              <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href="/register"
-                  className="border border-black bg-black px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-white transition hover:bg-white hover:text-black"
-                >
-                  Register
-                </a>
-                <a
-                  href="/event-details"
-                  className="border border-black/10 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-black transition hover:border-black hover:bg-black hover:text-white"
-                >
-                  Event Details
-                </a>
-              </div>
+            {/* Stats Grid */}
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {stats.map((item) => (
+                <div key={item.label} className="border border-black/10 bg-slate-50 p-6 backdrop-blur-sm transition-all hover:border-red-500 hover:bg-white hover:shadow-md">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-600">
+                    {item.label}
+                  </p>
+                  <p className="mt-3 text-lg font-bold text-slate-900">
+                    {item.value}
+                  </p>
+                </div>
+              ))}
             </div>
 
-            <div className="bg-black p-6 text-white sm:p-8 lg:p-10">
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-                {logos.map((label, index) => (
-                  <div
-                    key={`${label}-${index}`}
-                    className="flex min-h-[140px] flex-col items-center justify-center border border-white/10 bg-white/[0.03] px-3 py-4 text-center"
-                  >
-                    <div className="flex h-12 w-12 items-center justify-center border border-dashed border-white/15 text-[10px] font-semibold uppercase tracking-[0.22em] text-white/35">
-                      Logo
-                    </div>
-                    <p className="mt-3 text-[10px] uppercase tracking-[0.24em] text-white/35">
-                      {label}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                {gameCards.map((game, index) => (
-                  <article
-                    key={game.title}
-                    className="group overflow-hidden border border-white/10 bg-white/[0.03]"
-                  >
-                    <div className="relative aspect-[4/3] overflow-hidden bg-zinc-950">
-                      <img
-                        src={game.src}
-                        alt={game.title}
-                        className="h-full w-full object-cover object-top transition duration-500 group-hover:scale-[1.03]"
-                      />
-                      <div className="absolute inset-0 bg-black/18" />
-                    </div>
-
-                    <div className="space-y-2 p-4">
-                      <p className="text-sm font-semibold text-white">
-                        {game.title}
-                      </p>
-                      <p className="text-[11px] uppercase tracking-[0.22em] text-white/45">
-                        {game.subtitle}
-                      </p>
-                    </div>
-
-                    <div className="absolute left-3 top-3 h-7 w-7 border border-white/15 bg-black/35 text-center text-[10px] font-semibold leading-7 text-white/60">
-                      0{index + 1}
-                    </div>
-                  </article>
-                ))}
-              </div>
+            <div className="mt-8 flex flex-wrap gap-4">
+              <a
+                href="/register"
+                className="border border-red-600 bg-red-600 px-8 py-4 text-xs font-bold uppercase tracking-widest text-white transition hover:bg-red-700 hover:border-red-700 shadow-[0_0_15px_rgba(220,38,38,0.2)]"
+              >
+                Register Now
+              </a>
+              <a
+                href="#timeline"
+                className="border border-slate-300 bg-white px-8 py-4 text-xs font-bold uppercase tracking-widest text-slate-900 transition hover:border-slate-400 hover:bg-slate-50"
+              >
+                View Format
+              </a>
             </div>
           </div>
+
+          {/* Right Column (Games) */}
+          <div className="relative">
+            
+            {/* Games Grid */}
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+              <h3 className="sm:col-span-2 lg:col-span-1 text-[11px] font-bold uppercase tracking-[0.3em] text-slate-500 mb-2">Featured Titles</h3>
+              {gameCards.map((game, index) => (
+                <article
+                  key={game.title}
+                  className="group relative overflow-hidden border border-black/10 bg-slate-50 transition-all duration-500 hover:border-red-500 hover:shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:z-10"
+                >
+                  <div className="relative aspect-[3/1] sm:aspect-[2/1] lg:aspect-[3/1] overflow-hidden">
+                    <img
+                      src={game.src}
+                      alt={game.title}
+                      className="absolute inset-0 h-full w-full object-cover object-center opacity-80 transition duration-700 group-hover:scale-105 group-hover:opacity-100"
+                    />
+                    {/* White gradient overlay for contrast against light text */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/70 to-transparent" />
+                  </div>
+
+                  <div className="absolute inset-0 flex flex-col justify-center p-6 sm:p-8">
+                    <div className="flex items-center gap-4">
+                      <span className="text-xl font-bold text-red-600 opacity-90">
+                        0{index + 1}
+                      </span>
+                      <div>
+                        <h4 className="text-xl font-bold text-slate-900 tracking-wide">
+                          {game.title}
+                        </h4>
+                        <p className="mt-1 text-xs uppercase tracking-widest text-slate-500 font-semibold">
+                          {game.subtitle}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+
+          </div>
+
         </div>
       </div>
     </section>

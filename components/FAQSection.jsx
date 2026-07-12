@@ -9,15 +9,19 @@ export default function FAQSection() {
   const faqs = [
     {
       question: "Who can participate in the tournament?",
-      answer: "The tournament is strictly for college students currently enrolled in any IIIT across India. You will need to verify your student status using your official college email ID during registration.",
+      answer: "The tournament is strictly for college students currently enrolled in any IIIT across India. Furthermore, your IIIT must be officially registered and approved on our platform. You will need to verify your student status using your official college email ID.",
+    },
+    {
+      question: "Can I participate in multiple games?",
+      answer: "No. A single user can only join and play for ONE team. Furthermore, a single team can only register and participate in ONE game. If you wish to play a different game, you must leave or delete your current team and join another one.",
+    },
+    {
+      question: "My college is not registered. How do I register my college?",
+      answer: "If your college is not on the participating list, a representative from your official college esports club (or a student coordinator) must visit the 'College Registration' page on our website, fill out the details, and wait for admin approval.",
     },
     {
       question: "Is there any registration fee?",
       answer: "No, participation in the Inter-IIIT Esports League is completely free of charge.",
-    },
-    {
-      question: "Can I participate in multiple games?",
-      answer: "Yes! You can register for multiple games as long as the match schedules do not conflict. However, you must join different teams if your current team is not participating in the other games.",
     },
     {
       question: "What is the format of the tournament?",
@@ -30,14 +34,6 @@ export default function FAQSection() {
     {
       question: "How are the prize pools distributed?",
       answer: "Prize pools will be distributed among the top 3 teams for each game. The specific breakdown will be shared on our Discord server before the semi-finals.",
-    },
-    {
-      question: "How do I communicate with the organizers during the tournament?",
-      answer: "All official communication, announcements, match scheduling, and dispute resolutions will take place on our official Discord server.",
-    },
-    {
-      question: "What happens if a player disconnects during a match?",
-      answer: "Standard esports rules apply. Players are given a specific reconnect window depending on the game, after which the match either continues or pauses based on the admin's discretion.",
     },
   ];
 

@@ -91,16 +91,16 @@ export default function About() {
               {gameCards.map((game, index) => (
                 <article
                   key={game.title}
-                  className="group relative overflow-hidden border border-black/10 bg-slate-50 transition-all duration-500 hover:border-red-500 hover:shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:z-10"
+                  className="group relative overflow-hidden border border-black/10 transition-all duration-500 hover:border-red-500 hover:shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:z-10"
                 >
                   <div className="relative aspect-[3/1] sm:aspect-[2/1] lg:aspect-[3/1] overflow-hidden">
                     <img
                       src={game.src}
                       alt={game.title}
-                      className="absolute inset-0 h-full w-full object-cover object-center opacity-80 transition duration-700 group-hover:scale-105 group-hover:opacity-100"
+                      className="absolute inset-0 h-full w-full object-cover object-center  transition duration-700 group-hover:scale-105 group-hover:opacity-100"
                     />
                     {/* White gradient overlay for contrast against light text */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/70 to-transparent" />
+                    <div className="absolute inset-0 " />
                   </div>
 
                   <div className="absolute inset-0 flex flex-col justify-center p-6 sm:p-8">

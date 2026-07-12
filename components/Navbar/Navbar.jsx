@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Menu, Search, User, X } from "lucide-react";
 import { useState } from "react";
@@ -11,8 +12,9 @@ export default function Navbar() {
   const links = [
     { name: "Home", href: "/" },
     { name: "Events", href: "/event-details" },
+    { name: "IEC Team", href: "/iec-team" },
+    { name: "Colleges", href: "/participating-colleges" },
     { name: "Registration", href: "/register" },
-
     { name: "Contact", href: "/support" },
   ];
 
@@ -24,27 +26,31 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 border-b border-white/10 bg-black backdrop-blur-xl">
-      <div className="mx-auto flex sm:h-14 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:h-14 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3">
-          <img
+          <Image
             src="/logos/iiitians-network.png"
             alt="IIITians Network"
-            className="h-5 sm:h-9 w-auto opacity-95"
+            width={120}
+            height={48}
+            className="h-5 w-auto opacity-95 sm:h-9"
+            priority
           />
-          <h1 className="opacity-50">|</h1>
-          <img
+          <span className="opacity-50">|</span>
+          <Image
             src="/logos/IEC LOGO Black.png"
             alt="IEC"
-            className="h-9 sm:h-15 w-auto invert opacity-95"
+            width={88}
+            height={88}
+            className="h-9 w-auto invert opacity-95 sm:h-15"
+            priority
           />
 
           <div className="hidden sm:block">
             <h1 className="text-sm font-semibold tracking-[0.1em] text-white">
               INTER IIIT
             </h1>
-            <p className="text-[10px]  text-slate-100">
-              Esports Championship
-            </p>
+            <p className="text-[10px] text-slate-100">Esports Championship</p>
           </div>
         </Link>
 
@@ -73,10 +79,11 @@ export default function Navbar() {
               </button>
 
               <div
-                className={`absolute left-1/2 top-full mt-4 w-56 -translate-x-1/2 overflow-hidden border border-white/10 bg-slate-950/95 shadow-[0_18px_60px_rgba(0,0,0,0.45)] transition-all duration-200 ${gamesOpen
+                className={`absolute left-1/2 top-full mt-4 w-56 -translate-x-1/2 overflow-hidden border border-white/10 bg-slate-950/95 shadow-[0_18px_60px_rgba(0,0,0,0.45)] transition-all duration-200 ${
+                  gamesOpen
                     ? "pointer-events-auto translate-y-0 opacity-100"
                     : "pointer-events-none -translate-y-2 opacity-0"
-                  }`}
+                }`}
               >
                 <div className="p-2">
                   {gameLinks.map((item) => (
@@ -100,23 +107,17 @@ export default function Navbar() {
             <button
               type="button"
               aria-label="Search"
-              className="grid h-9 w-9 place-items-center text-slate-300 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+              className="grid h-9 w-9 place-items-center text-slate-300 transition hover:bg-white/10 hover:text-white"
             >
               <Search size={16} />
             </button>
             <Link
               href="/team"
               aria-label="Account"
-              className="grid h-9 w-9 place-items-center  text-slate-300 transition hover:border-white/20 hover:bg-white/10 hover:text-white"
+              className="grid h-9 w-9 place-items-center text-slate-300 transition hover:bg-white/10 hover:text-white"
             >
               <User size={16} />
             </Link>
-            {/* <Link
-              href="/register"
-              className="px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-red-200 transition hover:text-white"
-            >
-              Register
-            </Link> */}
           </div>
         </div>
 
@@ -130,22 +131,21 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile Sidebar Overlay */}
       <div
         className={`fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
-          open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
         onClick={() => setOpen(false)}
       />
 
-      {/* Mobile Sidebar */}
       <div
-        className={`fixed top-0 right-0 z-50 h-[100dvh] w-64 border-l border-slate-200 bg-white p-4 shadow-2xl transition-transform duration-300 lg:hidden flex flex-col ${
+        className={`fixed right-0 top-0 z-50 flex h-[100dvh] w-64 flex-col border-l border-slate-200 bg-white p-4 shadow-2xl transition-transform duration-300 lg:hidden ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="mb-4 flex justify-end">
           <button
+            type="button"
             onClick={() => setOpen(false)}
             className="grid h-9 w-9 place-items-center rounded-md border border-slate-200 bg-slate-100 text-slate-900 transition hover:bg-slate-200"
           >
@@ -190,7 +190,7 @@ export default function Navbar() {
         <Link
           href="/register"
           onClick={() => setOpen(false)}
-          className="mt-5 inline-flex w-full items-center justify-center rounded-lg bg-red-600 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.1em] text-white transition hover:bg-red-500 shadow-[0_0_15px_rgba(220,38,38,0.2)]"
+          className="mt-5 inline-flex w-full items-center justify-center rounded-lg bg-red-600 px-4 py-2.5 text-xs font-bold uppercase tracking-[0.1em] text-white shadow-[0_0_15px_rgba(220,38,38,0.2)] transition hover:bg-red-500"
         >
           Register
         </Link>
@@ -198,4 +198,3 @@ export default function Navbar() {
     </nav>
   );
 }
-

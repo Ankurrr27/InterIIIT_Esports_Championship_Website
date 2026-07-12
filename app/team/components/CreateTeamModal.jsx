@@ -48,7 +48,11 @@ export default function CreateTeamModal({ onClose }) {
 
     } catch (err) {
       setSuccess(false);
-      setMessage(err.message);
+      if (err.message === "UNREGISTERED_COLLEGE") {
+        setMessage("Your college is not registered. Ask your esports club to register first.");
+      } else {
+        setMessage(err.message);
+      }
     }
 
     setLoading(false);

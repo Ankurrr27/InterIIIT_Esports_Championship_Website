@@ -1,0 +1,102 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { Search } from "lucide-react";
+import Navbar from "@/components/Navbar/Navbar";
+import Footer from "@/components/Footer";
+import CollegeCard from "@/components/college-registration/CollegeCard";
+
+export default function ParticipatingCollegesPage() {
+  const [colleges, setColleges] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    async function fetchColleges() {
+      try {
+        const res = await fetch("/api/college-requests?limit=100"); // Fetch approved by default
+        const data = await res.json();
+        if (data.success) {
+          setColleges(data.data);
+        }
+      } catch (err) {
+        console.error("Failed to fetch colleges:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchColleges();
+  }, []);
+
+  const filteredColleges = colleges.filter((c) =>
+    c.college_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    c.club_name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <main className="relative flex min-h-[100svh] flex-col overflow-hidden bg-slate-950">
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black" />
+        <div className="grunge-noise" />
+      </div>
+
+      <div className="relative z-10 flex min-h-[100svh] flex-col">
+        <Navbar />
+
+        <div className="mx-auto w-full max-w-7xl flex-1 px-4 py-12 sm:px-6 lg:py-20">
+          <div className="mb-12 flex flex-col items-center justify-between gap-6 md:flex-row md:items-end">
+            <div>
+              <h1 className="mb-3 text-4xl font-[family-name:var(--font-display)] tracking-wider text-white sm:text-5xl">
+                Participating Colleges
+              </h1>
+              <p className="max-w-2xl text-sm font-medium text-gray-400 sm:text-base">
+                Discover the official esports clubs representing IIITs across India in the upcoming championship.
+              </p>
+            </div>
+
+            <div className="relative w-full max-w-sm">
+              <Search size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Search colleges or clubs..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full rounded-lg border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-white outline-none transition-colors focus:border-red-500 focus:bg-white/10"
+              />
+            </div>
+          </div>
+
+          {loading ? (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                <div key={i} className="h-48 animate-pulse rounded-xl bg-white/5" />
+              ))}
+            </div>
+          ) : filteredColleges.length > 0 ? (
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {filteredColleges.map((college) => (
+                <CollegeCard key={college._id} college={college} />
+              ))}
+            </div>
+          ) : (
+            <div className="flex min-h-[40vh] flex-col items-center justify-center text-center">
+              <div className="mb-4 rounded-full bg-white/5 p-6 text-gray-500">
+                <Search size={48} />
+              </div>
+              <h3 className="mb-2 text-xl font-bold text-white">No colleges found</h3>
+              <p className="text-gray-400">
+                {searchQuery
+                  ? `No results for "${searchQuery}". Try a different search term.`
+                  : "No colleges have been approved yet. Check back later!"}
+              </p>
+            </div>
+          )}
+        </div>
+
+        <Footer />
+      </div>
+    </main>
+  );
+}

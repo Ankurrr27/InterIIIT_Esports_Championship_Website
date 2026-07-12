@@ -1,13 +1,20 @@
-import { withApi } from "@/lib/helpers/apiHandler";
 import { getGameById } from "@/lib/service/game.service";
+import { dbConnect } from "@/lib/mongodb";
 
-export const GET = withApi(async (req, { params }) => {
+export async function GET(req, { params }) {
+    try {
+        await dbConnect();
+        const { gameId } = await params;
+        const game = await getGameById(gameId);
 
-    const game = await getGameById(params.gameId);
-
-    return Response.json({
-        success: true,
-        game
-    });
-
-});
+        return Response.json({
+            success: true,
+            game
+        });
+    } catch (err) {
+        return Response.json({
+            success: false,
+            error: err.message
+        }, { status: 404 });
+    }
+}

@@ -1,13 +1,8 @@
-import { withApi } from "@/lib/helpers/apiHandler";
-import { getGames } from "@/lib/service/game.service";
+import { GAMES } from "@/lib/constants/games";
 
-export const GET = withApi(async () => {
-
-    const games = getGames();
-
+export async function GET() {
     return Response.json({
         success: true,
-        games
+        games: GAMES
     });
-
-});
+}

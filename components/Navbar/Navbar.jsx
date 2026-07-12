@@ -13,6 +13,7 @@ export default function Navbar() {
     { name: "Home", href: "/" },
     { name: "Events", href: "/event-details" },
     { name: "IEC Team", href: "/iec-team" },
+    { name: "Colleges", href: "/participating-colleges" },
     { name: "Registration", href: "/register" },
     { name: "Contact", href: "/support" },
   ];

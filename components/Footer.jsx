@@ -62,9 +62,21 @@ function Footer() {
                   </Link>
                 </li>
                 <li>
+                  <Link href="/participating-colleges" className="group flex w-full items-center justify-start transition hover:text-red-600">
+                    <ChevronRight size={14} className="mr-2 hidden opacity-0 transition-all group-hover:opacity-100 group-hover:text-red-600 sm:block" />
+                    Colleges
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/register-college" className="group flex w-full items-center justify-start transition hover:text-red-600">
+                    <ChevronRight size={14} className="mr-2 hidden opacity-0 transition-all group-hover:opacity-100 group-hover:text-red-600 sm:block" />
+                    Register College
+                  </Link>
+                </li>
+                <li>
                   <Link href="/register" className="group flex w-full items-center justify-start transition hover:text-red-600">
                     <ChevronRight size={14} className="mr-2 hidden opacity-0 transition-all group-hover:opacity-100 group-hover:text-red-600 sm:block" />
-                    Registration
+                    Player Registration
                   </Link>
                 </li>
                 <li>

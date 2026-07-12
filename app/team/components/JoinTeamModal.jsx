@@ -20,15 +20,17 @@ export default function JoinTeamModal({ onClose }) {
         throw new Error("Please login first.");
       }
 
-      const res = await fetch("/api/team/request", {
+      const isInviteCode = teamId.length <= 8;
+      const endpoint = isInviteCode ? "/api/team/join" : "/api/team/request";
+      const bodyPayload = isInviteCode ? { inviteCode: teamId } : { teamId };
+
+      const res = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          teamId,
-        }),
+        body: JSON.stringify(bodyPayload),
       });
 
       const data = await res.json();
@@ -105,7 +107,7 @@ export default function JoinTeamModal({ onClose }) {
             disabled={loading}
             className="group flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-red-500 py-3.5 font-semibold text-white shadow-lg shadow-red-500/25 transition-all duration-300 hover:scale-[1.02] hover:shadow-red-500/40 disabled:pointer-events-none disabled:opacity-60"
           >
-            {loading ? "Sending..." : "Send Join Request"}
+            {loading ? "Sending..." : (teamId.length <= 8 && teamId.length > 0 ? "Join Team" : "Send Join Request")}
             {!loading && <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />}
           </button>
         </div>

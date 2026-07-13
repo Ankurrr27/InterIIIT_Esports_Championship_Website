@@ -79,6 +79,11 @@ export default function CollegeRegistrationForm() {
       return;
     }
 
+    if (!logoFile) {
+      toast.error("Please upload a college logo");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -145,7 +150,7 @@ export default function CollegeRegistrationForm() {
         <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-4 md:col-span-2">
             <div>
-              <label className={labelClass}>College Logo</label>
+              <label className={labelClass}>College Logo *</label>
               <div className="mt-2 flex items-center gap-6">
                 <div
                   className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-dashed border-white/20 bg-black/50"
@@ -197,10 +202,11 @@ export default function CollegeRegistrationForm() {
           </div>
 
           <div className="relative group md:col-span-1">
-            <label className={labelClass}>College Website</label>
+            <label className={labelClass}>College Website *</label>
             <div className="relative">
               <LinkIcon size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-red-500" />
               <input
+                required
                 type="url"
                 name="college_website"
                 value={formData.college_website}
@@ -253,10 +259,11 @@ export default function CollegeRegistrationForm() {
           </div>
 
           <div className="relative group md:col-span-1">
-            <label className={labelClass}>Club Instagram</label>
+            <label className={labelClass}>Club Instagram *</label>
             <div className="relative">
               <FaInstagram size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-red-500" />
               <input
+                required
                 name="club_instagram"
                 value={formData.club_instagram}
                 onChange={handleChange}
@@ -328,10 +335,11 @@ export default function CollegeRegistrationForm() {
           </div>
 
           <div className="relative group md:col-span-1">
-            <label className={labelClass}>WhatsApp Number</label>
+            <label className={labelClass}>WhatsApp Number *</label>
             <div className="relative">
               <MessageCircle size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-red-500" />
               <input
+                required
                 type="tel"
                 name="whatsapp_number"
                 value={formData.whatsapp_number}
@@ -353,8 +361,9 @@ export default function CollegeRegistrationForm() {
 
         <div className="grid gap-6">
           <div className="relative group">
-            <label className={labelClass}>Short description about the club</label>
+            <label className={labelClass}>Short description about the club *</label>
             <textarea
+              required
               name="description"
               value={formData.description}
               onChange={handleChange}
@@ -365,8 +374,9 @@ export default function CollegeRegistrationForm() {
           </div>
 
           <div className="relative group">
-            <label className={labelClass}>Previous esports/event experience</label>
+            <label className={labelClass}>Previous esports/event experience *</label>
             <textarea
+              required
               name="experience"
               value={formData.experience}
               onChange={handleChange}

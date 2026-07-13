@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer";
-import Image from "next/image";
-import { Users, Shield, CheckCircle2, Lock, Loader2, LogOut, Trash2, Mail, Copy, Check } from "lucide-react";
+import { Users, Shield, Lock, Loader2, LogOut, Trash2, Mail, Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 
 export default function CurrentTeamPage() {
@@ -24,16 +23,9 @@ export default function CurrentTeamPage() {
   const fetchTeamData = async () => {
     try {
       const token = localStorage.getItem("token");
-      if (!token) {
-        router.push("/login");
-        return;
-      }
-
-      const res = await fetch("/api/team/current", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      if (!token) { router.push("/login"); return; }
+      const res = await fetch("/api/team/current", { headers: { Authorization: `Bearer ${token}` } });
       const data = await res.json();
-
       if (data.success) {
         setTeam(data.team);
         setCurrentUser(data.currentUser);
@@ -41,7 +33,7 @@ export default function CurrentTeamPage() {
         toast.error(data.message || "Failed to load team data");
         router.push("/team");
       }
-    } catch (err) {
+    } catch {
       toast.error("An error occurred");
       router.push("/team");
     } finally {
@@ -53,130 +45,79 @@ export default function CurrentTeamPage() {
     if (!team?.inviteCode) return;
     navigator.clipboard.writeText(team.inviteCode);
     setCopied(true);
-    toast.success("Invite code copied to clipboard!");
+    toast.success("Invite code copied!");
     setTimeout(() => setCopied(false), 2000);
   };
 
   const handleInvite = async (e) => {
     e.preventDefault();
     if (!inviteEmail) return;
-    
     setInviting(true);
     try {
       const token = localStorage.getItem("token");
       const res = await fetch("/api/team/invite", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ email: inviteEmail }),
       });
       const data = await res.json();
-      if (data.success) {
-        toast.success("Invitation sent successfully!");
-        setInviteEmail("");
-      } else {
-        toast.error(data.message || "Failed to send invite");
-      }
-    } catch (err) {
-      toast.error(err.message);
-    } finally {
-      setInviting(false);
-    }
+      if (data.success) { toast.success("Invitation sent!"); setInviteEmail(""); }
+      else toast.error(data.message || "Failed to send invite");
+    } catch { toast.error("Failed to send invite"); }
+    finally { setInviting(false); }
   };
 
   const handleRemoveMember = async (memberId) => {
-    if (!confirm("Are you sure you want to remove this member?")) return;
-    
+    if (!confirm("Remove this member?")) return;
     try {
       const token = localStorage.getItem("token");
       const res = await fetch("/api/team/remove-member", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({ memberId }),
       });
       const data = await res.json();
-      if (data.success) {
-        toast.success("Member removed");
-        fetchTeamData();
-      } else {
-        toast.error(data.message);
-      }
-    } catch (err) {
-      toast.error("Failed to remove member");
-    }
+      if (data.success) { toast.success("Member removed"); fetchTeamData(); }
+      else toast.error(data.message);
+    } catch { toast.error("Failed to remove member"); }
   };
 
   const handleLeaveTeam = async () => {
-    if (!confirm("Are you sure you want to leave this team?")) return;
-    
+    if (!confirm("Leave this team?")) return;
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("/api/team/leave", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch("/api/team/leave", { method: "POST", headers: { Authorization: `Bearer ${token}` } });
       const data = await res.json();
-      if (data.success) {
-        toast.success("Left team successfully");
-        router.push("/team");
-      } else {
-        toast.error(data.message);
-      }
-    } catch (err) {
-      toast.error("Failed to leave team");
-    }
+      if (data.success) { toast.success("Left team"); router.push("/team"); }
+      else toast.error(data.message);
+    } catch { toast.error("Failed to leave team"); }
   };
 
   const handleDeleteTeam = async () => {
-    if (!confirm("WARNING: This will permanently delete the team. Continue?")) return;
-    
+    if (!confirm("WARNING: Permanently delete the team?")) return;
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("/api/team/delete", {
-        method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch("/api/team/delete", { method: "DELETE", headers: { Authorization: `Bearer ${token}` } });
       const data = await res.json();
-      if (data.success) {
-        toast.success("Team deleted");
-        router.push("/team");
-      } else {
-        toast.error(data.message);
-      }
-    } catch (err) {
-      toast.error("Failed to delete team");
-    }
+      if (data.success) { toast.success("Team deleted"); router.push("/team"); }
+      else toast.error(data.message);
+    } catch { toast.error("Failed to delete team"); }
   };
 
   const handleRegister = async () => {
-    if (!confirm("Lock roster and register for the tournament? You cannot change members after this.")) return;
-    
+    if (!confirm("Lock roster and register? You cannot change members after this.")) return;
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("/api/team/register", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch("/api/team/register", { method: "POST", headers: { Authorization: `Bearer ${token}` } });
       const data = await res.json();
-      if (data.success) {
-        toast.success("Team registered successfully!");
-        fetchTeamData();
-      } else {
-        toast.error(data.message);
-      }
-    } catch (err) {
-      toast.error("Failed to register team");
-    }
+      if (data.success) { toast.success("Team registered!"); fetchTeamData(); }
+      else toast.error(data.message);
+    } catch { toast.error("Failed to register team"); }
   };
 
   if (loading) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-slate-950">
+      <main className="flex min-h-screen items-center justify-center bg-black">
         <Loader2 className="h-12 w-12 animate-spin text-red-500" />
       </main>
     );
@@ -187,135 +128,118 @@ export default function CurrentTeamPage() {
   const isCaptain = currentUser?.role === "LEADER";
 
   return (
-    <main className="overflow-x-hidden bg-slate-950 text-white min-h-screen pb-20">
+    <main className="min-h-screen overflow-x-hidden bg-black text-white">
       <Navbar />
 
-      <section className="relative overflow-hidden bg-black pt-16 pb-12 sm:pt-24 sm:pb-16 border-b border-white/10">
-        <div className="absolute top-0 left-1/2 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-red-600/10 blur-[120px] pointer-events-none" />
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col items-center text-center sm:flex-row sm:text-left sm:items-end gap-6 sm:gap-8">
-            <div className="flex flex-col justify-end">
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-red-500">
-                {team.college}
-              </p>
-              <h1 className="mt-2 text-5xl font-[family-name:var(--font-display)] tracking-wide text-white sm:text-7xl">
-                {team.name}
-              </h1>
-              <div className="mt-4 flex flex-wrap items-center justify-center sm:justify-start gap-4">
-                {team.isRegistered ? (
-                  <span className="flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400">
-                    <Lock size={14} /> Roster Locked & Registered
-                  </span>
-                ) : (
-                  <span className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-slate-300">
-                    <Users size={14} /> Open Roster ({team.members.length}/{team.maxPlayers})
-                  </span>
-                )}
-                <span className="text-xs text-slate-500 uppercase tracking-wider">
-                  Game: {team.game}
-                </span>
-              </div>
-            </div>
+      {/* Hero Section — matches site style */}
+      <section className="relative overflow-hidden px-4 pb-14 pt-24 sm:px-6 sm:pb-20 sm:pt-32 lg:px-8">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,rgba(239,68,68,0.22),transparent_34%),radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.06),transparent_26%),linear-gradient(135deg,#050505_0%,#0d0d10_48%,#020202_100%)]" />
+        <div className="absolute inset-0 opacity-[0.07] [background-image:linear-gradient(90deg,rgba(255,255,255,0.14)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.14)_1px,transparent_1px)] [background-size:52px_52px]" />
+        <div className="absolute bottom-0 left-0 h-px w-full bg-white/10">
+          <div className="h-full w-1/3 bg-red-600" />
+        </div>
+
+        <div className="relative mx-auto max-w-7xl">
+          <div className="mb-4 h-1 w-16 bg-red-600" />
+          <p className="text-[10px] font-semibold uppercase tracking-[0.5em] text-red-400">{team.college}</p>
+          <h1 className="mt-4 font-[family-name:var(--font-display)] text-5xl leading-none tracking-wide sm:text-7xl lg:text-8xl">
+            {team.name}
+          </h1>
+          <div className="mt-5 flex flex-wrap items-center gap-4">
+            {team.isRegistered ? (
+              <span className="flex items-center gap-1.5 border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-emerald-400">
+                <Lock size={12} /> Roster Locked & Registered
+              </span>
+            ) : (
+              <span className="flex items-center gap-1.5 border border-white/15 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-slate-300">
+                <Users size={12} /> Open Roster — {team.members.length}/{team.maxPlayers} Players
+              </span>
+            )}
+            <span className="text-xs font-bold uppercase tracking-widest text-white/35">{team.game}</span>
           </div>
         </div>
       </section>
 
-      <section className="relative bg-[#020617] py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid gap-12 lg:grid-cols-3">
-            
-            <div className="lg:col-span-2 space-y-12">
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <div>
-                    <h2 className="text-2xl font-bold tracking-tight text-white">Active Roster</h2>
-                    <p className="text-sm text-slate-400 mt-1">Current lineup for {team.game}.</p>
-                  </div>
-                  <Users className="text-slate-600 opacity-50" size={32} />
-                </div>
+      {/* Main content */}
+      <section className="bg-white px-4 py-12 text-slate-950 sm:px-6 sm:py-16 lg:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-8 lg:grid-cols-3">
 
-                <div className="grid gap-3 sm:grid-cols-2">
-                  {team.members.map((member, idx) => (
-                    <div key={idx} className="group relative overflow-hidden rounded-lg border border-white/5 bg-white/[0.02] p-4 transition-all hover:border-red-500/30">
-                      <div className="absolute top-0 right-0 p-4 opacity-10">
-                        {member.role === "LEADER" ? <Shield size={40} /> : <Users size={40} />}
-                      </div>
-                      
-                      <h3 className="text-xl font-bold text-white">
-                        {member.userId?.name || "Unknown"}
-                      </h3>
-                      <div className="mt-3 flex items-center justify-between border-t border-white/5 pt-3">
-                        <p className="text-sm text-slate-400">{member.userId?.collegeEmail}</p>
-                        <span className="rounded bg-black/50 px-2 py-1 text-[10px] font-medium uppercase tracking-wider text-slate-300">
-                          {member.role}
+            {/* Roster */}
+            <div className="lg:col-span-2">
+              <div className="mb-6 flex items-center justify-between">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-red-600">Squad</p>
+                  <h2 className="mt-1 font-[family-name:var(--font-display)] text-4xl leading-none tracking-wide">Active Roster</h2>
+                </div>
+                <span className="text-sm font-semibold text-slate-400">{team.members.length}/{team.maxPlayers}</span>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-2">
+                {team.members.map((member, idx) => (
+                  <div key={idx} className="group relative overflow-hidden bg-black text-white border border-transparent hover:border-red-500/30 transition-colors">
+                    <div className="absolute inset-x-0 top-0 h-0.5 bg-red-600" />
+                    <div className="absolute right-0 top-0 h-20 w-20 bg-red-600/10 blur-2xl transition group-hover:bg-red-600/20" />
+                    <div className="relative p-5">
+                      <div className="flex items-start justify-between">
+                        <div>
+                          <h3 className="text-lg font-black text-white">{member.userId?.name || "Unknown"}</h3>
+                          <p className="mt-1 text-xs text-white/50 truncate max-w-[180px]">{member.userId?.collegeEmail}</p>
+                        </div>
+                        <span className={`shrink-0 ml-2 px-2 py-0.5 text-[9px] font-black uppercase tracking-widest border ${member.role === "LEADER" ? "border-red-500/40 bg-red-500/10 text-red-400" : "border-white/10 bg-white/5 text-slate-400"}`}>
+                          {member.role === "LEADER" ? <span className="flex items-center gap-1"><Shield size={9} /> Captain</span> : "Player"}
                         </span>
                       </div>
-                      
                       {isCaptain && member.role !== "LEADER" && !team.isRegistered && (
-                        <button 
+                        <button
                           onClick={() => handleRemoveMember(member.userId?._id)}
-                          className="absolute top-2 right-2 p-1.5 bg-red-500/10 text-red-500 rounded hover:bg-red-500 hover:text-white transition-colors"
-                          title="Remove Member"
+                          className="mt-4 text-[10px] font-bold uppercase tracking-wider text-red-500 hover:text-red-400 transition-colors"
                         >
-                          <Trash2 size={14} />
+                          Remove
                         </button>
                       )}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
 
-            <div className="space-y-6">
-              <div className="rounded-xl border border-white/10 bg-black/40 p-6">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-6">
-                  Tournament Status
-                </h3>
-                
-                <div className="space-y-4">
-                  <div className={`flex flex-col justify-center rounded-lg border p-4 ${team.isRegistered ? 'border-emerald-500/20 bg-emerald-500/10' : 'border-orange-500/20 bg-orange-500/10'}`}>
-                    <div className="flex items-center justify-between">
-                      <span className="font-semibold text-white">{team.game}</span>
-                      <span className={`text-[10px] font-bold uppercase tracking-wider ${team.isRegistered ? 'text-emerald-400' : 'text-orange-400'}`}>
-                        {team.isRegistered ? "Registered" : "Pending"}
-                      </span>
-                    </div>
-                  </div>
+            {/* Sidebar */}
+            <div className="space-y-4">
+              {/* Status */}
+              <div className="bg-black text-white p-5 border border-white/10">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-white/40 mb-4">Tournament Status</p>
+                <div className={`flex items-center justify-between rounded p-3 border text-sm font-semibold ${team.isRegistered ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-400" : "border-orange-500/30 bg-orange-500/10 text-orange-400"}`}>
+                  <span>{team.game}</span>
+                  <span className="text-[10px] uppercase tracking-wider font-black">{team.isRegistered ? "Registered" : "Pending"}</span>
                 </div>
-                
                 {isCaptain && !team.isRegistered && (
-                  <button 
+                  <button
                     onClick={handleRegister}
-                    className="mt-6 w-full rounded-lg bg-emerald-600/10 border border-emerald-500/20 py-3 text-xs font-semibold uppercase tracking-[0.15em] text-emerald-400 transition hover:bg-emerald-600/20 hover:border-emerald-500/40"
+                    className="mt-4 w-full bg-white text-black py-2.5 text-xs font-black uppercase tracking-[0.2em] hover:bg-slate-200 transition-colors"
                   >
                     Lock & Register Team
                   </button>
                 )}
               </div>
 
+              {/* Invite */}
               {isCaptain && !team.isRegistered && (
-                <div className="rounded-xl border border-white/10 bg-black/40 p-6">
-                  <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4">
-                    Invite Players
-                  </h3>
-                  
+                <div className="bg-black text-white p-5 border border-white/10">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-white/40 mb-4">Invite Players</p>
+
                   <div className="mb-4">
-                    <p className="text-xs text-slate-500 mb-2">Invite Code</p>
-                    <div className="flex bg-white/5 border border-white/10 rounded-lg p-1">
-                      <div className="flex-1 px-3 py-2 text-sm font-mono tracking-wider text-red-400">
-                        {team.inviteCode}
-                      </div>
-                      <button 
-                        onClick={handleCopyCode}
-                        className="bg-white/10 hover:bg-white/20 p-2 rounded-md transition-colors"
-                      >
-                        {copied ? <Check size={16} className="text-emerald-400" /> : <Copy size={16} className="text-slate-300" />}
+                    <p className="text-[10px] text-white/30 uppercase tracking-wider mb-2">Invite Code</p>
+                    <div className="flex bg-white/5 border border-white/10">
+                      <div className="flex-1 px-3 py-2 text-sm font-mono tracking-widest text-red-400">{team.inviteCode}</div>
+                      <button onClick={handleCopyCode} className="bg-white/10 hover:bg-white/20 px-3 transition-colors">
+                        {copied ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} className="text-slate-300" />}
                       </button>
                     </div>
                   </div>
 
                   <form onSubmit={handleInvite}>
-                    <p className="text-xs text-slate-500 mb-2">Invite via Email</p>
+                    <p className="text-[10px] text-white/30 uppercase tracking-wider mb-2">Invite via Email</p>
                     <div className="flex gap-2">
                       <input
                         type="email"
@@ -323,45 +247,37 @@ export default function CurrentTeamPage() {
                         value={inviteEmail}
                         onChange={(e) => setInviteEmail(e.target.value)}
                         placeholder="player@college.edu"
-                        className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-slate-600 focus:border-red-500 focus:outline-none"
+                        className="flex-1 bg-white/5 border border-white/10 px-3 py-2 text-sm text-white placeholder:text-white/20 focus:border-red-500 focus:outline-none"
                       />
-                      <button 
-                        type="submit"
-                        disabled={inviting}
-                        className="bg-red-600 hover:bg-red-500 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
-                      >
-                        {inviting ? <Loader2 size={16} className="animate-spin" /> : <Mail size={16} />}
+                      <button type="submit" disabled={inviting} className="bg-red-600 hover:bg-red-500 text-white px-3 py-2 transition-colors disabled:opacity-50">
+                        {inviting ? <Loader2 size={14} className="animate-spin" /> : <Mail size={14} />}
                       </button>
                     </div>
                   </form>
                 </div>
               )}
 
-              <div className="rounded-xl border border-white/10 bg-black/40 p-6 space-y-3">
-                <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-4">
-                  Danger Zone
-                </h3>
-                
+              {/* Danger Zone */}
+              <div className="bg-black text-white p-5 border border-white/10">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-white/40 mb-4">Danger Zone</p>
                 {!isCaptain && (
-                  <button 
+                  <button
                     onClick={handleLeaveTeam}
                     disabled={team.isRegistered}
-                    className="w-full flex items-center justify-center gap-2 rounded-lg bg-orange-500/10 border border-orange-500/20 py-2.5 text-xs font-semibold uppercase tracking-[0.1em] text-orange-400 transition hover:bg-orange-500/20 disabled:opacity-50"
+                    className="w-full flex items-center justify-center gap-2 border border-orange-500/30 bg-orange-500/10 py-2.5 text-xs font-bold uppercase tracking-wider text-orange-400 hover:bg-orange-500/20 transition-colors disabled:opacity-40"
                   >
-                    <LogOut size={16} /> Leave Team
+                    <LogOut size={14} /> Leave Team
                   </button>
                 )}
-                
                 {isCaptain && (
-                  <button 
+                  <button
                     onClick={handleDeleteTeam}
-                    className="w-full flex items-center justify-center gap-2 rounded-lg bg-red-500/10 border border-red-500/20 py-2.5 text-xs font-semibold uppercase tracking-[0.1em] text-red-500 transition hover:bg-red-500/20 hover:text-red-400"
+                    className="w-full flex items-center justify-center gap-2 border border-red-500/30 bg-red-500/10 py-2.5 text-xs font-bold uppercase tracking-wider text-red-500 hover:bg-red-500/20 transition-colors"
                   >
-                    <Trash2 size={16} /> Disband Team
+                    <Trash2 size={14} /> Disband Team
                   </button>
                 )}
               </div>
-
             </div>
 
           </div>

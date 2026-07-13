@@ -1,7 +1,9 @@
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { format } from "date-fns";
-import { Building2, Mail, Phone, MessageCircle, Briefcase, User, MapPin, Globe, Calendar, CheckCircle } from "lucide-react";
+import { Building2, Mail, Phone, MessageCircle, Briefcase, User, Globe, Calendar, CheckCircle, Edit, Save, X } from "lucide-react";
 import { FaInstagram } from "react-icons/fa";
+import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -11,156 +13,203 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
-export default function RequestDetailsModal({ isOpen, onClose, request }) {
+export default function RequestDetailsModal({ isOpen, onClose, request, currentUser, onUpdate }) {
+  const [isEditing, setIsEditing] = useState(false);
+  const [formData, setFormData] = useState({});
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (request) {
+      setFormData({
+        college_name: request.college_name || "",
+        club_name: request.club_name || "",
+        coordinator_name: request.coordinator_name || "",
+        designation: request.designation || "",
+        contact_number: request.contact_number || "",
+        whatsapp_number: request.whatsapp_number || "",
+        club_email: request.club_email || "",
+        club_instagram: request.club_instagram || "",
+        college_website: request.college_website || "",
+        description: request.description || "",
+        experience: request.experience || "",
+      });
+      setIsEditing(false);
+    }
+  }, [request, isOpen]);
+
   if (!request) return null;
 
+  const isAdmin = currentUser?.role === "ADMIN";
+
   const statusColors = {
-    Pending: "bg-amber-500/10 text-amber-500 hover:bg-amber-500/20",
-    Approved: "bg-green-500/10 text-green-500 hover:bg-green-500/20",
-    Rejected: "bg-red-500/10 text-red-500 hover:bg-red-500/20",
+    Pending:  "bg-amber-50 text-amber-700 border-amber-200",
+    Approved: "bg-green-50 text-green-700 border-green-200",
+    Rejected: "bg-red-50 text-red-700 border-red-200",
   };
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`/api/college-requests/${request._id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify(formData)
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Details updated successfully");
+        setIsEditing(false);
+        if (onUpdate) onUpdate();
+      } else toast.error(data.error || "Failed to update details");
+    } catch { toast.error("An error occurred while saving"); }
+    finally { setSaving(false); }
+  };
+
+  const handleChange = (e) => setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+
+  const inputCls = "w-full bg-white border border-gray-200 rounded px-2 py-1 text-sm text-slate-900 focus:border-red-500 focus:outline-none";
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto border-white/10 bg-slate-950 text-white shadow-2xl sm:max-w-3xl">
+      <DialogContent className="max-h-[90vh] max-w-2xl overflow-y-auto border-gray-200 bg-white text-slate-900 shadow-xl sm:max-w-3xl">
         <DialogHeader className="mb-4">
           <div className="flex items-center justify-between pr-6">
-            <DialogTitle className="text-2xl font-bold tracking-tight">
-              Registration Details
-            </DialogTitle>
-            <Badge variant="outline" className={`border-0 ${statusColors[request.status]}`}>
+            <div className="flex items-center gap-4">
+              <DialogTitle className="text-xl font-bold tracking-tight text-slate-900">
+                Registration Details
+              </DialogTitle>
+              {isAdmin && !isEditing && (
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="flex items-center gap-1.5 rounded-md bg-gray-100 px-2 py-1 text-xs font-semibold text-slate-700 hover:bg-gray-200 transition-colors"
+                >
+                  <Edit size={13} /> Edit
+                </button>
+              )}
+            </div>
+            <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${statusColors[request.status]}`}>
               {request.status}
-            </Badge>
+            </span>
           </div>
         </DialogHeader>
 
-        <div className="space-y-8 pb-6">
-          {/* Header section with logo and primary info */}
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-start">
-            <div className="flex h-32 w-32 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-black/50">
+        <div className="space-y-6 pb-4">
+          {/* College header */}
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
+            <div className="flex h-24 w-24 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-gray-200 bg-gray-50">
               {request.college_logo ? (
-                <Image
-                  src={request.college_logo}
-                  alt={request.college_name}
-                  width={128}
-                  height={128}
-                  className="h-full w-full object-contain p-2"
-                />
+                <Image src={request.college_logo} alt={request.college_name} width={96} height={96} className="h-full w-full object-contain p-2" />
               ) : (
-                <Building2 size={48} className="text-gray-500" />
+                <Building2 size={40} className="text-gray-300" />
               )}
             </div>
-            
-            <div className="flex-1 space-y-2">
-              <h3 className="text-2xl font-[family-name:var(--font-display)] tracking-wide text-white">
-                {request.college_name}
-              </h3>
-              <p className="flex items-center gap-2 text-lg font-medium text-red-400">
-                <Briefcase size={18} />
-                {request.club_name}
-              </p>
-              
-              <div className="mt-4 flex flex-wrap gap-4 text-sm text-gray-400">
-                <div className="flex items-center gap-1.5">
-                  <Calendar size={14} />
-                  <span>Submitted: {format(new Date(request.createdAt), "MMM d, yyyy")}</span>
-                </div>
-                {request.approved_at && (
-                  <div className="flex items-center gap-1.5 text-green-500/80">
-                    <CheckCircle size={14} />
-                    <span>Approved: {format(new Date(request.approved_at), "MMM d, yyyy")}</span>
-                  </div>
-                )}
+            <div className="flex-1 space-y-1">
+              {isEditing
+                ? <input type="text" name="college_name" value={formData.college_name} onChange={handleChange} className={`${inputCls} text-xl font-bold`} />
+                : <h3 className="text-xl font-bold text-slate-900">{request.college_name}</h3>}
+              {isEditing
+                ? <input type="text" name="club_name" value={formData.club_name} onChange={handleChange} className={`${inputCls} text-red-600 font-semibold mt-1`} />
+                : <p className="flex items-center gap-2 text-sm font-semibold text-red-600"><Briefcase size={15} />{request.club_name}</p>}
+              <div className="mt-2 flex flex-wrap gap-4 text-xs text-gray-400">
+                <div className="flex items-center gap-1"><Calendar size={12} /> Submitted {format(new Date(request.createdAt), "MMM d, yyyy")}</div>
+                {request.approved_at && <div className="flex items-center gap-1 text-green-600"><CheckCircle size={12} /> Approved {format(new Date(request.approved_at), "MMM d, yyyy")}</div>}
               </div>
             </div>
           </div>
 
-          <Separator className="bg-white/10" />
+          <Separator className="bg-gray-100" />
 
-          {/* Details Grid */}
-          <div className="grid gap-8 md:grid-cols-2">
-            
-            {/* Left Column */}
-            <div className="space-y-6">
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* Left: Coordinator & Club contact */}
+            <div className="space-y-4">
               <div>
-                <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
-                  Coordinator Information
-                </h4>
-                <div className="space-y-3 rounded-lg border border-white/5 bg-white/[0.02] p-4">
-                  <div className="flex items-center gap-3 text-sm">
-                    <User size={16} className="text-gray-400" />
-                    <div>
-                      <p className="font-medium text-white">{request.coordinator_name}</p>
-                      <p className="text-xs text-gray-500">{request.designation}</p>
-                    </div>
+                <h4 className="mb-2 text-[10px] font-bold uppercase tracking-wider text-gray-400">Coordinator</h4>
+                <div className="space-y-2 rounded-lg border border-gray-100 bg-gray-50 p-3">
+                  <div className="flex items-center gap-2 text-sm">
+                    <User size={14} className="text-gray-400 shrink-0" />
+                    {isEditing ? (
+                      <div className="flex-1 space-y-1.5">
+                        <input type="text" name="coordinator_name" value={formData.coordinator_name} onChange={handleChange} placeholder="Name" className={inputCls} />
+                        <input type="text" name="designation" value={formData.designation} onChange={handleChange} placeholder="Designation" className={inputCls} />
+                      </div>
+                    ) : (
+                      <div><p className="font-semibold text-slate-900">{request.coordinator_name}</p><p className="text-xs text-gray-500">{request.designation}</p></div>
+                    )}
                   </div>
-                  <div className="flex items-center gap-3 text-sm">
-                    <Phone size={16} className="text-gray-400" />
-                    <span className="text-gray-300">{request.contact_number}</span>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Phone size={14} className="text-gray-400 shrink-0" />
+                    {isEditing
+                      ? <input type="text" name="contact_number" value={formData.contact_number} onChange={handleChange} placeholder="Contact" className={`${inputCls} flex-1`} />
+                      : <span className="text-slate-700">{request.contact_number}</span>}
                   </div>
-                  {request.whatsapp_number && (
-                    <div className="flex items-center gap-3 text-sm">
-                      <MessageCircle size={16} className="text-green-500" />
-                      <span className="text-gray-300">{request.whatsapp_number}</span>
-                    </div>
-                  )}
+                  <div className="flex items-center gap-2 text-sm">
+                    <MessageCircle size={14} className="text-green-500 shrink-0" />
+                    {isEditing
+                      ? <input type="text" name="whatsapp_number" value={formData.whatsapp_number} onChange={handleChange} placeholder="WhatsApp" className={`${inputCls} flex-1`} />
+                      : <span className="text-slate-700">{request.whatsapp_number || "—"}</span>}
+                  </div>
                 </div>
               </div>
 
               <div>
-                <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
-                  Club Contact
-                </h4>
-                <div className="space-y-3 rounded-lg border border-white/5 bg-white/[0.02] p-4">
-                  <div className="flex items-center gap-3 text-sm">
-                    <Mail size={16} className="text-gray-400" />
-                    <span className="text-gray-300">{request.club_email}</span>
+                <h4 className="mb-2 text-[10px] font-bold uppercase tracking-wider text-gray-400">Club Contact</h4>
+                <div className="space-y-2 rounded-lg border border-gray-100 bg-gray-50 p-3">
+                  <div className="flex items-center gap-2 text-sm">
+                    <Mail size={14} className="text-gray-400 shrink-0" />
+                    {isEditing
+                      ? <input type="email" name="club_email" value={formData.club_email} onChange={handleChange} className={`${inputCls} flex-1`} />
+                      : <span className="text-slate-700">{request.club_email}</span>}
                   </div>
-                  {request.club_instagram && (
-                    <div className="flex items-center gap-3 text-sm">
-                      <FaInstagram size={16} className="text-pink-500" />
-                      <span className="text-gray-300">{request.club_instagram}</span>
-                    </div>
-                  )}
-                  {request.college_website && (
-                    <div className="flex items-center gap-3 text-sm">
-                      <Globe size={16} className="text-blue-400" />
-                      <a 
-                        href={request.college_website} 
-                        target="_blank" 
-                        rel="noreferrer"
-                        className="text-blue-400 hover:underline"
-                      >
-                        {request.college_website}
-                      </a>
-                    </div>
-                  )}
+                  <div className="flex items-center gap-2 text-sm">
+                    <FaInstagram size={14} className="text-pink-500 shrink-0" />
+                    {isEditing
+                      ? <input type="text" name="club_instagram" value={formData.club_instagram} onChange={handleChange} placeholder="Instagram" className={`${inputCls} flex-1`} />
+                      : <span className="text-slate-700">{request.club_instagram || "—"}</span>}
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Globe size={14} className="text-blue-500 shrink-0" />
+                    {isEditing
+                      ? <input type="url" name="college_website" value={formData.college_website} onChange={handleChange} placeholder="Website" className={`${inputCls} flex-1`} />
+                      : request.college_website
+                        ? <a href={request.college_website} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline truncate">{request.college_website}</a>
+                        : <span className="text-gray-400">—</span>}
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Right Column */}
-            <div className="space-y-6">
+            {/* Right: Description & Experience */}
+            <div className="space-y-4">
               <div>
-                <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
-                  Club Description
-                </h4>
-                <div className="min-h-[100px] rounded-lg border border-white/5 bg-white/[0.02] p-4 text-sm text-gray-300 leading-relaxed">
-                  {request.description || <span className="italic text-gray-600">No description provided</span>}
-                </div>
+                <h4 className="mb-2 text-[10px] font-bold uppercase tracking-wider text-gray-400">Club Description</h4>
+                {isEditing
+                  ? <textarea name="description" value={formData.description} onChange={handleChange} rows={4} className={`${inputCls} resize-none`} />
+                  : <div className="min-h-[90px] rounded-lg border border-gray-100 bg-gray-50 p-3 text-sm text-slate-700 leading-relaxed">
+                      {request.description || <span className="italic text-gray-400">No description provided</span>}
+                    </div>}
               </div>
-
               <div>
-                <h4 className="mb-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
-                  Previous Experience
-                </h4>
-                <div className="min-h-[100px] rounded-lg border border-white/5 bg-white/[0.02] p-4 text-sm text-gray-300 leading-relaxed">
-                  {request.experience || <span className="italic text-gray-600">No experience details provided</span>}
-                </div>
+                <h4 className="mb-2 text-[10px] font-bold uppercase tracking-wider text-gray-400">Previous Experience</h4>
+                {isEditing
+                  ? <textarea name="experience" value={formData.experience} onChange={handleChange} rows={4} className={`${inputCls} resize-none`} />
+                  : <div className="min-h-[90px] rounded-lg border border-gray-100 bg-gray-50 p-3 text-sm text-slate-700 leading-relaxed">
+                      {request.experience || <span className="italic text-gray-400">No experience details provided</span>}
+                    </div>}
               </div>
             </div>
-            
           </div>
+
+          {isEditing && (
+            <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
+              <button onClick={() => setIsEditing(false)} disabled={saving} className="flex items-center gap-1.5 px-4 py-2 text-sm text-gray-500 hover:text-slate-900 transition-colors">
+                <X size={15} /> Cancel
+              </button>
+              <button onClick={handleSave} disabled={saving} className="flex items-center gap-1.5 rounded-lg bg-red-600 px-5 py-2 text-sm font-semibold text-white hover:bg-red-500 transition-colors disabled:opacity-50">
+                <Save size={15} /> {saving ? "Saving..." : "Save Changes"}
+              </button>
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>

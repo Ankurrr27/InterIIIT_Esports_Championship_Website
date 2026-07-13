@@ -1,33 +1,8 @@
 import Image from "next/image";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar/Navbar";
-
-const teamMembers = [
-  {
-    name: "Ankur Singh",
-    role: "Frontend Lead",
-    department: "Website & Experience",
-    tag: "UI",
-    image: "/developers/ankur.jpg",
-    note: "Handles interface polish, responsiveness, and participant-facing flows.",
-  },
-  {
-    name: "Advik",
-    role: "Frontend Developer",
-    department: "Design Implementation",
-    tag: "UX",
-    image: "/developers/Advik.jpeg",
-    note: "Works on visual sections, page structure, and event UI refinements.",
-  },
-  {
-    name: "Rahul",
-    role: "Backend Developer",
-    department: "Platform Systems",
-    tag: "API",
-    image: "/developers/rahul.jpg",
-    note: "Supports authentication, teams, registrations, and backend operations.",
-  },
-];
+import { dbConnect } from "@/lib/mongodb";
+import IECTeamMember from "@/lib/models/IECTeamMember";
 
 const crewStats = [
   { value: "03", label: "Core Members" },
@@ -40,7 +15,12 @@ export const metadata = {
   description: "Meet the IEC team behind the Inter IIIT Esports Championship.",
 };
 
-export default function IecTeamPage() {
+export default async function IecTeamPage() {
+  await dbConnect();
+  
+  // Fetch team members from database directly in the Server Component
+  const teamMembers = await IECTeamMember.find({}).sort({ order: 1, createdAt: 1 }).lean();
+
   return (
     <main className="min-h-screen overflow-hidden bg-black text-white">
       <Navbar />
@@ -65,7 +45,7 @@ export default function IecTeamPage() {
 
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
             {crewStats.map((item) => (
-              <div key={item.label} className="bg-white/[0.055] p-5">
+              <div key={item.label} className="bg-white/[0.055] p-5 border border-white/5">
                 <p className="text-3xl font-black text-white">{item.value}</p>
                 <p className="mt-2 text-[10px] font-semibold uppercase tracking-[0.28em] text-white/45">
                   {item.label}
@@ -95,42 +75,40 @@ export default function IecTeamPage() {
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {teamMembers.map((member, index) => (
               <article
-                key={member.name}
-                className="group relative overflow-hidden bg-black text-white"
+                key={member._id.toString()}
+                className="group relative overflow-hidden bg-black text-white border border-transparent hover:border-red-500/30 transition-colors"
               >
-                <div className="absolute inset-x-0 top-0 h-1 bg-red-600" />
-                <div className="absolute right-0 top-0 h-32 w-32 bg-red-600/15 blur-3xl transition duration-500 group-hover:bg-red-600/25" />
+                <div className="absolute inset-x-0 top-0 h-1 bg-red-600 z-10" />
+                <div className="absolute right-0 top-0 h-32 w-32 bg-red-600/15 blur-3xl transition duration-500 group-hover:bg-red-600/25 z-0" />
 
-                <div className="relative h-80 overflow-hidden bg-slate-950">
+                <div className="relative h-80 overflow-hidden bg-slate-950 z-10">
                   <Image
-                    src={member.image}
+                    src={member.image_url}
                     alt={member.name}
                     fill
                     sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                     className="object-cover object-top grayscale transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-                  <span className="absolute left-4 top-4 bg-white px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-black">
-                    {member.tag}
-                  </span>
                   <span className="absolute bottom-4 left-4 bg-red-600 px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.24em] text-white">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                 </div>
 
-                <div className="relative p-5">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-red-300">
-                    {member.department}
-                  </p>
+                <div className="relative p-5 z-10">
                   <h3 className="mt-2 text-2xl font-black text-white">
                     {member.name}
                   </h3>
-                  <p className="mt-1 text-sm font-semibold text-white/55">
+                  <p className="mt-1 text-sm font-semibold text-white/80 text-red-400">
                     {member.role}
                   </p>
-                  <p className="mt-4 text-sm leading-6 text-white/62">
-                    {member.note}
-                  </p>
+
+                  {(member.instagram || member.linkedin) && (
+                    <div className="mt-4 flex gap-3 text-sm text-slate-400">
+                      {member.instagram && <a href={member.instagram} target="_blank" rel="noreferrer" className="hover:text-red-400">Instagram</a>}
+                      {member.linkedin && <a href={member.linkedin} target="_blank" rel="noreferrer" className="hover:text-blue-400">LinkedIn</a>}
+                    </div>
+                  )}
 
                   <div className="mt-5 flex items-center justify-between gap-3">
                     <span className="h-px flex-1 bg-white/12" />
@@ -141,6 +119,12 @@ export default function IecTeamPage() {
                 </div>
               </article>
             ))}
+
+            {teamMembers.length === 0 && (
+              <div className="col-span-full py-16 text-center text-slate-500 border border-dashed border-slate-200">
+                The core team is currently being assembled.
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -156,7 +140,7 @@ export default function IecTeamPage() {
             </h2>
           </div>
           <p className="text-sm leading-7 text-white/65 sm:text-base">
-            This team page is ready for more IEC members. Add new photos and names to the member list as the organizing crew grows.
+            This team page is dynamically managed from the IEC admin panel. Admins can instantly add new photos and names to the member list as the organizing crew grows.
           </p>
         </div>
       </section>

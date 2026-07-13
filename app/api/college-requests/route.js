@@ -1,7 +1,7 @@
 import { dbConnect } from "@/lib/mongodb";
 import CollegeRequest from "@/lib/models/CollegeRequest";
 import { uploadToCloudinary } from "@/lib/cloudinary";
-import { requireAdmin } from "@/lib/helpers/adminAuth";
+import { requireAdmin, requireStaff } from "@/lib/helpers/adminAuth";
 
 /**
  * POST /api/college-requests
@@ -30,11 +30,16 @@ export async function POST(req) {
     // Validate required fields
     const requiredFields = {
       college_name,
+      college_website,
       club_name,
       club_email,
+      club_instagram,
       coordinator_name,
       designation,
       contact_number,
+      whatsapp_number,
+      description,
+      experience,
     };
 
     for (const [field, value] of Object.entries(requiredFields)) {
@@ -44,6 +49,13 @@ export async function POST(req) {
           { status: 400 }
         );
       }
+    }
+
+    if (!logoFile || logoFile.size === 0) {
+      return Response.json(
+        { success: false, error: "college logo is required" },
+        { status: 400 }
+      );
     }
 
     // Validate email format
@@ -130,19 +142,19 @@ export async function GET(req) {
     const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
     const limit = Math.min(50, Math.max(1, parseInt(searchParams.get("limit") || "12", 10)));
 
-    // Check if admin
-    let isAdmin = false;
+    // Check if staff
+    let isStaff = false;
     try {
-      await requireAdmin(req);
-      isAdmin = true;
+      await requireStaff(req);
+      isStaff = true;
     } catch {
-      // Not admin — public access
+      // Not staff — public access
     }
 
     // Build filter
     const filter = {};
 
-    if (!isAdmin) {
+    if (!isStaff) {
       // Public only sees approved
       filter.status = "Approved";
     } else if (status && ["Pending", "Approved", "Rejected"].includes(status)) {

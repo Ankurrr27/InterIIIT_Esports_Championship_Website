@@ -1,0 +1,275 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import { toast } from "sonner";
+import { Loader2, Plus, Trash2, Image as ImageIcon, Users, Pencil } from "lucide-react";
+import Image from "next/image";
+
+export default function IECTeamAdminPage() {
+  const [members, setMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState("");
+  const [showAdd, setShowAdd] = useState(false);
+  const [editTarget, setEditTarget] = useState(null); // member being edited
+  const [submitting, setSubmitting] = useState(false);
+
+  const [form, setForm] = useState({ name: "", role: "", instagram: "", linkedin: "", order: 0 });
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const fileInputRef = useRef(null);
+  const editFileInputRef = useRef(null);
+
+  const [editImageFile, setEditImageFile] = useState(null);
+  const [editImagePreview, setEditImagePreview] = useState(null);
+  const [editForm, setEditForm] = useState({ name: "", role: "", instagram: "", linkedin: "", order: 0 });
+
+  useEffect(() => {
+    const t = localStorage.getItem("token");
+    if (t) { setToken(t); fetchMembers(); }
+  }, []);
+
+  const fetchMembers = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch("/api/public/iec-team");
+      const data = await res.json();
+      if (data.success) setMembers(data.team);
+    } catch { toast.error("Failed to fetch IEC team"); }
+    finally { setLoading(false); }
+  };
+
+  const openEdit = (member) => {
+    setEditTarget(member);
+    setEditForm({
+      name: member.name,
+      role: member.role,
+      instagram: member.instagram || "",
+      linkedin: member.linkedin || "",
+      order: member.order || 0,
+    });
+    setEditImageFile(null);
+    setEditImagePreview(member.image_url);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) { setImageFile(file); setImagePreview(URL.createObjectURL(file)); }
+  };
+
+  const handleEditImageChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) { setEditImageFile(file); setEditImagePreview(URL.createObjectURL(file)); }
+  };
+
+  const handleAddSubmit = async (e) => {
+    e.preventDefault();
+    if (!imageFile) return toast.error("Profile image is required");
+    setSubmitting(true);
+    const formData = new FormData();
+    formData.append("name", form.name);
+    formData.append("role", form.role);
+    formData.append("instagram", form.instagram);
+    formData.append("linkedin", form.linkedin);
+    formData.append("order", form.order);
+    formData.append("image", imageFile);
+    try {
+      const res = await fetch("/api/admin/iec-team", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Member added");
+        setShowAdd(false);
+        setForm({ name: "", role: "", instagram: "", linkedin: "", order: 0 });
+        setImageFile(null); setImagePreview(null);
+        fetchMembers();
+      } else toast.error(data.error);
+    } catch { toast.error("Failed to add member"); }
+    finally { setSubmitting(false); }
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitting(true);
+    const formData = new FormData();
+    formData.append("name", editForm.name);
+    formData.append("role", editForm.role);
+    formData.append("instagram", editForm.instagram);
+    formData.append("linkedin", editForm.linkedin);
+    formData.append("order", editForm.order);
+    if (editImageFile) formData.append("image", editImageFile);
+    try {
+      const res = await fetch(`/api/admin/iec-team?id=${editTarget._id}`, {
+        method: "PATCH",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Member updated");
+        setEditTarget(null);
+        setEditImageFile(null);
+        fetchMembers();
+      } else toast.error(data.error);
+    } catch { toast.error("Failed to update member"); }
+    finally { setSubmitting(false); }
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm("Remove this member from the core team?")) return;
+    try {
+      const res = await fetch(`/api/admin/iec-team?id=${id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.ok) { toast.success("Member removed"); fetchMembers(); }
+    } catch { toast.error("Delete failed"); }
+  };
+
+  const inputCls = "w-full bg-white border border-gray-200 rounded-md px-3 py-2 text-sm text-slate-900 placeholder:text-gray-400 focus:border-red-500 focus:outline-none shadow-sm";
+  const labelCls = "text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1 block";
+
+  const MemberModal = ({ title, onSubmit, imgPreview, onImgChange, imgRef, form: f, setForm: sf, isEdit }) => (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+      <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-6 shadow-2xl">
+        <div className="flex items-center justify-between mb-5">
+          <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">{title}</h3>
+          <button onClick={() => isEdit ? setEditTarget(null) : setShowAdd(false)} className="text-gray-400 hover:text-slate-900 text-xs">✕ Close</button>
+        </div>
+        <form onSubmit={onSubmit} className="space-y-3">
+          {/* Image picker */}
+          <div className="flex flex-col items-center mb-2">
+            <div
+              onClick={() => imgRef.current?.click()}
+              className="w-24 h-24 rounded-full border-2 border-dashed border-gray-200 bg-gray-50 flex items-center justify-center overflow-hidden cursor-pointer hover:border-red-500 transition-colors relative group"
+            >
+              {imgPreview
+                ? <Image src={imgPreview} alt="Preview" width={96} height={96} className="w-full h-full object-cover" />
+                : <ImageIcon size={22} className="text-gray-300" />
+              }
+              {/* Overlay on hover */}
+              <div className="absolute inset-0 flex items-center justify-center bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-full">
+                <Pencil size={18} className="text-white" />
+              </div>
+            </div>
+            <input type="file" accept="image/*" ref={imgRef} onChange={onImgChange} className="hidden" />
+            <p className="text-[10px] text-gray-500 mt-2">{isEdit ? "Click photo to change image" : "Click to upload photo *"}</p>
+          </div>
+
+          <div><label className={labelCls}>Name *</label><input required type="text" placeholder="Full name" value={f.name} onChange={e => sf({...f, name: e.target.value})} className={inputCls} /></div>
+          <div><label className={labelCls}>Role *</label><input required type="text" placeholder="e.g. Lead Organizer" value={f.role} onChange={e => sf({...f, role: e.target.value})} className={inputCls} /></div>
+          <div className="grid grid-cols-2 gap-3">
+            <div><label className={labelCls}>Instagram URL</label><input type="text" placeholder="https://instagram.com/..." value={f.instagram} onChange={e => sf({...f, instagram: e.target.value})} className={inputCls} /></div>
+            <div><label className={labelCls}>LinkedIn URL</label><input type="text" placeholder="https://linkedin.com/..." value={f.linkedin} onChange={e => sf({...f, linkedin: e.target.value})} className={inputCls} /></div>
+          </div>
+          <div><label className={labelCls}>Sort Order</label><input type="number" placeholder="0 = first" value={f.order} onChange={e => sf({...f, order: e.target.value})} className={inputCls} /></div>
+
+          <div className="flex justify-end gap-3 pt-3 border-t border-gray-100 mt-4">
+            <button type="button" onClick={() => isEdit ? setEditTarget(null) : setShowAdd(false)} className="px-3 py-1.5 text-xs text-gray-500 hover:text-slate-900 transition-colors">Cancel</button>
+            <button type="submit" disabled={submitting} className="px-4 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-md text-xs font-bold uppercase tracking-wider disabled:opacity-50 transition-colors">
+              {submitting ? "Saving..." : isEdit ? "Save Changes" : "Save Member"}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="space-y-4">
+
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-base font-bold text-slate-900 tracking-tight">IEC Core Team</h2>
+          <p className="text-xs text-gray-500 mt-0.5">Organizers displayed on the public website</p>
+        </div>
+        <button
+          onClick={() => setShowAdd(true)}
+          className="flex items-center gap-1.5 bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider transition-colors shadow-sm"
+        >
+          <Plus size={13} /> Add Member
+        </button>
+      </div>
+
+      {/* Summary strip */}
+      <div className="rounded-lg border border-gray-200 bg-white shadow-sm px-4 py-3 flex items-center justify-between">
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">Total Members</p>
+        <p className="text-xl font-bold text-slate-900">{members.length}</p>
+      </div>
+
+      {/* Grid */}
+      {loading ? (
+        <div className="flex justify-center py-16">
+          <Loader2 className="animate-spin text-red-500" size={24} />
+        </div>
+      ) : members.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-16 border border-dashed border-gray-200 bg-gray-50 rounded-xl">
+          <Users size={32} className="text-gray-300 mb-3" />
+          <p className="text-gray-400 text-sm font-medium">No team members yet</p>
+          <p className="text-gray-400 text-xs mt-1">Click "Add Member" to get started</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+          {members.map(member => (
+            <div key={member._id} className="relative group bg-white border border-gray-200 rounded-xl overflow-hidden p-4 text-center hover:border-gray-300 shadow-sm transition-all">
+              {/* Action buttons — appear on hover */}
+              <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-all">
+                <button
+                  onClick={() => openEdit(member)}
+                  className="p-1 bg-gray-100 hover:bg-blue-100 hover:text-blue-600 rounded text-gray-500 border border-gray-200 transition-colors shadow-sm"
+                  title="Edit"
+                >
+                  <Pencil size={11} />
+                </button>
+                <button
+                  onClick={() => handleDelete(member._id)}
+                  className="p-1 bg-gray-100 hover:bg-red-100 hover:text-red-600 rounded text-gray-500 border border-gray-200 transition-colors shadow-sm"
+                  title="Remove"
+                >
+                  <Trash2 size={11} />
+                </button>
+              </div>
+
+              <div className="w-16 h-16 mx-auto rounded-full overflow-hidden border border-red-200 mb-3 bg-gray-50">
+                <Image src={member.image_url} alt={member.name} width={64} height={64} className="w-full h-full object-cover" />
+              </div>
+              <p className="font-bold text-slate-900 text-sm leading-tight truncate">{member.name}</p>
+              <p className="text-red-600 text-[10px] font-semibold mt-0.5 truncate">{member.role}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Add Member Modal */}
+      {showAdd && (
+        <MemberModal
+          title="Add IEC Member"
+          onSubmit={handleAddSubmit}
+          imgPreview={imagePreview}
+          onImgChange={handleImageChange}
+          imgRef={fileInputRef}
+          form={form}
+          setForm={setForm}
+          isEdit={false}
+        />
+      )}
+
+      {/* Edit Member Modal */}
+      {editTarget && (
+        <MemberModal
+          title={`Edit — ${editTarget.name}`}
+          onSubmit={handleEditSubmit}
+          imgPreview={editImagePreview}
+          onImgChange={handleEditImageChange}
+          imgRef={editFileInputRef}
+          form={editForm}
+          setForm={setEditForm}
+          isEdit={true}
+        />
+      )}
+    </div>
+  );
+}

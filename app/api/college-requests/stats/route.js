@@ -1,6 +1,6 @@
 import { dbConnect } from "@/lib/mongodb";
 import CollegeRequest from "@/lib/models/CollegeRequest";
-import { requireAdmin } from "@/lib/helpers/adminAuth";
+import { requireStaff } from "@/lib/helpers/adminAuth";
 
 /**
  * GET /api/college-requests/stats
@@ -8,7 +8,7 @@ import { requireAdmin } from "@/lib/helpers/adminAuth";
  */
 export async function GET(req) {
   try {
-    await requireAdmin(req);
+    await requireStaff(req);
     await dbConnect();
 
     const [total, pending, approved, rejected, recent] = await Promise.all([

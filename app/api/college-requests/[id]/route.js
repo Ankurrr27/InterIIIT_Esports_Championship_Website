@@ -1,6 +1,6 @@
 import { dbConnect } from "@/lib/mongodb";
 import CollegeRequest from "@/lib/models/CollegeRequest";
-import { requireAdmin } from "@/lib/helpers/adminAuth";
+import { requireStaff } from "@/lib/helpers/adminAuth";
 import { uploadToCloudinary } from "@/lib/cloudinary";
 
 /**
@@ -9,7 +9,7 @@ import { uploadToCloudinary } from "@/lib/cloudinary";
  */
 export async function GET(req, { params }) {
   try {
-    await requireAdmin(req);
+    await requireStaff(req);
     await dbConnect();
 
     const { id } = await params;
@@ -39,7 +39,7 @@ export async function GET(req, { params }) {
  */
 export async function PATCH(req, { params }) {
   try {
-    await requireAdmin(req);
+    await requireStaff(req);
     await dbConnect();
 
     const { id } = await params;
@@ -103,7 +103,7 @@ export async function PATCH(req, { params }) {
  */
 export async function DELETE(req, { params }) {
   try {
-    await requireAdmin(req);
+    await requireStaff(req);
     await dbConnect();
 
     const { id } = await params;

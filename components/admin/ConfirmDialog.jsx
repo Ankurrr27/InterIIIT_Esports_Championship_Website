@@ -21,10 +21,10 @@ export default function ConfirmDialog({
 }) {
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !loading && onClose()}>
-      <DialogContent className="border-white/10 bg-black/90 text-white backdrop-blur-xl sm:max-w-md">
+      <DialogContent className="border-gray-200 bg-white text-slate-900 shadow-xl sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription className="text-gray-400">
+          <DialogTitle className="text-slate-900">{title}</DialogTitle>
+          <DialogDescription className="text-gray-500">
             {description}
           </DialogDescription>
         </DialogHeader>
@@ -34,7 +34,7 @@ export default function ConfirmDialog({
             variant="outline"
             onClick={onClose}
             disabled={loading}
-            className="border-white/10 bg-transparent text-white hover:bg-white/10"
+            className="border-gray-200 bg-white text-slate-700 hover:bg-gray-50"
           >
             {cancelText}
           </Button>
@@ -45,8 +45,8 @@ export default function ConfirmDialog({
             disabled={loading}
             className={
               isDestructive
-                ? "bg-red-600 hover:bg-red-700"
-                : "bg-white text-black hover:bg-gray-200"
+                ? "bg-red-600 hover:bg-red-700 text-white"
+                : "bg-slate-900 text-white hover:bg-slate-800"
             }
           >
             {loading ? "Processing..." : confirmText}

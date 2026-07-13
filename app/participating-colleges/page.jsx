@@ -36,10 +36,10 @@ export default function ParticipatingCollegesPage() {
   );
 
   return (
-    <main className="relative flex min-h-[100svh] flex-col overflow-hidden bg-slate-950">
+    <main className="relative flex min-h-[100svh] flex-col overflow-hidden bg-white">
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black" />
-        <div className="grunge-noise" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-50 via-white to-gray-50 opacity-80" />
+        <div className="grunge-noise opacity-30" />
       </div>
 
       <div className="relative z-10 flex min-h-[100svh] flex-col">
@@ -48,10 +48,10 @@ export default function ParticipatingCollegesPage() {
         <div className="mx-auto w-full max-w-7xl flex-1 px-4 py-12 sm:px-6 lg:py-20">
           <div className="mb-12 flex flex-col items-center justify-between gap-6 md:flex-row md:items-end">
             <div>
-              <h1 className="mb-3 text-4xl font-[family-name:var(--font-display)] tracking-wider text-white sm:text-5xl">
+              <h1 className="mb-3 text-4xl font-[family-name:var(--font-display)] tracking-wider text-slate-900 sm:text-5xl">
                 Participating Colleges
               </h1>
-              <p className="max-w-2xl text-sm font-medium text-gray-400 sm:text-base">
+              <p className="max-w-2xl text-sm font-medium text-gray-500 sm:text-base">
                 Discover the official esports clubs representing IIITs across India in the upcoming championship.
               </p>
             </div>
@@ -63,7 +63,7 @@ export default function ParticipatingCollegesPage() {
                 placeholder="Search colleges or clubs..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-lg border border-white/10 bg-white/5 py-2.5 pl-10 pr-4 text-sm text-white outline-none transition-colors focus:border-red-500 focus:bg-white/10"
+                className="w-full rounded-lg border border-gray-200 bg-white shadow-sm py-2.5 pl-10 pr-4 text-sm text-slate-900 outline-none transition-colors focus:border-red-500 focus:bg-gray-50 placeholder:text-gray-400"
               />
             </div>
           </div>
@@ -71,7 +71,7 @@ export default function ParticipatingCollegesPage() {
           {loading ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                <div key={i} className="h-48 animate-pulse rounded-xl bg-white/5" />
+                <div key={i} className="h-48 animate-pulse rounded-xl bg-gray-100" />
               ))}
             </div>
           ) : filteredColleges.length > 0 ? (
@@ -82,11 +82,11 @@ export default function ParticipatingCollegesPage() {
             </div>
           ) : (
             <div className="flex min-h-[40vh] flex-col items-center justify-center text-center">
-              <div className="mb-4 rounded-full bg-white/5 p-6 text-gray-500">
+              <div className="mb-4 rounded-full border border-gray-200 bg-gray-50 shadow-sm p-6 text-gray-400">
                 <Search size={48} />
               </div>
-              <h3 className="mb-2 text-xl font-bold text-white">No colleges found</h3>
-              <p className="text-gray-400">
+              <h3 className="mb-2 text-xl font-bold text-slate-900">No colleges found</h3>
+              <p className="text-gray-500">
                 {searchQuery
                   ? `No results for "${searchQuery}". Try a different search term.`
                   : "No colleges have been approved yet. Check back later!"}

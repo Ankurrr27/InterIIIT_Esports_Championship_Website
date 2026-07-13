@@ -45,7 +45,7 @@ export default function AdminLogin({ onLogin }) {
       });
 
       if (!statsRes.ok) {
-        throw new Error("Access denied. Admin privileges required.");
+        throw new Error("Access denied. Staff privileges required.");
       }
 
       onLogin(data.token);

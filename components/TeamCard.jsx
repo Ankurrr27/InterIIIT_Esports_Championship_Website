@@ -35,9 +35,9 @@ export default function TeamCard({ member }) {
 
       <div className="flex flex-col items-center p-5 pt-4 text-center">
         <h3 className="text-[15px] font-bold text-[#0f172a] line-clamp-1">{member.name}</h3>
-        <p className="mt-0.5 text-[11px] font-medium text-slate-500 uppercase line-clamp-1">
-          {member.college || "IIIT Surat"}
-        </p>
+        {/* <p className="mt-0.5 text-[11px] font-medium text-slate-500 uppercase line-clamp-1">
+          {member.college || "IIIT"}
+        </p> */}
         
         
       </div>

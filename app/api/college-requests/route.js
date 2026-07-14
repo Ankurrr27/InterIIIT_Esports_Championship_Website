@@ -68,9 +68,10 @@ export async function POST(req) {
     }
 
     // Check for duplicate college_name or club_email
+    const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const existing = await CollegeRequest.findOne({
       $or: [
-        { college_name: { $regex: new RegExp(`^${college_name}$`, "i") } },
+        { college_name: { $regex: new RegExp(`^${escapeRegex(college_name)}$`, "i") } },
         { club_email: club_email.toLowerCase() },
       ],
       status: { $ne: "Rejected" },
@@ -118,6 +119,8 @@ export async function POST(req) {
     );
   } catch (err) {
     console.error("College request POST error:", err);
+    if (err.stack) console.error(err.stack);
+    
     return Response.json(
       { success: false, error: err.message || "Internal server error" },
       { status: 500 }

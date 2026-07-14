@@ -186,12 +186,12 @@ export default function IECTeamAdminPage() {
   const inputCls = "w-full bg-white border border-gray-200 rounded-md px-3 py-2 text-sm text-slate-900 placeholder:text-gray-400 focus:border-red-500 focus:outline-none shadow-sm";
   const labelCls = "text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1 block";
 
-  const MemberModal = ({ title, onSubmit, imgPreview, onImgChange, imgRef, form: f, setForm: sf, isEdit }) => (
+  const renderMemberModal = ({ title, onSubmit, imgPreview, onImgChange, imgRef, form: f, setForm: sf, isEdit, onClose }) => (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
       <div className="w-full max-w-md rounded-xl border border-gray-200 bg-white p-6 shadow-2xl">
         <div className="flex items-center justify-between mb-5">
           <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">{title}</h3>
-          <button onClick={() => isEdit ? setEditTarget(null) : setShowAdd(false)} className="text-gray-400 hover:text-slate-900 text-xs">✕ Close</button>
+          <button onClick={onClose} className="text-gray-400 hover:text-slate-900 text-xs">✕ Close</button>
         </div>
         <form onSubmit={onSubmit} className="space-y-3">
           {/* Image picker */}
@@ -219,10 +219,10 @@ export default function IECTeamAdminPage() {
             <div><label className={labelCls}>Instagram URL</label><input type="text" placeholder="https://instagram.com/..." value={f.instagram} onChange={e => sf({...f, instagram: e.target.value})} className={inputCls} /></div>
             <div><label className={labelCls}>LinkedIn URL</label><input type="text" placeholder="https://linkedin.com/..." value={f.linkedin} onChange={e => sf({...f, linkedin: e.target.value})} className={inputCls} /></div>
           </div>
-          <div><label className={labelCls}>Sort Order</label><input type="number" placeholder="0 = first" value={f.order} onChange={e => sf({...f, order: e.target.value})} className={inputCls} /></div>
+          <div><label className={labelCls}>Sort Order</label><input type="number" placeholder="0 = first" value={f.order} onChange={e => sf({...f, order: parseInt(e.target.value) || 0})} className={inputCls} /></div>
 
           <div className="flex justify-end gap-3 pt-3 border-t border-gray-100 mt-4">
-            <button type="button" onClick={() => isEdit ? setEditTarget(null) : setShowAdd(false)} className="px-3 py-1.5 text-xs text-gray-500 hover:text-slate-900 transition-colors">Cancel</button>
+            <button type="button" onClick={onClose} className="px-3 py-1.5 text-xs text-gray-500 hover:text-slate-900 transition-colors">Cancel</button>
             <button type="submit" disabled={submitting} className="px-4 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-md text-xs font-bold uppercase tracking-wider disabled:opacity-50 transition-colors">
               {submitting ? "Saving..." : isEdit ? "Save Changes" : "Save Member"}
             </button>
@@ -424,32 +424,30 @@ export default function IECTeamAdminPage() {
       )}
 
       {/* Add Member Modal */}
-      {showAdd && (
-        <MemberModal
-          title="Add IEC Member"
-          onSubmit={handleAddSubmit}
-          imgPreview={imagePreview}
-          onImgChange={handleImageChange}
-          imgRef={fileInputRef}
-          form={form}
-          setForm={setForm}
-          isEdit={false}
-        />
-      )}
+      {showAdd && renderMemberModal({
+        title: "Add IEC Member",
+        onSubmit: handleAddSubmit,
+        imgPreview: imagePreview,
+        onImgChange: handleImageChange,
+        imgRef: fileInputRef,
+        form: form,
+        setForm: setForm,
+        isEdit: false,
+        onClose: () => setShowAdd(false)
+      })}
 
       {/* Edit Member Modal */}
-      {editTarget && (
-        <MemberModal
-          title={`Edit — ${editTarget.name}`}
-          onSubmit={handleEditSubmit}
-          imgPreview={editImagePreview}
-          onImgChange={handleEditImageChange}
-          imgRef={editFileInputRef}
-          form={editForm}
-          setForm={setEditForm}
-          isEdit={true}
-        />
-      )}
+      {editTarget && renderMemberModal({
+        title: `Edit — ${editTarget.name}`,
+        onSubmit: handleEditSubmit,
+        imgPreview: editImagePreview,
+        onImgChange: handleEditImageChange,
+        imgRef: editFileInputRef,
+        form: editForm,
+        setForm: setEditForm,
+        isEdit: true,
+        onClose: () => setEditTarget(null)
+      })}
     </div>
   );
 }

@@ -20,7 +20,7 @@ export default function SupportPage() {
         <Hero />
         <SupportCategories />
         <ContactSection />
-        <DeveloperSection />
+        {/* <DeveloperSection /> */}
       </div>
 
       <Footer />

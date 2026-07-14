@@ -66,7 +66,7 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <div
+            {/* <div
               className="relative"
               onMouseEnter={() => setGamesOpen(true)}
               onMouseLeave={() => setGamesOpen(false)}
@@ -100,7 +100,7 @@ export default function Navbar() {
                   ))}
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="flex items-center gap-3">
@@ -166,7 +166,7 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-2">
+            {/* <div className="mt-4 rounded-lg border border-slate-200 bg-slate-50 p-2">
               <p className="mb-1 px-2 py-1 text-[10px] font-semibold uppercase tracking-[0.24em] text-slate-500">
                 Games
               </p>
@@ -183,7 +183,7 @@ export default function Navbar() {
                   </span>
                 </Link>
               ))}
-            </div>
+            </div> */}
           </div>
         </div>
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
-import { Loader2, Plus, Trash2, Image as ImageIcon, Users, Pencil } from "lucide-react";
+import { Loader2, Plus, Trash2, Image as ImageIcon, Users, Pencil, Check, X, Clock } from "lucide-react";
 import Image from "next/image";
 
 export default function IECTeamAdminPage() {
@@ -10,8 +10,14 @@ export default function IECTeamAdminPage() {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState("");
   const [showAdd, setShowAdd] = useState(false);
-  const [editTarget, setEditTarget] = useState(null); // member being edited
+  const [editTarget, setEditTarget] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const [activeTab, setActiveTab] = useState("team");
+
+  // Applications state
+  const [applications, setApplications] = useState([]);
+  const [appsLoading, setAppsLoading] = useState(false);
+  const [appFilter, setAppFilter] = useState("PENDING");
 
   const [form, setForm] = useState({ name: "", role: "", instagram: "", linkedin: "", order: 0 });
   const [imageFile, setImageFile] = useState(null);
@@ -36,6 +42,55 @@ export default function IECTeamAdminPage() {
       if (data.success) setMembers(data.team);
     } catch { toast.error("Failed to fetch IEC team"); }
     finally { setLoading(false); }
+  };
+
+  const fetchApplications = async () => {
+    setAppsLoading(true);
+    try {
+      const t = localStorage.getItem("token");
+      const res = await fetch(`/api/iec-team-applications?status=${appFilter}`, {
+        headers: { Authorization: `Bearer ${t}` }
+      });
+      const data = await res.json();
+      if (data.success) setApplications(data.data);
+    } catch { toast.error("Failed to fetch applications"); }
+    finally { setAppsLoading(false); }
+  };
+
+  useEffect(() => {
+    if (activeTab === "applications" && token) fetchApplications();
+  }, [activeTab, appFilter, token]);
+
+  const handleAppAction = async (appId, status) => {
+    try {
+      const res = await fetch(`/api/iec-team-applications/${appId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ status })
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success(data.message);
+        fetchApplications();
+        if (status === "APPROVED") fetchMembers();
+      } else toast.error(data.error);
+    } catch { toast.error("Action failed"); }
+  };
+
+  const handleAppDelete = async (appId) => {
+    if (!confirm("Delete this application permanently?")) return;
+    try {
+      const res = await fetch(`/api/iec-team-applications/${appId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await res.json();
+      if (data.success) { toast.success("Deleted"); fetchApplications(); }
+      else toast.error(data.error);
+    } catch { toast.error("Delete failed"); }
   };
 
   const openEdit = (member) => {
@@ -186,19 +241,50 @@ export default function IECTeamAdminPage() {
           <h2 className="text-base font-bold text-slate-900 tracking-tight">IEC Core Team</h2>
           <p className="text-xs text-gray-500 mt-0.5">Organizers displayed on the public website</p>
         </div>
-        <button
-          onClick={() => setShowAdd(true)}
-          className="flex items-center gap-1.5 bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider transition-colors shadow-sm"
-        >
-          <Plus size={13} /> Add Member
-        </button>
+        {activeTab === "team" && (
+          <button
+            onClick={() => setShowAdd(true)}
+            className="flex items-center gap-1.5 bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider transition-colors shadow-sm"
+          >
+            <Plus size={13} /> Add Member
+          </button>
+        )}
+      </div>
+
+      {/* Tabs */}
+      <div className="flex overflow-hidden rounded-lg border border-gray-200 bg-gray-50/50 shadow-sm p-1 w-fit">
+        {[{key: "team", label: "Current Team"}, {key: "applications", label: "Applications"}].map((tab) => (
+          <button
+            key={tab.key}
+            onClick={() => setActiveTab(tab.key)}
+            className={`px-4 py-1.5 text-xs font-bold rounded-md transition-all ${
+              activeTab === tab.key
+                ? "bg-white text-slate-900 shadow-sm ring-1 ring-gray-200/50"
+                : "text-gray-500 hover:text-slate-900 hover:bg-gray-100/50"
+            }`}
+          >
+            {tab.label}
+            {tab.key === "applications" && applications.length > 0 && (
+              <span className="ml-1.5 bg-red-100 text-red-600 px-1.5 py-0.5 rounded text-[9px] font-bold">
+                {applications.length}
+              </span>
+            )}
+          </button>
+        ))}
       </div>
 
       {/* Summary strip */}
       <div className="rounded-lg border border-gray-200 bg-white shadow-sm px-4 py-3 flex items-center justify-between">
-        <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">Total Members</p>
-        <p className="text-xl font-bold text-slate-900">{members.length}</p>
+        <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">
+          {activeTab === "team" ? "Total Members" : "Applications"}
+        </p>
+        <p className="text-xl font-bold text-slate-900">
+          {activeTab === "team" ? members.length : applications.length}
+        </p>
       </div>
+
+      {/* ══════ CURRENT TEAM TAB ══════ */}
+      {activeTab === "team" && (<>
 
       {/* Grid */}
       {loading ? (
@@ -241,6 +327,100 @@ export default function IECTeamAdminPage() {
             </div>
           ))}
         </div>
+      )}
+      </>)}
+
+      {/* ══════ APPLICATIONS TAB ══════ */}
+      {activeTab === "applications" && (
+        <>
+          {/* Filter pills */}
+          <div className="flex gap-2">
+            {["PENDING", "APPROVED", "REJECTED"].map((s) => (
+              <button
+                key={s}
+                onClick={() => setAppFilter(s)}
+                className={`px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md border transition-all ${
+                  appFilter === s
+                    ? s === "PENDING" ? "bg-orange-50 text-orange-700 border-orange-200"
+                      : s === "APPROVED" ? "bg-emerald-50 text-emerald-700 border-emerald-200"
+                      : "bg-red-50 text-red-700 border-red-200"
+                    : "bg-white text-gray-400 border-gray-200 hover:text-slate-900"
+                }`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+
+          {appsLoading ? (
+            <div className="flex justify-center py-16">
+              <Loader2 className="animate-spin text-red-500" size={24} />
+            </div>
+          ) : applications.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-16 border border-dashed border-gray-200 bg-gray-50 rounded-xl">
+              <Clock size={32} className="text-gray-300 mb-3" />
+              <p className="text-gray-400 text-sm font-medium">No {appFilter.toLowerCase()} applications</p>
+            </div>
+          ) : (
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {applications.map((app) => (
+                <div key={app._id} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm hover:border-gray-300 transition-all">
+                  <div className="flex items-start gap-3">
+                    <div className="w-14 h-14 shrink-0 rounded-full overflow-hidden border border-gray-200 bg-gray-50">
+                      <Image src={app.image_url} alt={app.name} width={56} height={56} className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-bold text-slate-900 text-sm truncate">{app.name}</p>
+                      <p className="text-red-600 text-[10px] font-semibold truncate">{app.role}</p>
+                      <p className="text-gray-400 text-[10px] truncate mt-0.5">{app.email}</p>
+                    </div>
+                  </div>
+
+                  <p className="mt-3 text-xs text-gray-600 line-clamp-2 leading-relaxed">
+                    {app.reason_to_join}
+                  </p>
+
+                  <div className="flex items-center gap-1.5 mt-3 pt-3 border-t border-gray-100">
+                    {app.instagram && (
+                      <span className="text-[9px] bg-gray-50 border border-gray-200 px-1.5 py-0.5 rounded text-gray-500 truncate max-w-[80px]">
+                        {app.instagram}
+                      </span>
+                    )}
+                    {app.linkedin && (
+                      <span className="text-[9px] bg-gray-50 border border-gray-200 px-1.5 py-0.5 rounded text-gray-500 truncate max-w-[80px]">
+                        LinkedIn
+                      </span>
+                    )}
+                    <div className="flex-1" />
+                    {appFilter === "PENDING" && (
+                      <>
+                        <button
+                          onClick={() => handleAppAction(app._id, "APPROVED")}
+                          className="flex items-center gap-1 px-2 py-1 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition-colors"
+                        >
+                          <Check size={10} /> Approve
+                        </button>
+                        <button
+                          onClick={() => handleAppAction(app._id, "REJECTED")}
+                          className="flex items-center gap-1 px-2 py-1 rounded text-[10px] font-bold bg-red-50 text-red-600 border border-red-200 hover:bg-red-100 transition-colors"
+                        >
+                          <X size={10} /> Reject
+                        </button>
+                      </>
+                    )}
+                    <button
+                      onClick={() => handleAppDelete(app._id)}
+                      className="p-1 rounded text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                      title="Delete"
+                    >
+                      <Trash2 size={12} />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </>
       )}
 
       {/* Add Member Modal */}

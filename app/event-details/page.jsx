@@ -9,11 +9,11 @@ export default function EventDetailsPage() {
   return (
     <main className="overflow-x-hidden bg-slate-950 text-white">
       <Navbar />
-      <Hero_event />
+      {/* <Hero_event /> */}
       <About />
      
       <Timeline />
-       <Campuses />
+       {/* <Campuses /> */}
       <Footer />
     </main>
   );

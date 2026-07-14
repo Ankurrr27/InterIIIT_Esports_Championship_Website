@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, ChevronRight } from "lucide-react";
+import { Mail, ChevronRight, Users } from "lucide-react";
 
 function Footer() {
   return (
@@ -138,6 +138,12 @@ function Footer() {
                 </li>
                 <li>
                   <a href="#" className="transition hover:text-slate-900">Twitter / X</a>
+                </li>
+                <li>
+                  <Link href="/join-iec" className="group flex items-center gap-1.5 font-semibold text-red-600 transition hover:text-red-700">
+                    <Users size={14} />
+                    Join IEC Team
+                  </Link>
                 </li>
               </ul>
             </div>

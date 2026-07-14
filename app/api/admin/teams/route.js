@@ -1,5 +1,5 @@
 import { dbConnect } from "@/lib/mongodb";
-import { requireAuth } from "@/lib/auth";
+import { requireAdmin } from "@/lib/helpers/adminAuth";
 import Team from "@/lib/models/Team";
 import User from "@/lib/models/User"; // needed for population
 import JoinRequest from "@/lib/models/JoinRequest";
@@ -9,10 +9,7 @@ export async function GET(req) {
   await dbConnect();
 
   try {
-    const user = await requireAuth(req);
-    if (user.role !== "ADMIN") {
-      return Response.json({ success: false, message: "Forbidden" }, { status: 403 });
-    }
+    await requireAdmin(req);
 
     const teams = await Team.find({})
       .populate("leaderId", "name email collegeEmail")
@@ -31,10 +28,7 @@ export async function DELETE(req) {
   await dbConnect();
 
   try {
-    const user = await requireAuth(req);
-    if (user.role !== "ADMIN") {
-      return Response.json({ success: false, message: "Forbidden" }, { status: 403 });
-    }
+    await requireAdmin(req);
 
     const url = new URL(req.url);
     const teamId = url.searchParams.get("teamId");

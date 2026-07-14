@@ -1,6 +1,6 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar/Navbar";
-import TeamActions from "./components/TeamActions";
+import TeamClientWrapper from "./components/TeamClientWrapper";
 
 const stats = [
   { label: "Team Modes", value: "03", detail: "BGMI, Valorant, Free Fire" },
@@ -36,6 +36,7 @@ export default function UserTeamPage() {
     <main className="min-h-screen overflow-x-hidden bg-black text-white">
       <Navbar />
 
+      <TeamClientWrapper>
       <section className="relative overflow-hidden px-4 pb-14 pt-24 sm:px-6 sm:pb-20 sm:pt-32 lg:px-8">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_10%,rgba(239,68,68,0.24),transparent_34%),radial-gradient(circle_at_80%_20%,rgba(255,255,255,0.08),transparent_26%),linear-gradient(135deg,#050505_0%,#0d0d10_48%,#020202_100%)]" />
         <div className="absolute inset-0 opacity-[0.08] [background-image:linear-gradient(90deg,rgba(255,255,255,0.16)_1px,transparent_1px),linear-gradient(rgba(255,255,255,0.16)_1px,transparent_1px)] [background-size:54px_54px]" />
@@ -111,8 +112,8 @@ export default function UserTeamPage() {
           </div>
         </div>
       </section>
+      </TeamClientWrapper>
 
-      <TeamActions />
       <Footer />
     </main>
   );

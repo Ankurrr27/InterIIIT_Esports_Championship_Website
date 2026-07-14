@@ -8,6 +8,8 @@ import GamesSection from "@/components/GamesSection";
 import HomeFeatureSections from "@/components/HomeFeatureSections";
 import PrizePoolSection from "@/components/PrizePoolSection";
 import FAQSection from "@/components/FAQSection";
+import HomeCollegesSection from "@/components/HomeCollegesSection";
+import HomeContactSection from "@/components/HomeContactSection";
 
 const homeSlides = [
   { image: "/ff/11.png" },
@@ -33,6 +35,8 @@ export default function Home() {
        <GamesSection />
 
       {/* <PrizePoolSection /> */}
+      <HomeCollegesSection />
+      <HomeContactSection />
       <FAQSection />
       {/* <DeveloperSection /> */}
       <Footer />

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Search } from "lucide-react";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer";
@@ -93,6 +94,22 @@ export default function ParticipatingCollegesPage() {
               </p>
             </div>
           )}
+
+          {/* CTA Banner */}
+          <div className="border border-dashed border-red-300 bg-red-50/50 rounded-xl p-8 text-center mt-12">
+            <h2 className="mb-2 text-2xl font-bold text-slate-900">
+              Can&apos;t find your college here?
+            </h2>
+            <p className="mb-6 text-gray-600">
+              If your IIIT isn&apos;t listed, you can register your college&apos;s esports club to participate.
+            </p>
+            <Link
+              href="/register-college"
+              className="inline-block bg-red-600 hover:bg-red-500 text-white rounded-lg px-6 py-3 font-semibold transition-colors"
+            >
+              Register Your College →
+            </Link>
+          </div>
         </div>
 
         <Footer />

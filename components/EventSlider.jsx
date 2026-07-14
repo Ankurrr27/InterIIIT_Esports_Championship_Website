@@ -48,8 +48,8 @@ export default function EventSlider({
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent md:bg-gradient-to-r md:from-black/80 md:via-black/40 md:to-transparent" />
 
             {/* Diagonal stripe overlay — esports texture */}
-            <div
-              className="absolute inset-0 pointer-events-none opacity-[0.04]"
+            {/* <div
+              className="absolute inset-0 pointer-events-none "
               style={{
                 background: `repeating-linear-gradient(
                   -45deg,
@@ -59,15 +59,15 @@ export default function EventSlider({
                   rgba(255,255,255,0.3) 31px
                 )`,
               }}
-            />
+            /> */}
           </div>
 
           {/* Content (Bottom half on mobile, overlay on desktop) */}
           <div className="relative mx-auto w-full max-w-7xl md:min-h-[calc(100vh-56px)] flex items-center px-6 pt-4 pb-16 md:py-0">
             <div className="max-w-xl z-10">
-              <h1 className="text-[1.5rem] leading-[1.1] md:text-5xl font-black md:leading-tight">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-[family-name:var(--font-display)] tracking-wide leading-[0.9] uppercase">
                 {title}
-                <span className="block text-[1rem] mt-1 md:mt-0 md:text-4xl text-white">
+                <span className="block text-3xl md:text-5xl text-white mt-1 md:mt-2">
                   {subtitle}
                 </span>
               </h1>

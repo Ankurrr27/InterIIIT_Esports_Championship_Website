@@ -30,9 +30,9 @@ export default function HomeCollegesSection() {
 
         {/* ── Section Header ── */}
         <div className="mb-10 flex items-start flex-col gap-1">
-          <p className="text-[0.5rem] sm:text-xs tracking-[0.25em] uppercase text-red-500 font-medium">
+          {/* <p className="text-[0.5rem] sm:text-xs tracking-[0.25em] uppercase text-red-500 font-medium">
             Our Colleges
-          </p>
+          </p> */}
           <h2 className="text-3xl md:text-6xl font-[family-name:var(--font-display)] tracking-wide text-white leading-none">
             Participating Colleges
           </h2>
@@ -60,13 +60,13 @@ export default function HomeCollegesSection() {
             No colleges registered yet. Be the first!
           </p>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4">
             {colleges.map((college) => (
               <div
                 key={college._id}
-                className="group flex flex-col items-center gap-3 rounded-xl border border-white/10 bg-white/5 p-6 transition-all duration-300 hover:border-red-500/30 hover:bg-white/[0.08]"
+                className="group flex flex-col items-center gap-3 border-white/10 p-6 transition-all duration-300 ]"
               >
-                <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-white/5 p-1">
+                <div className="flex h-20 w-20 rounded-full shrink-0 items-center justify-center overflow-hidden bg-white/5 p-1">
                   {college.college_logo ? (
                     <Image
                       src={college.college_logo}
@@ -88,7 +88,7 @@ export default function HomeCollegesSection() {
         )}
 
         {/* ── CTA Banner ── */}
-        <div className="mt-10 rounded-xl border border-white/10 bg-white/[0.03] p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-10  bg-white/[0.03] p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <h3 className="text-lg sm:text-xl font-bold text-white">
               Can&apos;t find your college?

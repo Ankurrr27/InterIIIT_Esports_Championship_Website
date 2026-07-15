@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { dbConnect } from "@/lib/mongodb";
 import IECTeamApplication from "@/lib/models/IECTeamApplication";
 import IECTeamMember from "@/lib/models/IECTeamMember";
@@ -57,6 +58,8 @@ export async function PATCH(req, { params }) {
       }
     }
 
+    revalidatePath("/iec-team");
+
     return Response.json({
       success: true,
       message: `Application ${status.toLowerCase()} successfully`,
@@ -88,6 +91,8 @@ export async function DELETE(req, { params }) {
         { status: 404 }
       );
     }
+
+    revalidatePath("/iec-team");
 
     return Response.json({
       success: true,

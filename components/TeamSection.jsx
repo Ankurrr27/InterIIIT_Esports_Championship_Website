@@ -1,12 +1,8 @@
-import { dbConnect } from "@/lib/mongodb";
-import IECTeamMember from "@/lib/models/IECTeamMember";
+import { getIECTeamMembers } from "@/lib/helpers/iecTeam";
 import TeamCard from "./TeamCard";
 
 export default async function TeamSection() {
-  await dbConnect();
-  
-  // Fetch team members from database directly in the Server Component
-  const teamMembers = await IECTeamMember.find({}).sort({ order: 1, createdAt: 1 }).lean();
+  const teamMembers = await getIECTeamMembers();
 
   return (
     <section className="bg-[#f8fafc] px-4 py-12 text-slate-950 sm:px-6 sm:py-16 lg:px-8">

@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { dbConnect } from "@/lib/mongodb";
 import { requireAdmin } from "@/lib/helpers/adminAuth";
 import IECTeamMember from "@/lib/models/IECTeamMember";
@@ -40,6 +41,8 @@ export async function POST(req) {
       linkedin,
       order: Number(order)
     });
+
+    revalidatePath("/iec-team");
 
     return Response.json({ success: true, member });
   } catch (err) {
@@ -88,6 +91,8 @@ export async function PATCH(req) {
 
     await member.save();
 
+    revalidatePath("/iec-team");
+
     return Response.json({ success: true, member });
   } catch (err) {
     const status = err.message.includes("Admin") || err.message.includes("Auth") ? 401 : 500;
@@ -109,6 +114,8 @@ export async function DELETE(req) {
     if (!id) return Response.json({ success: false, error: "ID required" }, { status: 400 });
 
     await IECTeamMember.findByIdAndDelete(id);
+
+    revalidatePath("/iec-team");
 
     return Response.json({ success: true });
   } catch (err) {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Loader2, Plus, Trash2, Image as ImageIcon, Users, Pencil, Check, X, Clock } from "lucide-react";
 import Image from "next/image";
@@ -13,6 +14,7 @@ export default function IECTeamAdminPage() {
   const [editTarget, setEditTarget] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState("team");
+  const router = useRouter();
 
   // Applications state
   const [applications, setApplications] = useState([]);
@@ -75,7 +77,10 @@ export default function IECTeamAdminPage() {
       if (data.success) {
         toast.success(data.message);
         fetchApplications();
-        if (status === "APPROVED") fetchMembers();
+        if (status === "APPROVED") {
+          await fetchMembers();
+        }
+        router.refresh();
       } else toast.error(data.error);
     } catch { toast.error("Action failed"); }
   };
@@ -139,7 +144,8 @@ export default function IECTeamAdminPage() {
         setShowAdd(false);
         setForm({ name: "", role: "", instagram: "", linkedin: "", order: 0 });
         setImageFile(null); setImagePreview(null);
-        fetchMembers();
+        await fetchMembers();
+        router.refresh();
       } else toast.error(data.error);
     } catch { toast.error("Failed to add member"); }
     finally { setSubmitting(false); }
@@ -166,7 +172,8 @@ export default function IECTeamAdminPage() {
         toast.success("Member updated");
         setEditTarget(null);
         setEditImageFile(null);
-        fetchMembers();
+        await fetchMembers();
+        router.refresh();
       } else toast.error(data.error);
     } catch { toast.error("Failed to update member"); }
     finally { setSubmitting(false); }
@@ -179,7 +186,7 @@ export default function IECTeamAdminPage() {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` }
       });
-      if (res.ok) { toast.success("Member removed"); fetchMembers(); }
+      if (res.ok) { toast.success("Member removed"); await fetchMembers(); router.refresh(); }
     } catch { toast.error("Delete failed"); }
   };
 

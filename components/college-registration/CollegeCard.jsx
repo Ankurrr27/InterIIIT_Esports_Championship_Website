@@ -1,12 +1,18 @@
 import Image from "next/image";
-import { Building2, User, Mail } from "lucide-react";
+import { Building2, User, Mail, ShieldCheck } from "lucide-react";
 
 export default function CollegeCard({ college }) {
   return (
-    <div className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition-all hover:border-gray-300 hover:shadow-md hover:bg-gray-50">
-      <div className="flex flex-1 flex-col p-6">
-        <div className="mb-6 flex items-start gap-4">
-          <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-gray-200 bg-gray-50 p-1">
+    <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-lg shadow-slate-200/50 ring-1 ring-slate-100 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-500/10 hover:ring-red-100">
+      
+      {/* Top subtle gradient line */}
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-red-500 to-orange-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+      
+      <div className="flex flex-1 flex-col p-6 sm:p-8">
+        
+        {/* Header: Logo + Names */}
+        <div className="mb-8 flex items-center gap-5">
+          <div className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-slate-100 bg-white p-1 shadow-sm transition-transform duration-300 group-hover:scale-105">
             {college.college_logo ? (
               <Image
                 src={college.college_logo}
@@ -16,34 +22,50 @@ export default function CollegeCard({ college }) {
                 className="h-full w-full object-contain"
               />
             ) : (
-              <Building2 size={24} className="text-gray-400" />
+              <Building2 size={24} className="text-slate-300" />
             )}
           </div>
-          <div>
-            <h3 className="font-[family-name:var(--font-display)] text-xl tracking-wide text-slate-900 group-hover:text-red-600 transition-colors">
+          <div className="min-w-0">
+            <h3 className="truncate font-[family-name:var(--font-display)] text-xl leading-tight tracking-wide text-slate-900 transition-colors group-hover:text-red-600">
               {college.college_name}
             </h3>
-            <p className="text-sm font-medium text-red-600">{college.club_name}</p>
+            <p className="mt-1 flex items-center gap-1.5 truncate text-xs sm:text-sm font-semibold uppercase tracking-wide text-red-500">
+              <ShieldCheck size={14} className="shrink-0" />
+              <span className="truncate">{college.club_name}</span>
+            </p>
           </div>
         </div>
 
-        <div className="mt-auto space-y-3 rounded-lg border border-gray-100 bg-gray-50 p-4">
-          <div className="flex items-center gap-3 text-sm text-gray-600">
-            <User size={16} className="text-gray-400" />
-            <span className="truncate">{college.coordinator_name}</span>
-            <span className="ml-auto rounded-full bg-gray-200 px-2 py-0.5 text-[10px] uppercase tracking-wider text-gray-600 font-semibold">
-              {college.designation}
+        {/* Footer: Details Box */}
+        <div className="mt-auto space-y-3.5 rounded-xl border border-slate-100 bg-slate-50/50 p-4 transition-colors duration-300 group-hover:border-red-100 group-hover:bg-red-50/30">
+          
+          <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-100 bg-white shadow-sm transition-colors group-hover:border-red-100 group-hover:text-red-500 text-slate-400">
+              <User size={14} />
+            </div>
+            <div className="flex min-w-0 flex-col">
+              <span className="truncate text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                {college.designation}
+              </span>
+              <span className="truncate text-sm font-medium text-slate-700">
+                {college.coordinator_name}
+              </span>
+            </div>
+          </div>
+          
+          <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-200 to-transparent transition-colors group-hover:via-red-100" />
+          
+          <div className="flex items-center gap-3">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-100 bg-white shadow-sm transition-colors group-hover:border-red-100 group-hover:text-red-500 text-slate-400">
+              <Mail size={14} />
+            </div>
+            <span className="truncate text-sm font-medium text-slate-600">
+              {college.club_email}
             </span>
           </div>
-          <div className="flex items-center gap-3 text-sm text-gray-600">
-            <Mail size={16} className="text-gray-400" />
-            <span className="truncate">{college.club_email}</span>
-          </div>
+          
         </div>
       </div>
-      
-      {/* Decorative gradient effect on hover */}
-      <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-red-500/30 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
     </div>
   );
 }

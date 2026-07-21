@@ -19,12 +19,14 @@ export default function IECTeamAdminPage() {
   const [savingOrder, setSavingOrder] = useState(false);
   const router = useRouter();
 
+  const DEPARTMENTS = ["Management", "Free Fire", "BGMI", "Valorant", "Sponsorship", "Web Development", "Social Media", "Design", "Content"];
+
   // Applications state
   const [applications, setApplications] = useState([]);
   const [appsLoading, setAppsLoading] = useState(false);
   const [appFilter, setAppFilter] = useState("PENDING");
 
-  const [form, setForm] = useState({ name: "", role: "", instagram: "", linkedin: "", order: 0 });
+  const [form, setForm] = useState({ name: "", role: "", instagram: "", linkedin: "", order: 0, departments: [] });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
@@ -32,7 +34,7 @@ export default function IECTeamAdminPage() {
 
   const [editImageFile, setEditImageFile] = useState(null);
   const [editImagePreview, setEditImagePreview] = useState(null);
-  const [editForm, setEditForm] = useState({ name: "", role: "", instagram: "", linkedin: "", order: 0 });
+  const [editForm, setEditForm] = useState({ name: "", role: "", instagram: "", linkedin: "", order: 0, departments: [] });
 
   useEffect(() => {
     const t = localStorage.getItem("token");
@@ -109,6 +111,7 @@ export default function IECTeamAdminPage() {
       instagram: member.instagram || "",
       linkedin: member.linkedin || "",
       order: member.order || 0,
+      departments: member.departments || [],
     });
     setEditImageFile(null);
     setEditImagePreview(member.image_url);
@@ -134,6 +137,7 @@ export default function IECTeamAdminPage() {
     formData.append("instagram", form.instagram);
     formData.append("linkedin", form.linkedin);
     formData.append("order", form.order);
+    formData.append("departments", JSON.stringify(form.departments));
     formData.append("image", imageFile);
     try {
       const res = await fetch("/api/admin/iec-team", {
@@ -145,7 +149,7 @@ export default function IECTeamAdminPage() {
       if (data.success) {
         toast.success("Member added");
         setShowAdd(false);
-        setForm({ name: "", role: "", instagram: "", linkedin: "", order: 0 });
+        setForm({ name: "", role: "", instagram: "", linkedin: "", order: 0, departments: [] });
         setImageFile(null); setImagePreview(null);
         await fetchMembers();
         router.refresh();
@@ -163,6 +167,7 @@ export default function IECTeamAdminPage() {
     formData.append("instagram", editForm.instagram);
     formData.append("linkedin", editForm.linkedin);
     formData.append("order", editForm.order);
+    formData.append("departments", JSON.stringify(editForm.departments));
     if (editImageFile) formData.append("image", editImageFile);
     try {
       const res = await fetch(`/api/admin/iec-team?id=${editTarget._id}`, {
@@ -276,6 +281,27 @@ export default function IECTeamAdminPage() {
             <div><label className={labelCls}>LinkedIn URL</label><input type="text" placeholder="https://linkedin.com/..." value={f.linkedin} onChange={e => sf({...f, linkedin: e.target.value})} className={inputCls} /></div>
           </div>
           <div><label className={labelCls}>Sort Order</label><input type="number" placeholder="0 = first" value={f.order} onChange={e => sf({...f, order: parseInt(e.target.value) || 0})} className={inputCls} /></div>
+          
+          <div className="mt-2">
+            <label className={labelCls}>Teams / Departments</label>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 mt-2 bg-slate-50 p-3 rounded-lg border border-slate-100">
+              {DEPARTMENTS.map(dept => (
+                <label key={dept} className="flex items-center gap-2 text-[11px] text-slate-700 cursor-pointer hover:text-slate-900">
+                  <input
+                    type="checkbox"
+                    className="rounded border-slate-300 text-red-600 focus:ring-red-500"
+                    checked={f.departments?.includes(dept) || false}
+                    onChange={(e) => {
+                      const current = f.departments || [];
+                      if (e.target.checked) sf({...f, departments: [...current, dept]});
+                      else sf({...f, departments: current.filter(d => d !== dept)});
+                    }}
+                  />
+                  {dept}
+                </label>
+              ))}
+            </div>
+          </div>
 
           <div className="flex justify-end gap-3 pt-3 border-t border-gray-100 mt-4">
             <button type="button" onClick={onClose} className="px-3 py-1.5 text-xs text-gray-500 hover:text-slate-900 transition-colors">Cancel</button>

@@ -60,7 +60,7 @@ export default function AdminNavbar({ currentUser, onLogout, onRefresh, refreshi
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`relative flex items-center h-14 px-3 text-xs font-semibold tracking-wide transition-colors ${
+                  className={`relative flex items-center h-14 px-3 whitespace-nowrap text-xs font-semibold tracking-wide transition-colors ${
                     isActive
                       ? "text-white after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-red-500"
                       : "text-white/40 hover:text-white"

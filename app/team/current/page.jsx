@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer";
-import { Users, Shield, Lock, Loader2, LogOut, Trash2, Mail, Copy, Check, User as UserIcon, Edit2, X, Send } from "lucide-react";
+import { Users, Shield, Lock, Loader2, LogOut, Trash2, Mail, Copy, Check, User as UserIcon, Edit2, X, Send, ImagePlus } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
 
@@ -16,9 +16,11 @@ export default function CurrentTeamPage() {
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviting, setInviting] = useState(false);
   
-  const [editingName, setEditingName] = useState(false);
+  const [editingTeam, setEditingTeam] = useState(false);
   const [newTeamName, setNewTeamName] = useState("");
-  const [updatingName, setUpdatingName] = useState(false);
+  const [bannerFile, setBannerFile] = useState(null);
+  const [bannerPreview, setBannerPreview] = useState(null);
+  const [updatingTeam, setUpdatingTeam] = useState(false);
 
   const [directory, setDirectory] = useState([]);
   const [loadingDirectory, setLoadingDirectory] = useState(true);
@@ -107,29 +109,50 @@ export default function CurrentTeamPage() {
     } catch { toast.error("Failed to send invite"); }
   };
 
-  const handleUpdateTeamName = async () => {
-    if (!newTeamName.trim() || newTeamName === team.name) {
-      setEditingName(false);
+  const handleBannerChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { toast.error("Banner must be under 5MB"); return; }
+    setBannerFile(file);
+    setBannerPreview(URL.createObjectURL(file));
+  };
+
+  const handleUpdateTeam = async () => {
+    const nameChanged = newTeamName.trim() && newTeamName !== team.name;
+    if (!nameChanged && !bannerFile) {
+      setEditingTeam(false);
       return;
     }
-    setUpdatingName(true);
+    setUpdatingTeam(true);
     try {
       const token = localStorage.getItem("token");
+      const formData = new FormData();
+      formData.append("teamId", team._id);
+      if (nameChanged) formData.append("name", newTeamName);
+      if (bannerFile) formData.append("banner", bannerFile);
       const res = await fetch("/api/team/update", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-        body: JSON.stringify({ teamId: team._id, name: newTeamName }),
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
       });
       const data = await res.json();
       if (data.success) {
-        toast.success("Team name updated!");
+        toast.success("Team updated!");
         setTeam(data.team);
-        setEditingName(false);
+        setEditingTeam(false);
+        setBannerFile(null);
+        setBannerPreview(null);
       } else {
-        toast.error(data.message || "Failed to update team name");
+        toast.error(data.message || "Failed to update team");
       }
-    } catch { toast.error("Failed to update team name"); }
-    finally { setUpdatingName(false); }
+    } catch { toast.error("Failed to update team"); }
+    finally { setUpdatingTeam(false); }
+  };
+
+  const cancelEdit = () => {
+    setEditingTeam(false);
+    setBannerFile(null);
+    setBannerPreview(null);
   };
 
   const handleRemoveMember = async (memberId) => {
@@ -190,68 +213,94 @@ export default function CurrentTeamPage() {
 
   if (!team) return null;
 
-  const isCaptain = currentUser?.role === "LEADER";
+  const isCaptain = currentUser?.id === (team?.leaderId?._id || team?.leaderId?.toString());
+  const isAdmin = currentUser?.role === "ADMIN";
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-slate-50 text-slate-900">
       <Navbar />
 
-      {/* Minimal Hero Section */}
-      <section className="bg-white pt-32 pb-10 px-4 sm:px-6 lg:px-8 border-b border-black/5">
-        <div className="mx-auto max-w-5xl flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="flex-1">
-            <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">{team.college}</p>
-            
-            {editingName ? (
-              <div className="mt-2 flex items-center gap-2">
+      {/* Hero Section */}
+      <section className="bg-white pt-32 pb-10 border-b border-black/5">
+
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8">
+          {/* Edit mode panel */}
+          {editingTeam ? (
+            <div className="space-y-5">
+              <div>
+                <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Team Name</label>
                 <input
                   type="text"
                   value={newTeamName}
                   onChange={(e) => setNewTeamName(e.target.value)}
-                  className="text-3xl sm:text-4xl font-[family-name:var(--font-display)] tracking-tight text-slate-900 border-b-2 border-slate-300 focus:border-red-500 outline-none bg-transparent px-1 py-1"
+                  className="w-full max-w-md text-2xl sm:text-3xl font-[family-name:var(--font-display)] tracking-tight text-slate-900 border-b-2 border-slate-300 focus:border-red-500 outline-none bg-transparent px-1 py-1"
                   autoFocus
                 />
-                <button onClick={handleUpdateTeamName} disabled={updatingName} className="p-2 bg-emerald-100 text-emerald-600 rounded hover:bg-emerald-200 transition-colors">
-                  {updatingName ? <Loader2 size={18} className="animate-spin" /> : <Check size={18} />}
-                </button>
-                <button onClick={() => setEditingName(false)} disabled={updatingName} className="p-2 bg-slate-100 text-slate-600 rounded hover:bg-slate-200 transition-colors">
-                  <X size={18} />
-                </button>
               </div>
-            ) : (
-              <div className="mt-2 flex items-center gap-3">
-                <h1 className="text-4xl sm:text-5xl font-[family-name:var(--font-display)] tracking-tight text-slate-900">
-                  {team.name}
-                </h1>
-                {isCaptain && !team.isRegistered && (
-                  <button onClick={() => { setNewTeamName(team.name); setEditingName(true); }} className="text-slate-400 hover:text-slate-700 transition-colors">
-                    <Edit2 size={20} />
-                  </button>
+
+              <div>
+                <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1.5">Team Banner</label>
+                <label className="flex items-center gap-3 cursor-pointer w-fit px-4 py-2.5 border border-dashed border-slate-300 rounded-lg hover:border-slate-400 hover:bg-slate-50 transition-colors">
+                  <ImagePlus size={18} className="text-slate-400" />
+                  <span className="text-sm text-slate-600">{bannerFile ? bannerFile.name : "Choose banner image"}</span>
+                  <input type="file" accept="image/*" onChange={handleBannerChange} className="hidden" />
+                </label>
+                {bannerPreview && (
+                  <div className="mt-3 relative w-full max-w-md h-28 rounded-lg overflow-hidden border border-slate-200">
+                    <Image src={bannerPreview} alt="Banner preview" fill className="object-cover" />
+                    <button onClick={() => { setBannerFile(null); setBannerPreview(null); }} className="absolute top-2 right-2 bg-black/50 text-white p-1 rounded-full hover:bg-black/70 transition-colors">
+                      <X size={14} />
+                    </button>
+                  </div>
                 )}
               </div>
-            )}
 
-            <div className="mt-4 flex flex-wrap items-center gap-3">
-              <span className="text-sm font-medium text-slate-600">{team.game}</span>
-              <span className="text-slate-300">•</span>
-              {team.isRegistered ? (
-                <span className="flex items-center gap-1.5 text-sm font-medium text-emerald-600">
-                  <Lock size={14} /> Registered
-                </span>
-              ) : (
-                <span className="flex items-center gap-1.5 text-sm font-medium text-slate-600">
-                  <Users size={14} /> Open Roster ({team.members.length}/{team.maxPlayers})
-                </span>
+              <div className="flex items-center gap-2 pt-2">
+                <button onClick={handleUpdateTeam} disabled={updatingTeam} className="flex items-center gap-2 px-5 py-2 bg-slate-900 text-white text-sm font-medium rounded-lg hover:bg-slate-800 transition-colors disabled:opacity-50">
+                  {updatingTeam ? <Loader2 size={16} className="animate-spin" /> : <Check size={16} />} Save Changes
+                </button>
+                <button onClick={cancelEdit} disabled={updatingTeam} className="px-5 py-2 bg-slate-100 text-slate-600 text-sm font-medium rounded-lg hover:bg-slate-200 transition-colors">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+              <div className="flex-1">
+                <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">{team.college}</p>
+                <div className="mt-2 flex items-center gap-3">
+                  <h1 className="text-4xl sm:text-5xl font-[family-name:var(--font-display)] tracking-tight text-slate-900">
+                    {team.name}
+                  </h1>
+                  {isCaptain && !team.isRegistered && (
+                    <button onClick={() => { setNewTeamName(team.name); setEditingTeam(true); }} className="text-slate-400 hover:text-slate-700 transition-colors" title="Edit team">
+                      <Edit2 size={20} />
+                    </button>
+                  )}
+                </div>
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  <span className="text-sm font-medium text-slate-600">{team.game}</span>
+                  <span className="text-slate-300">•</span>
+                  {team.isRegistered ? (
+                    <span className="flex items-center gap-1.5 text-sm font-medium text-emerald-600">
+                      <Lock size={14} /> Registered
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-1.5 text-sm font-medium text-slate-600">
+                      <Users size={14} /> Open Roster ({team.members.length}/{team.maxPlayers})
+                    </span>
+                  )}
+                </div>
+              </div>
+              {isCaptain && !team.isRegistered && (
+                <button
+                  onClick={handleRegister}
+                  className="bg-slate-900 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors"
+                >
+                  Lock & Register Team
+                </button>
               )}
             </div>
-          </div>
-          {isCaptain && !team.isRegistered && (
-            <button
-              onClick={handleRegister}
-              className="bg-slate-900 text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:bg-slate-800 transition-colors"
-            >
-              Lock & Register Team
-            </button>
           )}
         </div>
       </section>
@@ -335,7 +384,18 @@ export default function CurrentTeamPage() {
                                 )}
                               </div>
                               <div>
-                                <h3 className="font-semibold text-slate-900 text-sm">{student.name}</h3>
+                                <div className="flex items-center gap-2">
+                                  <h3 className="font-semibold text-slate-900 text-sm">{student.name}</h3>
+                                  {student.role === "ADMIN" && (
+                                    <span className="text-[9px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded">Admin</span>
+                                  )}
+                                  {student.role === "LEADER" && (
+                                    <span className="text-[9px] font-bold uppercase tracking-wider text-red-600 bg-red-50 px-1.5 py-0.5 rounded">Captain</span>
+                                  )}
+                                  {student.role === "MODERATOR" && (
+                                    <span className="text-[9px] font-bold uppercase tracking-wider text-purple-600 bg-purple-50 px-1.5 py-0.5 rounded">Mod</span>
+                                  )}
+                                </div>
                                 <p className="text-[11px] text-slate-500">{student.game} • {student.collegeEmail}</p>
                               </div>
                             </div>

@@ -32,6 +32,7 @@ export default function RequestDetailsModal({ isOpen, onClose, request, currentU
         college_website: request.college_website || "",
         description: request.description || "",
         experience: request.experience || "",
+        email_domain: request.email_domain || "",
       });
       setIsEditing(false);
     }
@@ -173,6 +174,14 @@ export default function RequestDetailsModal({ isOpen, onClose, request, currentU
                       ? <input type="url" name="college_website" value={formData.college_website} onChange={handleChange} placeholder="Website" className={`${inputCls} flex-1`} />
                       : request.college_website
                         ? <a href={request.college_website} target="_blank" rel="noreferrer" className="text-blue-600 hover:underline truncate">{request.college_website}</a>
+                        : <span className="text-gray-400">—</span>}
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Mail size={14} className="text-purple-500 shrink-0" />
+                    {isEditing
+                      ? <div className="flex-1 flex items-center gap-1"><span className="text-gray-400">@</span><input type="text" name="email_domain" value={formData.email_domain} onChange={handleChange} placeholder="college.ac.in" className={`${inputCls} flex-1`} /></div>
+                      : request.email_domain
+                        ? <span className="text-slate-700">@{request.email_domain}</span>
                         : <span className="text-gray-400">—</span>}
                   </div>
                 </div>

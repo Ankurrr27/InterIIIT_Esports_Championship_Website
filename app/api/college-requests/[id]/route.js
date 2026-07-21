@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { dbConnect } from "@/lib/mongodb";
 import CollegeRequest from "@/lib/models/CollegeRequest";
 import { requireStaff } from "@/lib/helpers/adminAuth";
@@ -64,6 +65,10 @@ export async function PATCH(req, { params }) {
       updates = await req.json();
     }
 
+    if (updates.order !== undefined && updates.order !== null) {
+      updates.order = Number(updates.order);
+    }
+
     // If status is being changed to Approved, set approved_at
     if (updates.status === "Approved") {
       updates.approved_at = new Date();
@@ -115,6 +120,8 @@ export async function DELETE(req, { params }) {
         { status: 404 }
       );
     }
+
+    revalidatePath("/participating-colleges");
 
     return Response.json({ success: true, message: "Request deleted permanently" });
   } catch (err) {

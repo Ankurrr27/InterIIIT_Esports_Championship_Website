@@ -38,6 +38,7 @@ export default function CollegeRegistrationForm() {
     designation: "President",
     contact_number: "",
     whatsapp_number: "",
+    email_domain: "",
     description: "",
     experience: "",
   });
@@ -201,23 +202,39 @@ export default function CollegeRegistrationForm() {
             </div>
           </div>
 
-          <div className="relative group md:col-span-1">
-            <label className={labelClass}>College Website *</label>
-            <div className="relative">
-              <LinkIcon size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-red-500" />
-              <input
-                required
-                type="url"
-                name="college_website"
-                value={formData.college_website}
-                onChange={handleChange}
-                placeholder="https://"
-                className={inputClass}
-              />
+            <div className="relative group md:col-span-1">
+              <label className={labelClass}>College Website *</label>
+              <div className="relative">
+                <LinkIcon size={18} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 transition-colors group-focus-within:text-red-500" />
+                <input
+                  required
+                  type="url"
+                  name="college_website"
+                  value={formData.college_website}
+                  onChange={handleChange}
+                  placeholder="https://"
+                  className={inputClass}
+                />
+              </div>
+            </div>
+
+            <div className="relative group md:col-span-2">
+              <label className={labelClass}>Student Email Extension *</label>
+              <p className="mb-2 text-[11px] text-gray-500">The email domain provided to students by the college to verify their identities (e.g. iiitkota.ac.in)</p>
+              <div className="relative flex items-center">
+                <span className="absolute left-4 text-gray-400 font-medium select-none pointer-events-none">@</span>
+                <input
+                  required
+                  name="email_domain"
+                  value={formData.email_domain}
+                  onChange={handleChange}
+                  placeholder="college.ac.in"
+                  className={`${inputClass} pl-9`}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
       {/* SECTION 2: Club Info */}
       <div className="rounded-xl border border-white/10 bg-white/5 p-6 backdrop-blur-sm sm:p-8">

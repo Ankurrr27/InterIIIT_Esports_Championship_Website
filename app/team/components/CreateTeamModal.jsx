@@ -53,6 +53,7 @@ export default function CreateTeamModal({ onClose }) {
       } else {
         setMessage(err.message);
       }
+      console.error("[CreateTeam] Error:", err.message);
     }
 
     setLoading(false);

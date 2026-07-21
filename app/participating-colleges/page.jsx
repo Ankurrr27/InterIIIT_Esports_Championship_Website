@@ -16,7 +16,7 @@ export default function ParticipatingCollegesPage() {
   useEffect(() => {
     async function fetchColleges() {
       try {
-        const res = await fetch("/api/college-requests?limit=100"); // Fetch approved by default
+        const res = await fetch("/api/college-requests?limit=100", { cache: "no-store" }); // Fetch approved by default
         const data = await res.json();
         if (data.success) {
           setColleges(data.data);

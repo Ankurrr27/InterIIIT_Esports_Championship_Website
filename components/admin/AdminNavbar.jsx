@@ -10,6 +10,7 @@ export default function AdminNavbar({ currentUser, onLogout, onRefresh, refreshi
 
   const navLinks = [
     { name: "College Requests", href: "/admin/colleges", roles: ["ADMIN", "MODERATOR"] },
+    { name: "Users", href: "/admin/users", roles: ["ADMIN"] },
     { name: "Teams", href: "/admin/teams", roles: ["ADMIN"] },
     { name: "Leaderboard", href: "/admin/leaderboard", roles: ["ADMIN"] },
     { name: "IEC Team", href: "/admin/iec-team", roles: ["ADMIN"] },

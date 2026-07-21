@@ -18,6 +18,7 @@ export default function AdminLoginPage() {
 
   const handleLogin = (token) => {
     localStorage.setItem("token", token);
+    document.cookie = "adminAuth=true; path=/; max-age=86400"; // Expires in 1 day
     router.push("/admin/colleges");
   };
 

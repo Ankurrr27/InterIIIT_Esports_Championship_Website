@@ -25,16 +25,16 @@ function Footer() {
             </p>
 
             <div className="flex gap-3">
-              <a href="#" className="flex h-9 w-9 items-center justify-center border border-black/10 bg-slate-50 text-slate-500 transition hover:border-red-600 hover:bg-red-600 hover:text-white sm:h-10 sm:w-10">
+              <a href="https://www.instagram.com/interiiit_esports" target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center border border-black/10 bg-slate-50 text-slate-500 transition hover:border-red-600 hover:bg-red-600 hover:text-white sm:h-10 sm:w-10">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
               </a>
-              <a href="#" className="flex h-9 w-9 items-center justify-center border border-black/10 bg-slate-50 text-slate-500 transition hover:border-[#5865F2] hover:bg-[#5865F2] hover:text-white sm:h-10 sm:w-10">
+              <a href="https://discord.gg/iiitiansnetwork" target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center border border-black/10 bg-slate-50 text-slate-500 transition hover:border-[#5865F2] hover:bg-[#5865F2] hover:text-white sm:h-10 sm:w-10">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
               </a>
-              <a href="#" className="flex h-9 w-9 items-center justify-center border border-black/10 bg-slate-50 text-slate-500 transition hover:border-[#FF0000] hover:bg-[#FF0000] hover:text-white sm:h-10 sm:w-10">
+              <a href="https://www.youtube.com/@iiitiansnetwork" target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center border border-black/10 bg-slate-50 text-slate-500 transition hover:border-[#FF0000] hover:bg-[#FF0000] hover:text-white sm:h-10 sm:w-10">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 7.1C2.5 5.5 3.8 4.2 5.4 4.2h13.2C20.2 4.2 21.5 5.5 21.5 7.1v9.8c0 1.6-1.3 2.9-2.9 2.9H5.4C3.8 19.8 2.5 18.5 2.5 16.9V7.1z"/><path d="M9.7 14.5l5.8-3.4-5.8-3.4v6.8z"/></svg>
               </a>
-              <a href="#" className="flex h-9 w-9 items-center justify-center border border-black/10 bg-slate-50 text-slate-500 transition hover:border-[#1DA1F2] hover:bg-[#1DA1F2] hover:text-white sm:h-10 sm:w-10">
+              <a href="https://x.com/iiitiansnetwork" target="_blank" rel="noopener noreferrer" className="flex h-9 w-9 items-center justify-center border border-black/10 bg-slate-50 text-slate-500 transition hover:border-[#1DA1F2] hover:bg-[#1DA1F2] hover:text-white sm:h-10 sm:w-10">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z" /><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772" /></svg>
               </a>
             </div>
@@ -128,16 +128,16 @@ function Footer() {
               </h3>
               <ul className="mt-4 space-y-3 text-xs font-medium text-slate-600 sm:mt-6 sm:space-y-4 sm:text-sm">
                 <li>
-                  <a href="#" className="transition hover:text-slate-900">Discord Server</a>
+                  <a href="https://discord.gg/iiitiansnetwork" target="_blank" rel="noopener noreferrer" className="transition hover:text-slate-900">Discord Server</a>
                 </li>
                 <li>
-                  <a href="#" className="transition hover:text-slate-900">Instagram</a>
+                  <a href="https://www.instagram.com/interiiit_esports" target="_blank" rel="noopener noreferrer" className="transition hover:text-slate-900">Instagram</a>
                 </li>
                 <li>
-                  <a href="#" className="transition hover:text-slate-900">YouTube Stream</a>
+                  <a href="https://www.youtube.com/@iiitiansnetwork" target="_blank" rel="noopener noreferrer" className="transition hover:text-slate-900">YouTube Stream</a>
                 </li>
                 <li>
-                  <a href="#" className="transition hover:text-slate-900">Twitter / X</a>
+                  <a href="https://x.com/iiitiansnetwork" target="_blank" rel="noopener noreferrer" className="transition hover:text-slate-900">Twitter / X</a>
                 </li>
                 <li>
                   <Link href="/join-iec" className="group flex items-center gap-1.5 font-semibold text-red-600 transition hover:text-red-700">

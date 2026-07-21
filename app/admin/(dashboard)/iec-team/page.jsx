@@ -14,6 +14,9 @@ export default function IECTeamAdminPage() {
   const [editTarget, setEditTarget] = useState(null);
   const [submitting, setSubmitting] = useState(false);
   const [activeTab, setActiveTab] = useState("team");
+  const [isReordering, setIsReordering] = useState(false);
+  const [draggedMemberId, setDraggedMemberId] = useState(null);
+  const [savingOrder, setSavingOrder] = useState(false);
   const router = useRouter();
 
   // Applications state
@@ -39,7 +42,7 @@ export default function IECTeamAdminPage() {
   const fetchMembers = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/public/iec-team");
+      const res = await fetch("/api/public/iec-team", { cache: "no-store" });
       const data = await res.json();
       if (data.success) setMembers(data.team);
     } catch { toast.error("Failed to fetch IEC team"); }
@@ -190,6 +193,52 @@ export default function IECTeamAdminPage() {
     } catch { toast.error("Delete failed"); }
   };
 
+  const handleReorderDrop = (targetMember) => {
+    if (!draggedMemberId || !targetMember) return;
+
+    if (draggedMemberId === targetMember._id) {
+      setDraggedMemberId(null);
+      return;
+    }
+
+    setMembers((prev) => {
+      const next = [...prev];
+      const fromIndex = next.findIndex((member) => member._id === draggedMemberId);
+      const toIndex = next.findIndex((member) => member._id === targetMember._id);
+
+      if (fromIndex === -1 || toIndex === -1) return prev;
+
+      const [moved] = next.splice(fromIndex, 1);
+      next.splice(toIndex, 0, moved);
+      return next.map((member, index) => ({ ...member, order: index }));
+    });
+    setDraggedMemberId(null);
+  };
+
+  const saveMemberOrder = async () => {
+    if (!token) return;
+    setSavingOrder(true);
+    try {
+      await Promise.all(
+        members.map((member, index) => {
+          const formData = new FormData();
+          formData.append("order", index);
+          return fetch(`/api/admin/iec-team?id=${member._id}`, {
+            method: "PATCH",
+            headers: { Authorization: `Bearer ${token}` },
+            body: formData,
+          });
+        })
+      );
+      toast.success("Team order updated");
+      router.refresh();
+    } catch {
+      toast.error("Failed to save team order");
+    } finally {
+      setSavingOrder(false);
+    }
+  };
+
   const inputCls = "w-full bg-white border border-gray-200 rounded-md px-3 py-2 text-sm text-slate-900 placeholder:text-gray-400 focus:border-red-500 focus:outline-none shadow-sm";
   const labelCls = "text-[10px] font-semibold uppercase tracking-wider text-gray-400 mb-1 block";
 
@@ -249,12 +298,20 @@ export default function IECTeamAdminPage() {
           <p className="text-xs text-gray-500 mt-0.5">Organizers displayed on the public website</p>
         </div>
         {activeTab === "team" && (
-          <button
-            onClick={() => setShowAdd(true)}
-            className="flex items-center gap-1.5 bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider transition-colors shadow-sm"
-          >
-            <Plus size={13} /> Add Member
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsReordering((prev) => !prev)}
+              className="flex items-center gap-1.5 border border-gray-200 bg-white px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider text-slate-700 transition-colors hover:border-red-300 hover:text-red-600"
+            >
+              {isReordering ? "Cancel" : "Reorder"}
+            </button>
+            <button
+              onClick={() => setShowAdd(true)}
+              className="flex items-center gap-1.5 bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded-md text-xs font-bold uppercase tracking-wider transition-colors shadow-sm"
+            >
+              <Plus size={13} /> Add Member
+            </button>
+          </div>
         )}
       </div>
 
@@ -293,6 +350,19 @@ export default function IECTeamAdminPage() {
       {/* ══════ CURRENT TEAM TAB ══════ */}
       {activeTab === "team" && (<>
 
+      {isReordering && (
+        <div className="flex items-center justify-between rounded-lg border border-dashed border-red-200 bg-red-50/70 px-3 py-2">
+          <p className="text-xs font-semibold text-red-700">Drag a card to change the public display order.</p>
+          <button
+            onClick={saveMemberOrder}
+            disabled={savingOrder}
+            className="rounded-md bg-red-600 px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-white disabled:opacity-50"
+          >
+            {savingOrder ? "Saving..." : "Save Order"}
+          </button>
+        </div>
+      )}
+
       {/* Grid */}
       {loading ? (
         <div className="flex justify-center py-16">
@@ -307,7 +377,14 @@ export default function IECTeamAdminPage() {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
           {members.map(member => (
-            <div key={member._id} className="relative group bg-white border border-gray-200 rounded-xl overflow-hidden p-4 text-center hover:border-gray-300 shadow-sm transition-all">
+            <div
+              key={member._id}
+              draggable={isReordering}
+              onDragStart={() => setDraggedMemberId(member._id)}
+              onDragOver={(e) => isReordering && e.preventDefault()}
+              onDrop={() => handleReorderDrop(member)}
+              className={`relative group bg-white border border-gray-200 rounded-xl overflow-hidden p-4 text-center hover:border-gray-300 shadow-sm transition-all ${isReordering ? "cursor-grab" : ""}`}
+            >
               {/* Action buttons — appear on hover */}
               <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-all">
                 <button

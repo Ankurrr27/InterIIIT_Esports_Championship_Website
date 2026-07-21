@@ -10,7 +10,7 @@ const contacts = [
       "Get quick assistance from moderators and fellow players.",
     value: "Join our Discord",
     button: "Join Server",
-    href: "#",
+    href: "https://discord.gg/iiitiansnetwork",
     accent: "text-indigo-600 bg-white border-indigo-200",
     borderHover: "hover:border-indigo-600"
   },
@@ -19,9 +19,9 @@ const contacts = [
     title: "Email Support",
     description:
       "For registrations, payments, and account-related queries.",
-    value: "support@yourdomain.com",
+    value: "support@iec.iiitiansnetwork.com",
     button: "Send Email",
-    href: "mailto:support@yourdomain.com",
+    href: "mailto:support@iec.iiitiansnetwork.com",
     accent: "text-red-600 bg-white border-red-200",
     borderHover: "hover:border-red-600"
   },
@@ -30,9 +30,9 @@ const contacts = [
     title: "Instagram",
     description:
       "Stay updated and send us a DM if you need help.",
-    value: "@yourpage",
+    value: "@interiiit_esports",
     button: "Visit Page",
-    href: "#",
+    href: "https://www.instagram.com/interiiit_esports",
     accent: "text-pink-600 bg-white border-pink-200",
     borderHover: "hover:border-pink-600"
   },
@@ -86,6 +86,7 @@ export default function ContactCards() {
 
                   <a
                    href={contact.href}
+                   target="_blank" rel="noopener noreferrer"
                    className="mt-8 inline-flex items-center gap-2 rounded-none border border-slate-300 bg-white px-6 py-3 text-sm font-semibold uppercase tracking-widest text-slate-900 transition-all duration-300 hover:bg-slate-900 hover:text-white"
                   >
                     {contact.button}

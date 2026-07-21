@@ -25,6 +25,7 @@ export async function POST(req) {
     const whatsapp_number = formData.get("whatsapp_number")?.trim() || null;
     const description = formData.get("description")?.trim() || null;
     const experience = formData.get("experience")?.trim() || null;
+    const email_domain = formData.get("email_domain")?.trim()?.toLowerCase();
     const logoFile = formData.get("college_logo");
 
     // Validate required fields
@@ -40,6 +41,7 @@ export async function POST(req) {
       whatsapp_number,
       description,
       experience,
+      email_domain,
     };
 
     for (const [field, value] of Object.entries(requiredFields)) {
@@ -110,6 +112,7 @@ export async function POST(req) {
       whatsapp_number,
       description,
       experience,
+      email_domain,
       status: "Pending",
     });
 
@@ -141,7 +144,7 @@ export async function GET(req) {
     const { searchParams } = new URL(req.url);
     const status = searchParams.get("status");
     const search = searchParams.get("search") || "";
-    const sort = searchParams.get("sort") || "newest";
+    const sort = searchParams.get("sort") || "custom";
     const page = Math.max(1, parseInt(searchParams.get("page") || "1", 10));
     const limit = Math.min(50, Math.max(1, parseInt(searchParams.get("limit") || "12", 10)));
 
@@ -175,7 +178,11 @@ export async function GET(req) {
     }
 
     // Sort
-    const sortOption = sort === "oldest" ? { createdAt: 1 } : { createdAt: -1 };
+    const sortOption = sort === "oldest"
+      ? { createdAt: 1 }
+      : sort === "newest"
+        ? { createdAt: -1 }
+        : { order: 1, createdAt: 1 };
 
     const skip = (page - 1) * limit;
 

@@ -1,16 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowRight, Building2, Gamepad2, GraduationCap, Lock, Mail, User } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
-
-const COLLEGES = [
-  { name: "IIIT Kota", domain: "iiitkota.ac.in" },
-  { name: "IIIT Nagpur", domain: "iiitnagpur.ac.in" },
-  { name: "IIIT Patna", domain: "iiitpatna.ac.in" },
-];
 
 const cardShell = "z-10 my-2 flex w-full max-w-[430px] justify-center px-4 sm:px-0 lg:my-0";
 const cardPanel = "flex h-[590px] max-h-[calc(100svh-7rem)] min-h-[520px] w-full flex-col overflow-y-auto rounded-lg border border-white/10 bg-black/55 px-5 py-5 shadow-2xl backdrop-blur-xl sm:px-6 sm:py-6";
@@ -31,6 +25,25 @@ export default function RegisterCard() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
+  const [colleges, setColleges] = useState([]);
+  const [fetchingColleges, setFetchingColleges] = useState(true);
+
+  useEffect(() => {
+    const fetchColleges = async () => {
+      try {
+        const res = await fetch("/api/public/colleges");
+        const data = await res.json();
+        if (data.success) {
+          setColleges(data.colleges);
+        }
+      } catch (error) {
+        console.error("Failed to fetch colleges:", error);
+      } finally {
+        setFetchingColleges(false);
+      }
+    };
+    fetchColleges();
+  }, []);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
@@ -40,7 +53,7 @@ export default function RegisterCard() {
   };
 
   // Get expected domain hint for the selected college
-  const selectedCollege = COLLEGES.find((c) => c.name === formData.college);
+  const selectedCollege = colleges.find((c) => c.name === formData.college);
   const domainHint = selectedCollege ? `e.g. you@${selectedCollege.domain}` : "College Email";
 
   const handleRegister = async () => {
@@ -143,8 +156,10 @@ export default function RegisterCard() {
                 onChange={handleChange}
                 className={inputClass + " appearance-none"}
               >
-                <option value="" className="bg-[#111111]">Select College</option>
-                {COLLEGES.map((c) => (
+                <option value="" className="bg-[#111111]">
+                  {fetchingColleges ? "Loading colleges..." : "Select College"}
+                </option>
+                {colleges.map((c) => (
                   <option key={c.name} value={c.name} className="bg-[#111111]">
                     {c.name}
                   </option>

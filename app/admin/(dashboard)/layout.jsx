@@ -32,17 +32,20 @@ export default function AdminDashboardLayout({ children }) {
           setLoading(false);
         } else {
           localStorage.removeItem("token");
+          document.cookie = "adminAuth=; path=/; max-age=0";
           router.push("/admin/login");
         }
       })
       .catch(() => {
         localStorage.removeItem("token");
+        document.cookie = "adminAuth=; path=/; max-age=0";
         router.push("/admin/login");
       });
   }, [router]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    document.cookie = "adminAuth=; path=/; max-age=0";
     router.push("/admin/login");
   };
 

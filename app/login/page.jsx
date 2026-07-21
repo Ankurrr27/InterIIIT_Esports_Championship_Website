@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Navbar from "@/components/Navbar/Navbar";
 import LoginCard from "@/components/LoginCard";
+import AuthPageWrapper from "@/components/AuthPageWrapper";
 import { FaInstagram, FaDiscord, FaYoutube } from "react-icons/fa";
 
 export default function LoginPage() {
@@ -24,17 +25,19 @@ export default function LoginPage() {
         <Navbar />
 
         <div className="flex flex-1 items-center justify-center px-4 py-6 sm:px-6 lg:justify-end lg:px-24">
-          <LoginCard />
+          <AuthPageWrapper>
+            <LoginCard />
+          </AuthPageWrapper>
         </div>
 
-        <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-2 text-white sm:bottom-8 sm:left-8 lg:left-24">
-          <span className="text-xs font-semibold tracking-widest text-gray-300 sm:text-sm">FOLLOW US</span>
-          <div className="flex items-center gap-4">
-            <a href="#" className="transition-colors hover:text-red-500"><FaInstagram size={20} /></a>
-            <a href="#" className="transition-colors hover:text-red-500"><FaDiscord size={22} /></a>
-            <a href="#" className="transition-colors hover:text-red-500"><FaYoutube size={22} /></a>
+          <div className="absolute bottom-4 left-4 z-10 flex flex-col gap-2 text-white sm:bottom-8 sm:left-8 lg:left-24">
+            <span className="text-xs font-semibold tracking-widest text-gray-300 sm:text-sm">FOLLOW US</span>
+            <div className="flex items-center gap-4">
+              <a href="https://www.instagram.com/interiiit_esports" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-red-500"><FaInstagram size={20} /></a>
+              <a href="https://discord.gg/iiitiansnetwork" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-red-500"><FaDiscord size={22} /></a>
+              <a href="https://www.youtube.com/@iiitiansnetwork" target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-red-500"><FaYoutube size={22} /></a>
+            </div>
           </div>
-        </div>
       </div>
     </main>
   );

@@ -19,6 +19,11 @@ export async function POST(req) {
     const instagram = formData.get("instagram");
     const linkedin = formData.get("linkedin");
     const order = formData.get("order") || 0;
+    const departmentsStr = formData.get("departments");
+    let departments = [];
+    if (departmentsStr && departmentsStr !== "undefined") {
+      try { departments = JSON.parse(departmentsStr); } catch (e) {}
+    }
     const imageFile = formData.get("image");
 
     if (!name || !role || !imageFile) {
@@ -39,7 +44,8 @@ export async function POST(req) {
       image_url,
       instagram,
       linkedin,
-      order: Number(order)
+      order: Number(order),
+      departments
     });
 
     revalidatePath("/iec-team");
@@ -71,6 +77,11 @@ export async function PATCH(req) {
     const instagram = formData.get("instagram");
     const linkedin = formData.get("linkedin");
     const order = formData.get("order");
+    const departmentsStr = formData.get("departments");
+    let departments = undefined;
+    if (departmentsStr && departmentsStr !== "undefined") {
+      try { departments = JSON.parse(departmentsStr); } catch (e) {}
+    }
 
     const member = await IECTeamMember.findById(id);
     if (!member) return Response.json({ success: false, error: "Member not found" }, { status: 404 });
@@ -88,6 +99,7 @@ export async function PATCH(req) {
     if (instagram !== null && instagram !== undefined) member.instagram = instagram;
     if (linkedin !== null && linkedin !== undefined) member.linkedin = linkedin;
     if (order !== null && order !== undefined) member.order = Number(order);
+    if (departments !== undefined) member.departments = departments;
 
     await member.save();
 

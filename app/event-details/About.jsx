@@ -25,7 +25,7 @@ const stats = [
 
 export default function About() {
   return (
-    <section id="about" className="relative bg-white py-12 text-slate-900 sm:py-16 overflow-hidden border-b border-black/5">
+    <section id="about" className="relative bg-white py-16 text-slate-900 sm:py-24 overflow-hidden">
       
       {/* Background accents */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-red-600/5 rounded-full blur-[100px] pointer-events-none -translate-y-1/2 translate-x-1/3" />
@@ -33,7 +33,7 @@ export default function About() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
           
           {/* Left Column (Text & Stats) */}
           <div className="flex flex-col justify-center">
@@ -53,29 +53,29 @@ export default function About() {
             </p>
 
             {/* Stats Grid */}
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+            <div className="mt-10 grid gap-3 sm:grid-cols-2">
               {stats.map((item) => (
-                <div key={item.label} className="border border-black/10 bg-slate-50 p-6 backdrop-blur-sm transition-all hover:border-red-500 hover:bg-white hover:shadow-md">
-                  <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-600">
+                <div key={item.label} className="bg-slate-50 rounded-xl p-5 transition-all duration-300 hover:bg-red-50 hover:shadow-sm group">
+                  <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-red-500 group-hover:text-red-600 transition-colors">
                     {item.label}
                   </p>
-                  <p className="mt-3 text-lg font-bold text-slate-900">
+                  <p className="mt-2 text-lg font-bold text-slate-900">
                     {item.value}
                   </p>
                 </div>
               ))}
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-4">
+            <div className="mt-10 flex flex-wrap gap-4">
               <a
                 href="/register"
-                className="border border-red-600 bg-red-600 px-8 py-4 text-xs font-bold uppercase tracking-widest text-white transition hover:bg-red-700 hover:border-red-700 shadow-[0_0_15px_rgba(220,38,38,0.2)]"
+                className="rounded-lg bg-red-600 px-8 py-4 text-xs font-bold uppercase tracking-widest text-white transition-all duration-300 hover:bg-red-700 hover:shadow-lg hover:shadow-red-600/20"
               >
                 Register Now
               </a>
               <a
                 href="#timeline"
-                className="border border-slate-300 bg-white px-8 py-4 text-xs font-bold uppercase tracking-widest text-slate-900 transition hover:border-slate-400 hover:bg-slate-50"
+                className="rounded-lg bg-slate-100 px-8 py-4 text-xs font-bold uppercase tracking-widest text-slate-900 transition-all duration-300 hover:bg-slate-200"
               >
                 View Format
               </a>
@@ -85,34 +85,33 @@ export default function About() {
           {/* Right Column (Games) */}
           <div className="relative">
             
-            {/* Games Grid */}
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
-              <h3 className="sm:col-span-2 lg:col-span-1 text-[11px] font-bold uppercase tracking-[0.3em] text-slate-500 mb-2">Featured Titles</h3>
+              <h3 className="sm:col-span-2 lg:col-span-1 text-[11px] font-bold uppercase tracking-[0.3em] text-slate-400 mb-1">Featured Titles</h3>
               {gameCards.map((game, index) => (
                 <article
                   key={game.title}
-                  className="group relative overflow-hidden border border-black/10 transition-all duration-500 hover:border-red-500 hover:shadow-[0_0_20px_rgba(220,38,38,0.2)] hover:z-10"
+                  className="group relative overflow-hidden rounded-xl transition-all duration-500 hover:shadow-xl hover:shadow-black/10 hover:z-10"
                 >
                   <div className="relative aspect-[3/1] sm:aspect-[2/1] lg:aspect-[3/1] overflow-hidden">
                     <img
                       src={game.src}
                       alt={game.title}
-                      className="absolute inset-0 h-full w-full object-cover object-center  transition duration-700 group-hover:scale-105 group-hover:opacity-100"
+                      className="absolute inset-0 h-full w-full object-cover object-center transition duration-700 group-hover:scale-105"
                     />
-                    {/* White gradient overlay for contrast against light text */}
-                    <div className="absolute inset-0 " />
+                    {/* Dark gradient overlay so text is always readable */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
                   </div>
 
                   <div className="absolute inset-0 flex flex-col justify-center p-6 sm:p-8">
                     <div className="flex items-center gap-4">
-                      <span className="text-xl font-bold text-red-600 opacity-90">
+                      <span className="text-2xl font-bold text-red-400 drop-shadow-lg">
                         0{index + 1}
                       </span>
                       <div>
-                        <h4 className="text-xl font-bold text-slate-900 tracking-wide">
+                        <h4 className="text-xl font-bold text-white tracking-wide drop-shadow-md">
                           {game.title}
                         </h4>
-                        <p className="mt-1 text-xs uppercase tracking-widest text-slate-500 font-semibold">
+                        <p className="mt-1 text-xs uppercase tracking-widest text-white/70 font-semibold">
                           {game.subtitle}
                         </p>
                       </div>

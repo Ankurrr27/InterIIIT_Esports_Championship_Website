@@ -1,4 +1,5 @@
 import Image from "next/image";
+import TeamCard from "./TeamCard";
 
 const themes = {
   amber: {
@@ -30,7 +31,7 @@ const themes = {
   },
 };
 
-export default function GameOrganizers({ organizers = [], theme = "red" }) {
+export default function GameOrganizers({ organizers = [], teamMembers = [], theme = "red" }) {
   const colors = themes[theme] || themes.red;
 
   return (
@@ -53,54 +54,26 @@ export default function GameOrganizers({ organizers = [], theme = "red" }) {
           </span>
         </div>
 
-        <div className="grid gap-5">
-          {organizers.map((org, index) => {
-            const clubLogo = org.clubLogo || org.logo || "/logos/iiitians-network.png";
-            const networkLogo = org.networkLogo || "/logos/iiitians-network.png";
-
-            return (
-              <article
-                key={index}
-                className={`group relative overflow-hidden bg-gradient-to-br ${colors.panel} p-4 ring-1 ring-white/10 transition duration-300 hover:ring-white/20 sm:p-6 lg:p-7 ${colors.glow}`}
-              >
-                <div className="absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_38%)] opacity-70" />
-                <div className="absolute bottom-0 left-0 h-1 w-full bg-white/10">
-                  <div className={`h-full w-2/5 ${colors.line}`} />
-                </div>
-
-                <div className="relative grid gap-6 lg:grid-cols-[280px_1fr_260px] lg:items-stretch">
-                  <div className="relative min-h-[250px] overflow-hidden bg-zinc-950 ring-1 ring-white/10 sm:min-h-[300px] lg:min-h-[340px]">
-                    <Image
-                      src={org.personImage}
-                      alt={org.leader}
-                      fill
-                      sizes="(min-width: 1024px) 280px, 100vw"
-                      className="object-cover object-top grayscale transition duration-500 group-hover:scale-105 group-hover:grayscale-0"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3">
-                      <span className={`px-3 py-1.5 text-[10px] font-black uppercase tracking-[0.24em] ${colors.chip}`}>
-                        {org.game || "Partner"}
-                      </span>
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55">
-                        #{String(index + 1).padStart(2, "0")}
-                      </span>
-                    </div>
+        {/* Club Conducting Info Row */}
+        {organizers.length > 0 && (
+          <div className="mb-12">
+            {organizers.map((org, index) => {
+              const clubLogo = org.clubLogo || org.logo || "/logos/iiitians-network.png";
+              
+              return (
+                <article
+                  key={index}
+                  className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br ${colors.panel} p-6 ring-1 ring-white/10 transition duration-300 hover:ring-white/20 sm:p-8 lg:p-10 ${colors.glow}`}
+                >
+                  <div className="absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.12),transparent_38%)] opacity-70" />
+                  <div className="absolute bottom-0 left-0 h-1 w-full bg-white/10">
+                    <div className={`h-full w-2/5 ${colors.line}`} />
                   </div>
 
-                  <div className="flex min-w-0 flex-col justify-center py-1 lg:py-5">
-                    <div className="flex flex-wrap items-center gap-3">
-                      <div className="relative h-11 w-24 bg-white p-2 ring-1 ring-white/10">
-                        <Image
-                          src={networkLogo}
-                          alt="IIITians Network logo"
-                          fill
-                          sizes="96px"
-                          className="object-contain p-2"
-                        />
-                      </div>
-                      <span className="text-xs font-black uppercase tracking-[0.26em] text-white/35">x</span>
-                      <div className="relative h-11 w-24 bg-white p-2 ring-1 ring-white/10">
+                  <div className="relative flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+                    
+                    <div className="flex items-center gap-6">
+                      <div className="relative h-20 w-20 shrink-0 rounded-xl bg-white p-2 ring-1 ring-white/20 sm:h-24 sm:w-24">
                         <Image
                           src={clubLogo}
                           alt={`${org.club || "Club"} logo`}
@@ -109,53 +82,58 @@ export default function GameOrganizers({ organizers = [], theme = "red" }) {
                           className="object-contain p-2"
                         />
                       </div>
-                    </div>
-
-                    <h3 className="mt-6 text-3xl font-black tracking-tight text-white sm:text-5xl">
-                      {org.leader}
-                    </h3>
-                    <p className={`mt-3 inline-flex w-fit px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.24em] ${colors.soft}`}>
-                      {org.role}
-                    </p>
-                    {org.description ? (
-                      <p className="mt-5 max-w-2xl text-sm leading-7 text-white/68 sm:text-base">
-                        {org.description}
-                      </p>
-                    ) : null}
-                  </div>
-
-                  <aside className="flex flex-col justify-between gap-5 bg-black/30 p-4 ring-1 ring-white/10 lg:p-5">
-                    <div>
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/35">
-                        Responsible For
-                      </p>
-                      <div className="mt-4 grid gap-2 text-sm font-semibold text-white/80">
-                        <span>Match rooms</span>
-                        <span>Roster checks</span>
-                        <span>Player coordination</span>
-                        <span>Dispute support</span>
-                      </div>
-                    </div>
-
-                    <div className="border-t border-white/10 pt-4">
-                      <p className="text-[10px] font-semibold uppercase tracking-[0.28em] text-white/35">
-                        Affiliation
-                      </p>
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        <span className="bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-white/70">
+                      <div>
+                        <h3 className="text-2xl font-black tracking-tight text-white sm:text-4xl">
                           {org.club}
-                        </span>
-                        <span className="bg-white/10 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-white/70">
+                        </h3>
+                        <p className={`mt-2 inline-flex w-fit px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.24em] ${colors.soft}`}>
                           {org.college}
-                        </span>
+                        </p>
                       </div>
                     </div>
-                  </aside>
+
+                    {org.description && (
+                      <div className="max-w-xl lg:text-right">
+                        <p className="text-sm leading-relaxed text-white/70 sm:text-base">
+                          {org.description}
+                        </p>
+                        <div className="mt-4 inline-flex items-center gap-2 rounded-lg bg-white/5 px-4 py-2 ring-1 ring-white/10">
+                          <span className={`h-2 w-2 rounded-full ${colors.line} animate-pulse`} />
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-white/80">
+                            Official {org.game || "Game"} Partner
+                          </span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
+
+        {/* Team Members Grid */}
+        {teamMembers && teamMembers.length > 0 && (
+          <div>
+            <div className="mb-8 border-t border-white/10 pt-8">
+              <h3 className="text-xl font-bold tracking-tight text-white sm:text-2xl">
+                The Squad
+              </h3>
+              <p className="mt-2 text-sm text-white/55">
+                Meet the individuals managing the operations for this game.
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+              {teamMembers.map((member) => (
+                <div key={member._id || member.name} className="flex">
+                  <TeamCard member={member} />
                 </div>
-              </article>
-            );
-          })}
-        </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
       </div>
     </section>
   );

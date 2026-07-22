@@ -14,7 +14,7 @@ const contacts = [
   {
     icon: Mail,
     title: "Email Support",
-    value: "support@iec.iiitiansnetwork.com",
+    value: "iiitiansnetwork@gmail.com",
     href: "mailto:support@iec.iiitiansnetwork.com",
     accent: "text-red-500 bg-red-50 border-red-100",
     borderHover: "hover:border-red-300"
@@ -31,7 +31,7 @@ const contacts = [
 
 export default function HomeContactSection() {
   return (
-    <section className="relative py-10 sm:py-12 lg:py-16 bg-white text-slate-900">
+    <section className="relative py-5 sm:py-12 lg:py-16 bg-white text-slate-900">
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* ── Section Header ── */}
@@ -43,14 +43,14 @@ export default function HomeContactSection() {
           <p className="mt-2 text-[11px] sm:text-sm text-slate-600">
             Send us a message or reach out through our community channels.
           </p>
-          <div className="mt-2 h-[2px] w-12 bg-red-600" />
+          {/* <div className="mt-2 h-[2px] w-12 bg-red-600" /> */}
         </div>
 
         {/* ── Content Grid ── */}
         <div className="grid gap-6 lg:grid-cols-3">
 
           {/* Form (2 columns) */}
-          <div className="lg:col-span-2 rounded-xl border border-slate-100 bg-slate-50/50 p-6 sm:p-8">
+          <div className="lg:col-span-2 rounded-xl border border-slate-100 bg-slate-50/50 p-2 sm:p-8">
             <form className="space-y-5">
               <div className="grid gap-5 md:grid-cols-2">
                 <div>
@@ -59,7 +59,7 @@ export default function HomeContactSection() {
                   </label>
                   <input
                     type="text"
-                    placeholder="John Doe"
+                    placeholder="Ankur Singh"
                     className="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:border-red-400 focus:ring-2 focus:ring-red-100"
                   />
                 </div>
@@ -69,7 +69,7 @@ export default function HomeContactSection() {
                   </label>
                   <input
                     type="email"
-                    placeholder="john@example.com"
+                    placeholder="abcd1234@iiitkota.ac.in"
                     className="w-full rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 outline-none transition-all focus:border-red-400 focus:ring-2 focus:ring-red-100"
                   />
                 </div>

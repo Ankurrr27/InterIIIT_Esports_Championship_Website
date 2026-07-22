@@ -25,8 +25,9 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-white/10 bg-black backdrop-blur-xl">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:h-14 sm:px-6 lg:px-8">
+    <>
+    <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 h-[64px] sm:h-14 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3">
           <Image
             src="/logos/iiitians-network.png"
@@ -196,5 +197,8 @@ export default function Navbar() {
         </Link>
       </div>
     </nav>
+    {/* Placeholder to prevent layout shift from fixed navbar */}
+    <div className="h-[64px] sm:h-14 w-full shrink-0" />
+    </>
   );
 }

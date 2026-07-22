@@ -79,21 +79,21 @@ export default function EventSlider({
               <div className="mt-6 md:mt-7 flex flex-wrap gap-3 md:gap-4">
                 <Link
                   href={primaryBtn.href}
-                  className="rounded bg-red-600 px-5 py-2.5 md:px-6 md:py-3 text-[13px] md:text-base font-semibold hover:bg-red-500 transition text-center"
+                  className="rounded bg-red-600 px-4 py-2 text-[11px] md:px-5 md:py-2.5 md:text-[13px] font-semibold hover:bg-red-500 transition text-center uppercase tracking-wider"
                 >
                   {primaryBtn.text}
                 </Link>
 
                 <Link
                   href={secondaryBtn.href}
-                  className="hidden md:inline-flex rounded border border-white/20 bg-white/10 px-6 py-3 text-base font-semibold hover:border-red-500 transition text-center"
+                  className="hidden md:inline-flex rounded border border-white/20 bg-white/10 px-4 py-2 text-[11px] md:px-5 md:py-2.5 md:text-[13px] font-semibold hover:border-red-500 transition text-center uppercase tracking-wider"
                 >
                   {secondaryBtn.text}
                 </Link>
               </div>
 
               {/* Indicators */}
-              <div className="mt-8 hidden md:flex gap-2 justify-start">
+              {/* <div className="mt-8 hidden md:flex gap-2 justify-start">
                 {slides.map((_, index) => (
                   <button
                     key={index}
@@ -103,7 +103,7 @@ export default function EventSlider({
                     }`}
                   />
                 ))}
-              </div>
+              </div> */}
             </div>
           </div>
         </section>

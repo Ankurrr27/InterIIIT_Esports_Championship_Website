@@ -2,7 +2,7 @@ import Navbar from "@/components/Navbar/Navbar";
 import EventSlider from "@/components/EventSlider";
 import EventIntro from "@/components/EventIntro";
 import Stats from "@/components/Stats/Stats";
-import TeamSection from "@/components/TeamSection";
+import HomeTeamSection from "@/components/HomeTeamSection";
 import Footer from "@/components/Footer";
 import GamesSection from "@/components/GamesSection";
 import HomeFeatureSections from "@/components/HomeFeatureSections";
@@ -36,7 +36,7 @@ export default function Home() {
 
       {/* <PrizePoolSection /> */}
       <HomeCollegesSection />
-      <TeamSection />
+      <HomeTeamSection />
       <HomeContactSection />
       <FAQSection />
       <Footer />

@@ -1,42 +1,17 @@
 import EventSlider from "@/components/EventSlider";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer";
-import GameOverview from "@/components/GameOverview";
-import GameMapSection from "@/components/GameMapSection";
 import GameOrganizers from "@/components/GameOrganisers";
 import GameLeaderboard from "@/components/GameLeaderboard";
+import GameRules from "@/components/GameRules";
+import GameFAQs from "@/components/GameFAQs";
+import { dbConnect } from "@/lib/mongodb";
+import IECTeamMember from "@/lib/models/IECTeamMember";
 
 const bgmiSlides = [
   { image: "/bgmi/1.png" },
   { image: "/bgmi/22.png" },
   { image: "/bgmi/23.png" },
-];
-
-const bgmiStats = [
-  { label: "Squad Size", value: "4", note: "Four starters lock the squad. Substitutes only if approved." },
-  { label: "Mode", value: "BR", note: "Battle royale pacing with room-based match flow." },
-  { label: "Focus", value: "Survive", note: "Positioning, rotations, and late-game discipline matter most." },
-  { label: "Rule Tone", value: "Strict", note: "No hacks, scripts, teaming, or account sharing." },
-];
-
-const bgmiHighlights = [
-  "Each squad must register with exactly four starting players.",
-  "Room entry and lobby timing are handled through official coordination.",
-  "Performance is judged by placement points and match consistency.",
-  "Every lobby is built for fair play, clean rotations, and decisive end zones.",
-];
-
-const bgmiSteps = [
-  "Register the squad and confirm the roster.",
-  "Complete verification before fixtures begin.",
-  "Join the room and report on time.",
-  "Fight through each circle toward the grand finals.",
-];
-
-const bgmiMaps = [
-  { title: "Opening Drop", image: "/bgmi/1.png", badge: "Drop Zone", focus: "Landing", description: "Strong early positioning sets the pace for the match.", progress: "62%" },
-  { title: "Mid-Game Shift", image: "/bgmi/22.png", badge: "Rotate", focus: "Control", description: "Rotations and compound control decide who survives the mid-game.", progress: "78%" },
-  { title: "Final Circle", image: "/bgmi/23.png", badge: "End Zone", focus: "Finish", description: "Late-game awareness and calm execution close out the leaderboard.", progress: "90%" },
 ];
 
 const bgmiOrganizers = [
@@ -61,7 +36,18 @@ const bgmiLeaderboard = [
   { rank: "04", team: "To be announced", played: "-", points: "-" },
 ];
 
-export default function BGMIPage() {
+export default async function BGMIPage() {
+  await dbConnect();
+  const teamMembers = await IECTeamMember.find({ departments: "BGMI" }).sort({ order: 1 }).lean();
+  
+  // Convert MongoDB ObjectIds to strings to avoid passing non-plain objects to Client Components
+  const serializedMembers = teamMembers.map(member => ({
+    ...member,
+    _id: member._id.toString(),
+    createdAt: member.createdAt?.toISOString(),
+    updatedAt: member.updatedAt?.toISOString()
+  }));
+
   return (
     <>
       <Navbar />
@@ -79,24 +65,15 @@ export default function BGMIPage() {
           href: "/games/bgmi/rulebook",
         }}
       />
-      <GameOverview
-        eyebrow="BGMI"
-        title="Battlefield Brief"
-        description="A compact match overview for squads that want the key details without leaving the page."
-        stats={bgmiStats}
-        highlights={bgmiHighlights}
-        steps={bgmiSteps}
-        theme="amber"
-      />
-      <GameMapSection
-        eyebrow="BGMI"
-        title="Map Flow"
-        description="A simple visual flow of how the battleground usually plays out from landing to the final circle."
-        maps={bgmiMaps}
-        theme="amber"
-      />
-      <GameOrganizers organizers={bgmiOrganizers} theme="amber" />
+      
       <GameLeaderboard title="BGMI Leaderboard" rows={bgmiLeaderboard} theme="amber" />
+      
+      <GameOrganizers organizers={bgmiOrganizers} teamMembers={serializedMembers} theme="amber" />
+      
+      <GameRules title="BGMI Rules & Regulations" theme="amber" />
+      
+      <GameFAQs theme="amber" />
+      
       <Footer />
     </>
   );

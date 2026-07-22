@@ -58,13 +58,13 @@ export default function UserTeamPage() {
             <div className="mt-7 flex flex-wrap gap-3">
               <a
                 href="#team-actions"
-                className="bg-red-600 px-6 py-3 text-sm font-black uppercase tracking-[0.18em] text-white transition hover:bg-red-500"
+                className="bg-red-600 px-4 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-[12px] font-black uppercase tracking-[0.18em] text-white transition hover:bg-red-500"
               >
                 Manage Team
               </a>
               <a
                 href="/support"
-                className="bg-white px-6 py-3 text-sm font-black uppercase tracking-[0.18em] text-black transition hover:bg-slate-200"
+                className="bg-white px-4 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-[12px] font-black uppercase tracking-[0.18em] text-black transition hover:bg-slate-200"
               >
                 Need Help
               </a>

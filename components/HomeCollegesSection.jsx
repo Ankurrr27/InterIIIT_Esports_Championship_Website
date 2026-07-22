@@ -39,7 +39,7 @@ export default function HomeCollegesSection() {
           <p className="mt-2 text-[11px] sm:text-sm text-slate-400">
             IIITs from across the nation competing for glory.
           </p>
-          <div className="mt-2 h-[2px] w-12 bg-red-600" />
+          {/* <div className="mt-2 h-[2px] w-12 bg-red-600" /> */}
         </div>
 
         {/* ── Grid ── */}
@@ -60,13 +60,13 @@ export default function HomeCollegesSection() {
             No colleges registered yet. Be the first!
           </p>
         ) : (
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-3 sm:gap-4">
+          <div className="grid grid-cols-4 md:grid-cols-6 gap-2 sm:gap-4">
             {colleges.map((college) => (
               <div
                 key={college._id}
-                className="group flex flex-col items-center gap-3 border-white/10 p-6 transition-all duration-300 ]"
+                className="group flex flex-col items-center gap-2 sm:gap-3 p-2 sm:p-6 transition-all duration-300"
               >
-                <div className="flex h-20 w-20 rounded-full shrink-0 items-center justify-center overflow-hidden bg-white/5 p-1">
+                <div className="flex h-14 w-14 sm:h-20 sm:w-20 rounded-full shrink-0 items-center justify-center overflow-hidden bg-white p-1.5 sm:p-2 shadow-sm ring-1 ring-white/10">
                   {college.college_logo ? (
                     <Image
                       src={college.college_logo}
@@ -76,10 +76,10 @@ export default function HomeCollegesSection() {
                       className="h-full w-full object-contain"
                     />
                   ) : (
-                    <Building2 size={28} className="text-slate-500" />
+                    <Building2 size={24} className="text-slate-500" />
                   )}
                 </div>
-                <h3 className="text-center text-sm font-semibold text-white group-hover:text-red-400 transition-colors leading-tight">
+                <h3 className="text-center text-[10px] sm:text-sm font-semibold text-white group-hover:text-red-400 transition-colors leading-tight line-clamp-2">
                   {college.college_name}
                 </h3>
               </div>
@@ -99,10 +99,10 @@ export default function HomeCollegesSection() {
           </div>
           <Link
             href="/register-college"
-            className="group flex items-center gap-2 rounded-none bg-red-600 px-6 py-3 text-sm font-semibold text-white uppercase tracking-widest transition-all hover:bg-red-500"
+            className="group flex items-center gap-2 rounded-none bg-red-600 px-4 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-[12px] font-semibold text-white uppercase tracking-widest transition-all hover:bg-red-500"
           >
             Register Now
-            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+            <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
       </div>

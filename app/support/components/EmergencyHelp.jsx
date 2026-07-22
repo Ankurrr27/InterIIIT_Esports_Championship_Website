@@ -35,15 +35,14 @@ export default function EmergencyHelp() {
 
               <Link
                 href="#"
-                className="group flex w-full items-center justify-center gap-2 rounded-none bg-red-600 px-8 py-4 text-sm font-semibold uppercase tracking-widest text-white transition-all duration-300 hover:bg-red-700"
+                className="group flex w-full items-center justify-center gap-2 rounded-none bg-red-600 px-5 py-3 sm:px-6 sm:py-3 text-[11px] sm:text-[13px] font-semibold uppercase tracking-widest text-white transition-all duration-300 hover:bg-red-700"
               >
                 Join Discord
                 <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
               </Link>
-
               <Link
                 href="#contact"
-                className="group w-full rounded-none border border-slate-300 bg-white px-8 py-4 text-center text-sm font-semibold uppercase tracking-widest text-slate-900 transition-all duration-300 hover:bg-slate-50 hover:border-slate-400"
+                className="group w-full rounded-none border border-slate-300 bg-white px-5 py-3 sm:px-6 sm:py-3 text-[11px] sm:text-[13px] text-center font-semibold uppercase tracking-widest text-slate-900 transition-all duration-300 hover:bg-slate-50 hover:border-slate-400"
               >
                 Submit Support Ticket
               </Link>

@@ -78,7 +78,7 @@ export default function GamesSection() {
           <h2 className="text-3xl md:text-6xl font-[family-name:var(--font-display)] tracking-wide text-white leading-none">
             Featured Games
           </h2>
-          <div className="mt-2 h-[2px] w-12 bg-red-600" />
+          {/* <div className="mt-2 h-[2px] w-12 bg-red-600" /> */}
         </div>
 
         {/* Cards */}

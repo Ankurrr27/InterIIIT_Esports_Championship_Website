@@ -32,14 +32,14 @@ export default function Hero() {
         <div className="mt-12 flex flex-col items-center justify-center gap-4 sm:flex-row w-full sm:w-auto">
           <Link
             href="#contact"
-            className="w-full sm:w-auto rounded-none bg-slate-900 px-8 py-4 text-sm font-semibold uppercase tracking-widest text-white transition-all duration-300 hover:bg-red-600 text-center"
+            className="w-full sm:w-auto rounded-none bg-slate-900 px-5 py-3 sm:px-6 sm:py-3 text-[11px] sm:text-[13px] font-semibold uppercase tracking-widest text-white transition-all duration-300 hover:bg-red-600 text-center"
           >
             Contact Support
           </Link>
 
           <Link
             href="/discord"
-            className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-none border border-slate-200 bg-white px-8 py-4 text-sm font-semibold uppercase tracking-widest text-slate-900 transition-all duration-300 hover:bg-slate-50 hover:border-slate-300 text-center"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 rounded-none border border-slate-200 bg-white px-5 py-3 sm:px-6 sm:py-3 text-[11px] sm:text-[13px] font-semibold uppercase tracking-widest text-slate-900 transition-all duration-300 hover:bg-slate-50 hover:border-slate-300 text-center"
           >
             <MessageCircle size={18} />
             Join Discord

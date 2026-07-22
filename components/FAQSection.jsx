@@ -35,19 +35,59 @@ export default function FAQSection() {
       question: "How are the prize pools distributed?",
       answer: "Prize pools will be distributed among the top 3 teams for each game. The specific breakdown will be shared on our Discord server before the semi-finals.",
     },
+    {
+      question: "How do I join the official Discord server?",
+      answer: "Once your team is registered and verified, the official Discord link will be available on your team dashboard and sent to your registered email.",
+    },
+    {
+      question: "Are emulators allowed for mobile games?",
+      answer: "No, emulators are strictly prohibited for BGMI and Free Fire. Any player found using an emulator will result in immediate disqualification of their entire team.",
+    },
+    {
+      question: "Can we change our team roster after registration?",
+      answer: "Rosters can be modified only before the registration deadline. Once the tournament brackets are locked, no roster changes or substitutions are allowed.",
+    },
+    {
+      question: "What happens if a player disconnects during a match?",
+      answer: "If a player disconnects, the game will be paused (if the game supports it) for a maximum of 10 minutes. If the player cannot reconnect within the allotted time, the team must continue playing shorthanded.",
+    },
+    {
+      question: "Do we need to stream or record our matches?",
+      answer: "Recording is not mandatory for early qualifiers, but semi-finals and finals may require at least one player from each team to record their POV for fair play verification.",
+    },
+    {
+      question: "How do we report match scores?",
+      answer: "After the match concludes, the winning team's captain must immediately submit a screenshot of the end-game scoreboard in the designated Discord channel for verification.",
+    },
+    {
+      question: "What happens if the opposing team doesn't show up?",
+      answer: "Teams are given a strict 15-minute grace period from the scheduled start time. If the opposing team fails to show up, your team will be awarded a default win (walkover).",
+    },
+    {
+      question: "Can B.Tech and M.Tech students from the same IIIT play together?",
+      answer: "Yes, as long as all players are currently enrolled students of the same registered IIIT, any mix of degree programs (B.Tech, M.Tech, PhD) is allowed.",
+    },
+    {
+      question: "Are iPads or tablets allowed for BGMI or Free Fire?",
+      answer: "No, the mobile tournaments are strictly for smartphones. iPads, tablets, and any similar large-screen devices are not permitted to ensure a level playing field.",
+    },
+    {
+      question: "Who do I contact for technical issues on the website?",
+      answer: "You can visit the 'Contact' page on our website to submit a support ticket, use the WhatsApp button for urgent issues, or ping our moderators directly on the Discord server.",
+    },
   ];
 
   return (
     <section className="relative py-10 sm:py-12 lg:py-16 bg-black text-white">
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-left mb-6 sm:mb-8">
-          <p className="text-[0.5rem] sm:text-xs tracking-[0.25em] uppercase text-slate-400 font-medium mb-1">Help</p>
+          {/* <p className="text-[0.5rem] sm:text-xs tracking-[0.25em] uppercase text-slate-400 font-medium mb-1">Help</p> */}
           <h2 className="text-3xl sm:text-6xl font-[family-name:var(--font-display)] tracking-wide text-white leading-none">
             FAQ
           </h2>
-          <p className="mt-2 text-[11px] sm:mt-3 sm:text-sm text-slate-400">
+          {/* <p className="mt-2 text-[11px] sm:mt-3 sm:text-sm text-slate-400">
             Got questions? We&apos;ve got answers.
-          </p>
+          </p> */}
         </div>
 
         <div className="space-y-2 sm:space-y-3">

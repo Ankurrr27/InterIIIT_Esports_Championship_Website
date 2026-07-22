@@ -85,9 +85,9 @@ export default function ContactCards() {
                   </p>
 
                   <a
-                   href={contact.href}
-                   target="_blank" rel="noopener noreferrer"
-                   className="mt-8 inline-flex items-center gap-2 rounded-none border border-slate-300 bg-white px-6 py-3 text-sm font-semibold uppercase tracking-widest text-slate-900 transition-all duration-300 hover:bg-slate-900 hover:text-white"
+                    href={contact.href}
+                    target="_blank" rel="noopener noreferrer"
+                    className="mt-8 inline-flex items-center gap-2 rounded-none border border-slate-300 bg-white px-4 py-2 sm:px-5 sm:py-2.5 text-[10px] sm:text-[12px] font-semibold uppercase tracking-widest text-slate-900 transition-all duration-300 hover:bg-slate-900 hover:text-white"
                   >
                     {contact.button}
                     <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />

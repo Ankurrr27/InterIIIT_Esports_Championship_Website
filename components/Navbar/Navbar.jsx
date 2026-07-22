@@ -3,11 +3,28 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Menu, Search, User, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [gamesOpen, setGamesOpen] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      fetch("/api/user/me", { headers: { Authorization: `Bearer ${token}` } })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            setUser(data.user);
+          }
+        })
+        .catch(() => {});
+    }
+  }, []);
+
+  const teamHref = user?.teamId ? "/team/current" : "/team";
 
   const links = [
     { name: "Home", href: "/" },
@@ -15,6 +32,7 @@ export default function Navbar() {
     { name: "IEC Team", href: "/iec-team" },
     { name: "Colleges", href: "/participating-colleges" },
     { name: "Registration", href: "/register" },
+    { name: "My Team", href: "/team" },
     { name: "Contact", href: "/support" },
   ];
 
@@ -60,7 +78,7 @@ export default function Navbar() {
             {links.map((item) => (
               <Link
                 key={item.name}
-                href={item.href}
+                href={item.href === "/team" ? teamHref : item.href}
                 className="text-[11px] font-semibold tracking-[0.22em] text-slate-300 transition hover:text-white"
               >
                 {item.name}
@@ -113,7 +131,7 @@ export default function Navbar() {
               <Search size={16} />
             </button>
             <Link
-              href="/team"
+              href={teamHref}
               aria-label="Account"
               className="grid h-9 w-9 place-items-center text-slate-300 transition hover:bg-white/10 hover:text-white"
             >
@@ -159,7 +177,7 @@ export default function Navbar() {
             {links.map((item) => (
               <Link
                 key={item.name}
-                href={item.href}
+                href={item.href === "/team" ? teamHref : item.href}
                 onClick={() => setOpen(false)}
                 className="rounded-md px-3 py-2 text-sm font-medium text-slate-800 transition hover:bg-slate-100 hover:text-slate-950"
               >

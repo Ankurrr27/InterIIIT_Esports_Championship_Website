@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, Building2, Gamepad2, GraduationCap, Lock, Mail, User } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 
-const cardShell = "z-10 my-2 flex w-full max-w-[430px] justify-center px-4 sm:px-0 lg:my-0";
-const cardPanel = "flex h-[590px] max-h-[calc(100svh-7rem)] min-h-[520px] w-full flex-col overflow-y-auto rounded-lg border border-white/10 bg-black/55 px-5 py-5 shadow-2xl backdrop-blur-xl sm:px-6 sm:py-6";
-const inputClass = "w-full rounded-lg border border-white/10 bg-transparent py-2.5 pl-10 pr-10 text-sm text-white outline-none transition-all duration-300 placeholder:text-gray-500 focus:border-red-500 focus:bg-white/5";
+const cardShell = "z-10 my-0 sm:my-2 flex w-full max-w-[430px] justify-center px-0 sm:px-0 lg:my-0";
+const cardPanel = "flex h-auto sm:h-[590px] max-h-none sm:max-h-[calc(100svh-7rem)] min-h-0 sm:min-h-[520px] w-full flex-col overflow-y-auto rounded-none sm:rounded-lg border-0 sm:border sm:border-white/10 bg-white sm:bg-black/55 px-5 py-6 shadow-none sm:shadow-2xl sm:backdrop-blur-2xl sm:px-6 sm:py-6";
+const inputClass = "w-full rounded-lg border border-slate-200 sm:border-white/10 bg-transparent py-2.5 pl-10 pr-10 text-sm text-slate-900 sm:text-white outline-none transition-all duration-300 placeholder:text-slate-400 sm:placeholder:text-gray-500 focus:border-red-500 focus:bg-slate-50 sm:focus:bg-white/5";
 
 export default function RegisterCard() {
   const router = useRouter();
@@ -112,8 +112,8 @@ export default function RegisterCard() {
 
   return (
     <div className={cardShell}>
-      <div className={cardPanel}>        <div className="mb-4 flex w-full border-b border-white/20">
-          <Link href="/login" className="flex-1 py-2 text-center text-xs font-medium uppercase tracking-widest text-gray-400 sm:text-sm">
+      <div className={cardPanel}>        <div className="mb-4 flex w-full border-b border-slate-200 sm:border-white/20">
+          <Link href="/login" className="flex-1 py-2 text-center text-xs font-medium uppercase tracking-widest text-slate-400 sm:text-gray-400 sm:text-sm">
             LOGIN
           </Link>
           <Link href="/register" className="flex-1 border-b-2 border-red-600 py-2 text-center text-xs font-medium uppercase tracking-widest text-red-500 sm:text-sm">
@@ -156,11 +156,11 @@ export default function RegisterCard() {
                 onChange={handleChange}
                 className={inputClass + " appearance-none"}
               >
-                <option value="" className="bg-[#111111]">
+              <option value="" className="bg-white sm:bg-[#111111] text-slate-900 sm:text-white">
                   {fetchingColleges ? "Loading colleges..." : "Select College"}
                 </option>
                 {colleges.map((c) => (
-                  <option key={c.name} value={c.name} className="bg-[#111111]">
+                  <option key={c.name} value={c.name} className="bg-white sm:bg-[#111111] text-slate-900 sm:text-white">
                     {c.name}
                   </option>
                 ))}
@@ -201,10 +201,10 @@ export default function RegisterCard() {
                 onChange={handleChange}
                 className={inputClass + " appearance-none"}
               >
-                <option value="" className="bg-[#111111]">Select Game</option>
-                <option value="BGMI" className="bg-[#111111]">BGMI</option>
-                <option value="VALORANT" className="bg-[#111111]">Valorant</option>
-                <option value="FREEFIRE" className="bg-[#111111]">Free Fire</option>
+              <option value="" className="bg-white sm:bg-[#111111] text-slate-900 sm:text-white">Select Game</option>
+                <option value="BGMI" className="bg-white sm:bg-[#111111] text-slate-900 sm:text-white">BGMI</option>
+                <option value="VALORANT" className="bg-white sm:bg-[#111111] text-slate-900 sm:text-white">Valorant</option>
+                <option value="FREEFIRE" className="bg-white sm:bg-[#111111] text-slate-900 sm:text-white">Free Fire</option>
               </select>
             </div>
 
@@ -234,17 +234,17 @@ export default function RegisterCard() {
             </button>
 
             <div className="flex items-center gap-3 py-1">
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-              <span className="text-xs font-medium uppercase tracking-wider text-gray-500">OR</span>
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 sm:via-white/20 to-transparent" />
+              <span className="text-xs font-medium uppercase tracking-wider text-slate-400 sm:text-gray-500">OR</span>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 sm:via-white/20 to-transparent" />
             </div>
 
-            <button className="flex w-full items-center justify-center gap-2 rounded-lg bg-white py-2.5 text-sm font-medium text-black">
+            <button className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 sm:border-0 bg-slate-50 sm:bg-white py-2.5 text-sm font-medium text-black">
               <FcGoogle size={20} />
               Continue with Google
             </button>
 
-            <p className="text-center text-xs text-gray-400">
+            <p className="text-center text-xs text-slate-500 sm:text-gray-400">
               Already have an account?{" "}
               <Link href="/login" className="font-semibold text-red-600">
                 Login

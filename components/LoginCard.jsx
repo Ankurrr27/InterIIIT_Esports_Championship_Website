@@ -6,9 +6,9 @@ import { useRouter } from "next/navigation";
 import { ArrowRight, Gamepad2, GraduationCap, Lock, Mail, ShieldCheck, Trophy, Users } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 
-const cardShell = "z-10 my-2 flex w-full max-w-[430px] justify-center px-4 sm:px-0 lg:my-0";
-const cardPanel = "flex h-[590px] max-h-[calc(100svh-7rem)] min-h-[520px] w-full flex-col overflow-y-auto rounded-lg border border-white/10 bg-black/55 px-5 py-5 shadow-2xl backdrop-blur-xl sm:px-6 sm:py-6";
-const inputClass = "w-full rounded-lg border border-white/10 bg-transparent py-2.5 pl-10 pr-10 text-sm text-white outline-none transition-all duration-300 placeholder:text-gray-500 focus:border-red-500 focus:bg-white/5";
+const cardShell = "z-10 my-0 sm:my-2 flex w-full max-w-[430px] justify-center px-0 sm:px-0 lg:my-0";
+const cardPanel = "flex h-auto sm:h-[590px] max-h-none sm:max-h-[calc(100svh-7rem)] min-h-0 sm:min-h-[520px] w-full flex-col overflow-y-auto rounded-none sm:rounded-lg border-0 sm:border sm:border-white/10 bg-white sm:bg-black/55 px-5 py-6 shadow-none sm:shadow-2xl sm:backdrop-blur-2xl sm:px-6 sm:py-6";
+const inputClass = "w-full rounded-lg border border-slate-200 sm:border-white/10 bg-transparent py-2.5 pl-10 pr-10 text-sm text-slate-900 sm:text-white outline-none transition-all duration-300 placeholder:text-slate-400 sm:placeholder:text-gray-500 focus:border-red-500 focus:bg-slate-50 sm:focus:bg-white/5";
 
 const perks = [
   { icon: Trophy, label: "Prize pool", value: "Rs 50K+" },
@@ -71,11 +71,11 @@ export default function LoginCard() {
 
   return (
     <div className={cardShell}>
-      <div className={cardPanel}>        <div className="mb-4 flex w-full border-b border-white/20">
+      <div className={cardPanel}>        <div className="mb-4 flex w-full border-b border-slate-200 sm:border-white/20">
           <Link href="/login" className="flex-1 border-b-2 border-red-600 py-2 text-center text-xs font-medium uppercase tracking-widest text-red-500 sm:text-sm">
             LOGIN
           </Link>
-          <Link href="/register" className="flex-1 py-2 text-center text-xs font-medium uppercase tracking-widest text-gray-400 sm:text-sm">
+          <Link href="/register" className="flex-1 py-2 text-center text-xs font-medium uppercase tracking-widest text-slate-400 sm:text-gray-400 sm:text-sm">
             SIGN UP
           </Link>
         </div>
@@ -112,10 +112,10 @@ export default function LoginCard() {
                 const Icon = item.icon;
 
                 return (
-                  <div key={item.label} className="flex min-h-10 items-center gap-3 rounded-lg border border-white/10 bg-white/[0.03] px-3 text-sm">
+                  <div key={item.label} className="flex min-h-10 items-center gap-3 rounded-lg border border-slate-100 sm:border-white/10 bg-slate-50 sm:bg-white/[0.03] px-3 text-sm">
                     <Icon size={17} className="text-red-500" />
-                    <span className="text-gray-400">{item.label}</span>
-                    <span className="ml-auto font-medium text-white">{item.value}</span>
+                    <span className="text-slate-500 sm:text-gray-400">{item.label}</span>
+                    <span className="ml-auto font-medium text-slate-900 sm:text-white">{item.value}</span>
                   </div>
                 );
               })}
@@ -147,17 +147,17 @@ export default function LoginCard() {
             </button>
 
             <div className="flex items-center gap-3 py-1">
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-              <span className="text-xs font-medium uppercase tracking-wider text-gray-500">OR</span>
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 sm:via-white/20 to-transparent" />
+              <span className="text-xs font-medium uppercase tracking-wider text-slate-400 sm:text-gray-500">OR</span>
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 sm:via-white/20 to-transparent" />
             </div>
 
-            <button className="flex w-full items-center justify-center gap-2 rounded-lg bg-white py-2.5 text-sm font-medium text-black">
+            <button className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 sm:border-0 bg-slate-50 sm:bg-white py-2.5 text-sm font-medium text-black">
               <FcGoogle size={20} />
               Continue with Google
             </button>
 
-            <p className="text-center text-xs text-gray-400">
+            <p className="text-center text-xs text-slate-500 sm:text-gray-400">
               New to IEC?{" "}
               <Link href="/register" className="font-semibold text-red-600">
                 Sign up

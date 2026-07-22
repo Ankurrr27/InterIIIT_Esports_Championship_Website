@@ -25,12 +25,32 @@ export default function CurrentTeamPage() {
   const [directory, setDirectory] = useState([]);
   const [loadingDirectory, setLoadingDirectory] = useState(true);
 
+  const [requests, setRequests] = useState([]);
+  const [loadingRequests, setLoadingRequests] = useState(true);
+
   const router = useRouter();
 
   useEffect(() => {
     fetchTeamData();
     fetchDirectory();
+    fetchRequests();
   }, []);
+
+  const fetchRequests = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const res = await fetch("/api/team/request", { headers: { Authorization: `Bearer ${token}` } });
+      const data = await res.json();
+      if (data.success) {
+        setRequests(data.requests || []);
+      }
+    } catch (error) {
+      console.error("Failed to fetch requests", error);
+    } finally {
+      setLoadingRequests(false);
+    }
+  };
 
   const fetchDirectory = async () => {
     try {
@@ -107,6 +127,27 @@ export default function CurrentTeamPage() {
       if (data.success) { toast.success(`Invitation sent to ${email}!`); }
       else toast.error(data.message || "Failed to send invite");
     } catch { toast.error("Failed to send invite"); }
+  };
+
+  const handleAcceptRequest = async (requestId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch("/api/team/request/accept", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ requestId }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success("Player accepted into team!");
+        fetchTeamData();
+        fetchRequests();
+      } else {
+        toast.error(data.message || "Failed to accept player");
+      }
+    } catch {
+      toast.error("Failed to accept player");
+    }
   };
 
   const handleBannerChange = (e) => {
@@ -431,6 +472,45 @@ export default function CurrentTeamPage() {
             {/* Sidebar */}
             <div className="space-y-6">
               
+              {/* Join Requests */}
+              {isCaptain && !team.isRegistered && (
+                <div className="p-5 rounded-xl border border-slate-200 bg-white shadow-sm">
+                  <h3 className="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
+                    Pending Requests
+                    {requests.length > 0 && (
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-red-100 text-[10px] font-bold text-red-600">
+                        {requests.length}
+                      </span>
+                    )}
+                  </h3>
+                  
+                  {loadingRequests ? (
+                    <div className="flex justify-center p-4"><Loader2 size={16} className="animate-spin text-slate-400" /></div>
+                  ) : requests.length === 0 ? (
+                    <p className="text-xs text-slate-500 text-center py-2">No pending requests</p>
+                  ) : (
+                    <div className="flex flex-col gap-3">
+                      {requests.map((req) => (
+                        <div key={req._id} className="flex flex-col gap-2 rounded-lg border border-slate-100 bg-slate-50 p-3">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <p className="text-sm font-semibold text-slate-900">{req.userId?.name}</p>
+                              <p className="text-[10px] text-slate-500">{req.userId?.email}</p>
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => handleAcceptRequest(req._id)}
+                            className="flex w-full items-center justify-center gap-1.5 rounded bg-slate-900 py-1.5 text-xs font-medium text-white transition-colors hover:bg-slate-800"
+                          >
+                            <Check size={14} /> Accept Player
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
               {/* Invite */}
               {isCaptain && !team.isRegistered && (
                 <div className="p-5 rounded-xl border border-slate-200 bg-white shadow-sm">

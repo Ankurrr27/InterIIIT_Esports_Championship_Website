@@ -12,24 +12,24 @@ export default function CollegeCard({ college }) {
         
         {/* Header: Logo + Names */}
         <div className="mb-8 flex items-center gap-5">
-          <div className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-slate-100 bg-white p-1 shadow-sm transition-transform duration-300 group-hover:scale-105">
+          <div className="relative flex h-20 w-20 sm:h-24 sm:w-24 shrink-0 items-center justify-center overflow-hidden rounded-full border border-slate-100 bg-white p-1.5 shadow-sm transition-transform duration-300 group-hover:scale-105">
             {college.college_logo ? (
               <Image
                 src={college.college_logo}
                 alt={`${college.college_name} logo`}
-                width={64}
-                height={64}
+                width={96}
+                height={96}
                 className="h-full w-full object-contain"
               />
             ) : (
-              <Building2 size={24} className="text-slate-300" />
+              <Building2 size={28} className="text-slate-300" />
             )}
           </div>
           <div className="min-w-0">
-            <h3 className="truncate font-[family-name:var(--font-display)] text-xl leading-tight tracking-wide text-slate-900 transition-colors group-hover:text-red-600">
+            <h3 className="truncate font-[family-name:var(--font-display)] text-2xl sm:text-3xl leading-tight tracking-wide text-slate-900 transition-colors group-hover:text-red-600">
               {college.college_name}
             </h3>
-            <p className="mt-1 flex items-center gap-1.5 truncate text-xs sm:text-sm font-semibold uppercase tracking-wide text-red-500">
+            <p className="mt-1 flex items-center gap-1.5 truncate text-[10px] sm:text-[11px] font-semibold uppercase tracking-widest text-red-500">
               <ShieldCheck size={14} className="shrink-0" />
               <span className="truncate">{college.club_name}</span>
             </p>
@@ -44,10 +44,10 @@ export default function CollegeCard({ college }) {
               <User size={14} />
             </div>
             <div className="flex min-w-0 flex-col">
-              <span className="truncate text-[10px] font-bold uppercase tracking-widest text-slate-400">
+              <span className="truncate text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-slate-400">
                 {college.designation}
               </span>
-              <span className="truncate text-sm font-medium text-slate-700">
+              <span className="truncate text-[11px] sm:text-xs font-medium text-slate-700">
                 {college.coordinator_name}
               </span>
             </div>
@@ -59,7 +59,7 @@ export default function CollegeCard({ college }) {
             <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-slate-100 bg-white shadow-sm transition-colors group-hover:border-red-100 group-hover:text-red-500 text-slate-400">
               <Mail size={14} />
             </div>
-            <span className="truncate text-sm font-medium text-slate-600">
+            <span className="truncate text-[11px] sm:text-xs font-medium text-slate-600">
               {college.club_email}
             </span>
           </div>

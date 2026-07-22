@@ -46,13 +46,13 @@ export default function ParticipatingCollegesPage() {
       <div className="relative z-10 flex min-h-[100svh] flex-col">
         <Navbar />
 
-        <div className="mx-auto w-full max-w-7xl flex-1 px-4 py-12 sm:px-6 lg:py-20">
-          <div className="mb-12 flex flex-col items-center justify-between gap-6 md:flex-row md:items-end">
+        <div className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-6 lg:py-20">
+          <div className="mb-8 sm:mb-12 flex flex-col items-center justify-between gap-4 sm:gap-6 md:flex-row md:items-end">
             <div>
-              <h1 className="mb-3 text-4xl font-[family-name:var(--font-display)] tracking-wider text-slate-900 sm:text-5xl">
+              <h1 className="mb-2 sm:mb-3 text-3xl font-[family-name:var(--font-display)] tracking-wider text-slate-900 sm:text-5xl">
                 Participating Colleges
               </h1>
-              <p className="max-w-2xl text-sm font-medium text-gray-500 sm:text-base">
+              <p className="max-w-2xl text-[13px] leading-relaxed font-medium text-gray-500 sm:text-base">
                 Discover the official esports clubs representing IIITs across India in the upcoming championship.
               </p>
             </div>
@@ -70,13 +70,13 @@ export default function ParticipatingCollegesPage() {
           </div>
 
           {loading ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
                 <div key={i} className="h-48 animate-pulse rounded-xl bg-gray-100" />
               ))}
             </div>
           ) : filteredColleges.length > 0 ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filteredColleges.map((college) => (
                 <CollegeCard key={college._id} college={college} />
               ))}
@@ -96,16 +96,16 @@ export default function ParticipatingCollegesPage() {
           )}
 
           {/* CTA Banner */}
-          <div className="border border-dashed border-red-300 bg-red-50/50 rounded-xl p-8 text-center mt-12">
-            <h2 className="mb-2 text-2xl font-bold text-slate-900">
+          <div className="border border-dashed border-red-300 bg-red-50/50 rounded-xl p-6 sm:p-8 text-center mt-8 sm:mt-12">
+            <h2 className="mb-1 sm:mb-2 text-xl sm:text-2xl font-bold text-slate-900">
               Can&apos;t find your college here?
             </h2>
-            <p className="mb-6 text-gray-600">
+            <p className="mb-4 sm:mb-6 text-[13px] sm:text-base text-gray-600">
               If your IIIT isn&apos;t listed, you can register your college&apos;s esports club to participate.
             </p>
             <Link
               href="/register-college"
-              className="inline-block bg-red-600 hover:bg-red-500 text-white rounded-lg px-6 py-3 font-semibold transition-colors"
+              className="inline-block bg-red-600 hover:bg-red-500 text-white rounded-lg px-4 py-2 text-[12px] sm:text-[14px] sm:px-6 sm:py-3 font-semibold transition-colors"
             >
               Register Your College →
             </Link>

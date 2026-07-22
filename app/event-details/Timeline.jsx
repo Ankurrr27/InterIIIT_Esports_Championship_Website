@@ -5,14 +5,14 @@ import { FileEdit, Lock, Swords, Trophy, Crown } from "lucide-react";
 
 const timeline = [
   {
-    date: "10 July 2026",
+    date: "10 August 2026",
     title: "Registration Opens",
     description: "Team registrations begin for all esports titles.",
     status: "active",
     icon: <FileEdit size={18} />,
   },
   {
-    date: "20 July 2026",
+    date: "20 August 2026",
     title: "Registration Closes",
     description: "Last day to register your team before the deadline.",
     status: "upcoming",
@@ -52,7 +52,7 @@ const fadeUp = {
 
 export default function Timeline() {
   return (
-    <section id="timeline" className="relative overflow-hidden bg-slate-50 py-24 sm:py-32">
+    <section id="timeline" className="relative overflow-hidden bg-slate-50 py-12 sm:py-32">
       <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
         {/* Section Header */}
@@ -66,10 +66,10 @@ export default function Timeline() {
           <p className="text-[11px] font-bold uppercase tracking-[0.4em] text-red-600">
             Format Overview
           </p>
-          <h2 className="mt-4 text-4xl font-[family-name:var(--font-display)] tracking-wide sm:text-5xl lg:text-6xl text-slate-900">
+          <h2 className="mt-2 sm:mt-4 text-3xl font-[family-name:var(--font-display)] tracking-wide sm:text-5xl lg:text-6xl text-slate-900">
             Tournament Structure
           </h2>
-          <p className="mt-6 text-base leading-relaxed text-slate-500">
+          <p className="mt-4 sm:mt-6 text-sm sm:text-base leading-relaxed text-slate-500">
             The path to glory. Follow the timeline from registration to the Grand Finals to ensure your squad is ready for battle.
           </p>
         </motion.div>
@@ -175,14 +175,14 @@ export default function Timeline() {
         </div>
 
         {/* Mobile Timeline */}
-        <div className="mt-14 block md:hidden">
+        <div className="mt-10 block md:hidden">
           <div className="relative pl-10">
 
             {/* Vertical Track */}
             <div className="absolute left-[14px] top-0 bottom-0 w-[2px] bg-slate-200" />
             <div className="absolute left-[14px] top-0 h-20 w-[2px] bg-red-500 shadow-[0_0_12px_rgba(220,38,38,0.3)]" />
 
-            <div className="space-y-6">
+            <div className="space-y-4">
               {timeline.map((item, index) => {
                 const isActive = item.status === "active";
                 return (
@@ -207,12 +207,12 @@ export default function Timeline() {
                     </div>
 
                     {/* Card */}
-                    <div className={`rounded-xl p-5 border transition-all duration-300 ${
+                    <div className={`rounded-xl p-4 sm:p-5 border transition-all duration-300 ${
                       isActive
                         ? "bg-white border-red-200 shadow-lg shadow-red-500/5 ring-1 ring-red-100"
                         : "bg-white border-slate-200 shadow-sm"
                     }`}>
-                      <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center justify-between mb-2 sm:mb-3">
                         <span className={`text-[10px] font-bold uppercase tracking-[0.2em] ${
                           isActive ? "text-red-500" : "text-slate-400"
                         }`}>
@@ -231,13 +231,13 @@ export default function Timeline() {
                         {item.date}
                       </p>
 
-                      <h3 className={`text-lg font-bold tracking-tight mb-1.5 ${
+                      <h3 className={`text-base sm:text-lg font-bold tracking-tight mb-1 sm:mb-1.5 ${
                         isActive ? "text-slate-900" : "text-slate-800"
                       }`}>
                         {item.title}
                       </h3>
 
-                      <p className="text-sm leading-relaxed text-slate-500">
+                      <p className="text-xs sm:text-sm leading-relaxed text-slate-500">
                         {item.description}
                       </p>
 

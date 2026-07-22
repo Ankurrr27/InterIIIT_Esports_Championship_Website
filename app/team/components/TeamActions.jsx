@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
+import { Loader2, Check, X as XIcon } from "lucide-react";
+import { toast } from "sonner";
 
 import CreateTeamCard from "./CreateTeamCard";
 import JoinTeamCard from "./JoinTeamCard";
@@ -15,6 +16,7 @@ export default function TeamActions() {
   const [joinModal, setJoinModal] = useState(false);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [invitations, setInvitations] = useState([]);
   const router = useRouter();
 
   useEffect(() => {
@@ -34,6 +36,19 @@ export default function TeamActions() {
         const data = await res.json();
         if (data.success) {
           setUser(data.user);
+          if (data.user.teamId) {
+            router.push("/team/current");
+            return;
+          } else {
+            fetch("/api/team/invitations", {
+              headers: { Authorization: `Bearer ${token}` }
+            })
+            .then(r => r.json())
+            .then(invData => {
+              if (invData.success) setInvitations(invData.invitations);
+            })
+            .catch(() => {});
+          }
         }
       } catch (err) {
         console.error("Failed to fetch user state", err);
@@ -52,47 +67,73 @@ export default function TeamActions() {
     action();
   };
 
+  const handleRespond = async (invitationId, accept) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch("/api/team/invite/respond", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ invitationId, accept }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        toast.success(accept ? "Joined team successfully!" : "Invitation declined");
+        if (accept) {
+          router.push("/team/current");
+        } else {
+          setInvitations(invitations.filter(inv => inv._id !== invitationId));
+        }
+      } else {
+        toast.error(data.message || "Failed to respond");
+      }
+    } catch {
+      toast.error("Failed to respond");
+    }
+  };
+
   return (
     <>
       <section id="team-actions" className="relative overflow-hidden bg-black px-4 py-12 text-white sm:px-6 sm:py-16 lg:px-8">
         <div className="absolute inset-x-0 top-0 h-px bg-red-600/60" />
         <div className="absolute right-0 top-0 h-72 w-72 bg-red-600/10 blur-3xl" />
 
-        <div className="relative mx-auto max-w-7xl">
-          <div className="mb-7 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-[10px] font-semibold uppercase tracking-[0.45em] text-red-400">
-                Team Portal
-              </p>
-              <h2 className="mt-2 font-[family-name:var(--font-display)] text-4xl leading-none tracking-wide sm:text-6xl">
-                Choose Your Next Move
-              </h2>
-            </div>
-            <p className="max-w-md text-sm leading-6 text-white/55">
-              Create a squad, join a captain, or open your active roster from one place.
-            </p>
-          </div>
-
+        <div className="relative mx-auto max-w-7xl pt-10">
           {loading ? (
             <div className="flex h-48 w-full items-center justify-center rounded-xl border border-white/10 bg-white/5">
               <Loader2 className="h-8 w-8 animate-spin text-red-500" />
             </div>
           ) : (
-            <div className="grid gap-4 md:grid-cols-3">
-              {/* IF NO TEAM: Show Create & Join */}
+            <div className="grid gap-4 md:grid-cols-2 max-w-4xl mx-auto">
               {!user?.teamId && (
                 <>
                   <CreateTeamCard onClick={() => handleCardClick(() => setOpenModal(true))} />
                   <JoinTeamCard onClick={() => handleCardClick(() => setJoinModal(true))} />
                 </>
               )}
+            </div>
+          )}
 
-              {/* IF HAS TEAM: Show View/Manage */}
-              {user?.teamId && (
-                <div className="md:col-span-3 lg:col-span-2">
-                  <CurrentTeamCard onClick={() => handleCardClick(() => router.push("/team/current"))} />
-                </div>
-              )}
+          {!loading && invitations.length > 0 && (
+            <div className="mt-12 max-w-4xl mx-auto">
+              <h3 className="mb-4 text-xl font-semibold">Pending Invitations</h3>
+              <div className="flex flex-col gap-3">
+                {invitations.map(inv => (
+                  <div key={inv._id} className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-4">
+                    <div>
+                      <p className="font-medium text-lg text-white">{inv.teamId?.name || "Unknown Team"}</p>
+                      <p className="text-sm text-gray-400">Invited by {inv.inviterId?.name}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <button onClick={() => handleRespond(inv._id, true)} className="flex items-center gap-1.5 rounded-lg bg-green-500/20 px-4 py-2 text-sm font-medium text-green-400 hover:bg-green-500/30 transition-colors">
+                        <Check size={16} /> Accept
+                      </button>
+                      <button onClick={() => handleRespond(inv._id, false)} className="flex items-center gap-1.5 rounded-lg bg-red-500/20 px-4 py-2 text-sm font-medium text-red-400 hover:bg-red-500/30 transition-colors">
+                        <XIcon size={16} /> Decline
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
         </div>

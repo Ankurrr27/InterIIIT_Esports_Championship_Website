@@ -24,7 +24,7 @@ export default function LoginPage() {
       <div className="relative z-10 flex min-h-[100svh] flex-col">
         <Navbar />
 
-        <div className="flex flex-1 items-center justify-center px-4 py-6 sm:px-6 lg:justify-end lg:px-24">
+        <div className="flex flex-1 items-center justify-center px-0 py-0 sm:py-6 sm:px-6 lg:justify-end lg:px-24">
           <AuthPageWrapper>
             <LoginCard />
           </AuthPageWrapper>

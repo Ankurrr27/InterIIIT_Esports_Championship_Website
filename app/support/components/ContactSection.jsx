@@ -14,8 +14,8 @@ const contacts = [
   {
     icon: Mail,
     title: "Email Support",
-    value: "support@iec.iiitiansnetwork.com",
-    href: "mailto:support@iec.iiitiansnetwork.com",
+    value: "iiitiansnetwork@gmail.com",
+    href: "mailto:iiitiansnetwork@gmail.com",
     accent: "text-red-500 bg-red-50 border-red-100",
     borderHover: "hover:border-red-300"
   },

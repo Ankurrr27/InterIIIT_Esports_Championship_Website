@@ -5,7 +5,7 @@ import { Headset, MessageCircle } from "lucide-react";
 
 export default function Hero() {
   return (
-    <section className="relative flex min-h-[60vh] sm:min-h-[90vh] items-center justify-center overflow-hidden px-4 sm:px-6 pt-16 sm:pt-24 pb-10 sm:pb-16">
+    <section className="bg-white pt-24 pb-12 sm:pt-32 sm:pb-20 border-b border-black/5 relative flex items-center justify-center overflow-hidden px-4 sm:px-6">
       
       <div className="relative z-10 mx-auto max-w-4xl text-center w-full">
         {/* Badge */}

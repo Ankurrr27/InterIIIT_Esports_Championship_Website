@@ -17,11 +17,10 @@ const contacts = [
   {
     icon: Mail,
     title: "Email Support",
-    description:
-      "For registrations, payments, and account-related queries.",
-    value: "support@iec.iiitiansnetwork.com",
-    button: "Send Email",
-    href: "mailto:support@iec.iiitiansnetwork.com",
+    description: "Drop us a line and we'll get back to you within 24 hours.",
+    value: "iiitiansnetwork@gmail.com",
+    button: "Send an email",
+    href: "mailto:iiitiansnetwork@gmail.com",
     accent: "text-red-600 bg-white border-red-200",
     borderHover: "hover:border-red-600"
   },

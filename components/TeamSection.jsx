@@ -54,36 +54,27 @@ export default async function TeamSection() {
     <section className="bg-slate-50 py-10 text-slate-950 sm:py-24 border-t border-black/5">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         
-        <div className="mb-8 sm:mb-16 text-left sm:text-center">
-          <p className="text-[0.5rem] sm:text-xs tracking-[0.25em] uppercase text-red-500 font-medium mb-1">
-            Our Team
-          </p>
+        <div className="mb-8 sm:mb-16 text-left">
+          
           <h2 className="font-[family-name:var(--font-display)] text-3xl tracking-wide sm:text-5xl lg:text-6xl text-slate-900 uppercase leading-none">
             Core Team
           </h2>
-          <p className="mt-2 sm:mt-4 text-slate-500 text-[11px] sm:text-sm tracking-[0.2em] uppercase font-semibold">
-            Meet the people behind the championship
-          </p>
+          
         </div>
         
-        <div className="space-y-12 sm:space-y-24">
+        <div className=" md:space-y-24">
           {departmentGroups.map((group) => (
             <div key={group.name} className="relative">
               
               {/* Department Header */}
-              <div className="mb-6 sm:mb-10 text-left sm:text-center relative">
-                <div className="hidden sm:block absolute inset-0 flex items-center" aria-hidden="true">
-                  <div className="w-full border-t border-slate-200" />
-                </div>
-                <div className="relative sm:flex sm:justify-center">
-                  <span className="sm:bg-slate-50 sm:px-6 text-xs sm:text-sm font-bold uppercase tracking-[0.3em] text-red-600">
-                    {group.name} {group.name.includes("Team") ? "" : "Team"}
-                  </span>
-                </div>
+              <div className="mb-6 sm:mb-8 text-left border-b border-slate-200 pb-2">
+                <span className="text-xs sm:text-sm font-bold text-red-400 uppercase tracking-wider">
+                  {group.name} {group.name.includes("Team") ? "" : "Team"}
+                </span>
               </div>
 
               {/* Department Members */}
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 sm:gap-6 lg:gap-8 justify-center">
+              <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 sm:gap-3 lg:gap-4 justify-center">
                 {group.members.map((member) => (
                   <div key={member._id.toString()} className="w-full">
                     <TeamCard member={member} />

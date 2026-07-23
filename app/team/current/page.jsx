@@ -15,6 +15,8 @@ export default function CurrentTeamPage() {
   const [copied, setCopied] = useState(false);
   const [inviteEmail, setInviteEmail] = useState("");
   const [inviting, setInviting] = useState(false);
+  const [invitingEmail, setInvitingEmail] = useState(null);
+  const [sentInvitations, setSentInvitations] = useState([]);
   
   const [editingTeam, setEditingTeam] = useState(false);
   const [newTeamName, setNewTeamName] = useState("");
@@ -77,6 +79,7 @@ export default function CurrentTeamPage() {
       if (data.success) {
         setTeam(data.team);
         setCurrentUser(data.currentUser);
+        setSentInvitations(data.sentInvitations || []);
       } else {
         toast.error(data.message || "Failed to load team data");
         router.push("/team");
@@ -116,6 +119,7 @@ export default function CurrentTeamPage() {
   };
 
   const handleInviteFromDirectory = async (email) => {
+    setInvitingEmail(email);
     try {
       const token = localStorage.getItem("token");
       const res = await fetch("/api/team/invite", {
@@ -124,9 +128,13 @@ export default function CurrentTeamPage() {
         body: JSON.stringify({ email }),
       });
       const data = await res.json();
-      if (data.success) { toast.success(`Invitation sent to ${email}!`); }
+      if (data.success) { 
+        toast.success(`Invitation sent to ${email}!`); 
+        fetchTeamData();
+      }
       else toast.error(data.message || "Failed to send invite");
     } catch { toast.error("Failed to send invite"); }
+    finally { setInvitingEmail(null); }
   };
 
   const handleAcceptRequest = async (requestId) => {
@@ -262,9 +270,8 @@ export default function CurrentTeamPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="bg-white pt-32 pb-10 border-b border-black/5">
-
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8">
+      <section className="bg-white pt-24 pb-12 sm:pt-32 sm:pb-20 border-b border-black/5 relative overflow-hidden">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Edit mode panel */}
           {editingTeam ? (
             <div className="space-y-5">
@@ -346,10 +353,9 @@ export default function CurrentTeamPage() {
         </div>
       </section>
 
-      {/* Minimal Main content */}
       <section className="bg-slate-50/50 px-4 py-12 text-slate-900 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-5xl">
-          <div className="grid gap-8 md:grid-cols-3">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-8 lg:grid-cols-3">
 
             {/* Roster */}
             <div className="md:col-span-2 space-y-4">
@@ -449,12 +455,22 @@ export default function CurrentTeamPage() {
                                   {student.teamId.name}
                                 </span>
                               ) : isCaptain && !team.isRegistered && team.members.length < team.maxPlayers ? (
-                                <button 
-                                  onClick={() => handleInviteFromDirectory(student.email)}
-                                  className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded transition-colors"
-                                >
-                                  <Send size={12} /> Invite
-                                </button>
+                                student.game === team.game ? (
+                                  sentInvitations.some(inv => inv.inviteeEmail?.toLowerCase() === student.email?.toLowerCase() || inv.inviteeEmail?.toLowerCase() === student.collegeEmail?.toLowerCase()) ? (
+                                    <span className="text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2 py-1 rounded border border-amber-200">Pending</span>
+                                  ) : (
+                                    <button 
+                                      onClick={() => handleInviteFromDirectory(student.email)}
+                                      disabled={invitingEmail === student.email}
+                                      className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded transition-colors disabled:opacity-50"
+                                    >
+                                      {invitingEmail === student.email ? <Loader2 size={12} className="animate-spin" /> : <Send size={12} />} 
+                                      {invitingEmail === student.email ? "Sending..." : "Invite"}
+                                    </button>
+                                  )
+                                ) : (
+                                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-50 px-2 py-1 rounded border border-slate-200">Different Game</span>
+                                )
                               ) : (
                                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">No Team</span>
                               )}

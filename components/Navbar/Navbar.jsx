@@ -4,11 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { Menu, Search, User, X } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [gamesOpen, setGamesOpen] = useState(false);
   const [user, setUser] = useState(null);
+  const [hasCheckedNotifs, setHasCheckedNotifs] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -23,6 +27,44 @@ export default function Navbar() {
         .catch(() => {});
     }
   }, []);
+
+  useEffect(() => {
+    if (user && !hasCheckedNotifs) {
+      setHasCheckedNotifs(true);
+      const token = localStorage.getItem("token");
+      
+      if (!user.teamId) {
+        fetch("/api/team/invitations", { headers: { Authorization: `Bearer ${token}` } })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success && data.invitations?.length > 0) {
+              toast.info(`You have ${data.invitations.length} pending team invitation(s)`, {
+                duration: 10000,
+                action: {
+                  label: "View",
+                  onClick: () => router.push("/team")
+                }
+              });
+            }
+          })
+          .catch(() => {});
+      } else if (user.teamId) {
+        fetch("/api/team/request", { headers: { Authorization: `Bearer ${token}` } })
+          .then(res => res.json())
+          .then(data => {
+            if (data.success && data.requests?.length > 0) {
+              toast.info(`You have ${data.requests.length} pending join request(s) for your team`, {
+                duration: 10000,
+                action: {
+                  label: "View",
+                  onClick: () => router.push("/team/current")
+                }
+              });
+            }
+          }).catch(() => {});
+      }
+    }
+  }, [user, hasCheckedNotifs, router]);
 
   const teamHref = user?.teamId ? "/team/current" : "/team";
 
@@ -122,7 +164,7 @@ export default function Navbar() {
             </div> */}
           </div>
 
-          <div className="flex items-center gap-3">
+          {/* <div className="flex items-center gap-3">
             <button
               type="button"
               aria-label="Search"
@@ -137,7 +179,7 @@ export default function Navbar() {
             >
               <User size={16} />
             </Link>
-          </div>
+          </div> */}
         </div>
 
         <button

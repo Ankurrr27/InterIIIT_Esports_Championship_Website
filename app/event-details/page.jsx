@@ -1,8 +1,8 @@
-import Hero_event from "@/components/Hero/Hero_event"
+
 import Navbar from "@/components/Navbar/Navbar";
 import About from "./About";
-import Campuses from "./Campuses";
-import Timeline from "./Timeline";
+
+
 import Footer from "@/components/Footer";
 
 export default function EventDetailsPage() {
@@ -12,7 +12,7 @@ export default function EventDetailsPage() {
       {/* <Hero_event /> */}
       <About />
      
-      <Timeline />
+   
        {/* <Campuses /> */}
       <Footer />
     </main>

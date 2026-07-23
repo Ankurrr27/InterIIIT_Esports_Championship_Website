@@ -93,7 +93,7 @@ export default function TeamActions() {
 
   return (
     <>
-      <section id="team-actions" className="relative overflow-hidden bg-black px-4 py-12 text-white sm:px-6 sm:py-16 lg:px-8">
+      <section id="team-actions" className="bg-black pt-24 pb-12 sm:pt-32 sm:pb-20 border-b border-white/10 relative overflow-hidden px-4 sm:px-6 lg:px-8">
         <div className="absolute inset-x-0 top-0 h-px bg-red-600/60" />
         <div className="absolute right-0 top-0 h-72 w-72 bg-red-600/10 blur-3xl" />
 

@@ -18,7 +18,7 @@ const gameCards = [
 
 const stats = [
   { label: "Titles", value: "3 Major Games" },
-  { label: "Teams", value: "20+ IIIT Squads" },
+  { label: "Teams", value: "50+ IIIT Squads" },
   { label: "Format", value: "Live Finals" },
   { label: "Prize", value: "TBD" },
 ];
@@ -49,7 +49,7 @@ export default function About() {
             </h2>
 
             <p className="mt-5 sm:mt-8 max-w-xl text-sm sm:text-base leading-relaxed text-slate-600 font-medium">
-              Inter-IIIT Esports brings together the best competitive gamers across India's premier tech institutes. Featuring multiple titles, massive prize pools, and a ruthless tournament bracket designed to crown the undisputed champions.
+              Inter-IIIT Esports Championship unites the best gaming talent from IIITs across India in a nationwide competition. Organised by IIITians Network in collaboration with gaming clubs across participating IIITs, the championship features BGMI, Valorant, and Free Fire through a structured three-stage format—from Intra-IIIT qualifiers to the Inter-IIIT league stage and the Grand Finals—to crown the ultimate champions.
             </p>
 
             {/* Stats Grid */}
@@ -92,7 +92,7 @@ export default function About() {
                   key={game.title}
                   className="group relative overflow-hidden rounded-xl transition-all duration-500 hover:shadow-xl hover:shadow-black/10 hover:z-10"
                 >
-                  <div className="relative aspect-[5/2] sm:aspect-[1.8/1] lg:aspect-[2.5/1] overflow-hidden">
+                  <div className="relative aspect-5/2 sm:aspect-[1.8/1] lg:aspect-[2.5/1] overflow-hidden">
                     <img
                       src={game.src}
                       alt={game.title}
@@ -109,7 +109,7 @@ export default function About() {
                         <h4 className="text-xl font-bold text-white tracking-wide drop-shadow-md">
                           {game.title}
                         </h4>
-                        <p className="mt-1 text-xs uppercase tracking-widest text-white/70 font-semibold">
+                        <p className="mt-1 text-xs tracking-widest text-white/70 font-semibold">
                           {game.subtitle}
                         </p>
                       </div>

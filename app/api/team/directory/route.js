@@ -15,8 +15,11 @@ export async function GET(req) {
       return NextResponse.json({ success: false, message: "User college not found" }, { status: 400 });
     }
 
-    // Find all users from the same college
-    const directory = await User.find({ college: currentUser.college })
+    // Find all users from the same college (regardless of game, so they can see everyone)
+    const directory = await User.find({ 
+      college: currentUser.college,
+      _id: { $ne: currentUser._id }
+    })
       .populate("teamId", "name isRegistered")
       .select("name email collegeEmail profileImage game role teamId createdAt")
       .sort({ createdAt: -1 })
